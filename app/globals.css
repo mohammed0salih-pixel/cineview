@@ -288,6 +288,11 @@
     border: 1px solid #e5e7eb;
     box-shadow: 0 14px 30px rgba(17, 17, 17, 0.08);
   }
+  .legacy-ui [class*="bg-[var(--cv-accent)]"],
+  .legacy-ui [class*="bg-red"],
+  .legacy-ui [class*="bg-[color-mix"] {
+    color: #ffffff !important;
+  }
   .legacy-ui [class*="bg-white/5"],
   .legacy-ui [class*="bg-white/10"] {
     background-color: #ffffff !important;
