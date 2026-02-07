@@ -192,10 +192,10 @@ export default function ProjectsPage() {
 
       <main className="pt-24">
         <div className="mx-auto max-w-7xl px-4 pb-20 lg:px-8 fade-soft">
-          <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.4em]">Project Hub</div>
-              <h1 className="mt-4 text-3xl sm:text-4xl font-semibold text-white font-display tracking-tight">Project Management</h1>
+              <h1 className="mt-4 text-3xl sm:text-4xl font-semibold text-white font-display tracking-tight">Project Slate</h1>
               <p className="mt-2 text-white/60">Organize shoots, create shot lists, and collaborate with your team</p>
             </div>
 
@@ -237,7 +237,7 @@ export default function ProjectsPage() {
             ))}
           </div>
 
-          <div className="mb-8">
+          <div className="mb-12">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-white">Saved Projects</h2>
               {liveStatus === "authed" && (
@@ -277,28 +277,23 @@ export default function ProjectsPage() {
               </div>
             )}
             {liveStatus === "authed" && liveProjects.length > 0 && (
-              <div className="space-y-10">
+              <div className="space-y-12">
                 {liveProjects.map((project) => (
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
                     className="block py-4"
                   >
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                      <div>
-                        <p className="text-lg font-semibold text-white">
-                          {project.name || "Untitled Project"}
-                        </p>
-                        <div className="mt-3 space-y-1 text-sm text-white/60">
-                          <p>Type: {resolveProjectType(project)}</p>
-                          <p>Status: {resolveProjectStatus(project.status)}</p>
-                          <p>Confidence: —</p>
-                        </div>
-                      </div>
-                      <div className="text-xs text-white/40">
-                        {project.created_at
-                          ? `Created ${new Date(project.created_at).toLocaleDateString()}`
-                          : "Created date unavailable"}
+                    <div className="space-y-3">
+                      <p className="text-2xl sm:text-3xl font-semibold text-white">
+                        {project.name || "Untitled Project"}
+                      </p>
+                      <div className="text-sm text-white/60">
+                        <span>Type: {resolveProjectType(project)}</span>
+                        <span className="mx-2 text-white/40">·</span>
+                        <span>Status: {resolveProjectStatus(project.status)}</span>
+                        <span className="mx-2 text-white/40">·</span>
+                        <span>Confidence: —</span>
                       </div>
                     </div>
                   </Link>
@@ -308,7 +303,7 @@ export default function ProjectsPage() {
           </div>
 
           {activeTab === "overview" && (
-            <div className="space-y-10">
+            <div className="space-y-12">
               {displayProjects.length ? (
                 displayProjects.map((project) => (
                   <Link
@@ -316,19 +311,16 @@ export default function ProjectsPage() {
                     href={`/projects/${project.id}`}
                     className="block py-4"
                   >
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                      <div>
-                        <p className="text-lg font-semibold text-white">{project.name}</p>
-                        <div className="mt-3 space-y-1 text-sm text-white/60">
-                          <p>Type: {resolveProjectType(project)}</p>
-                          <p>Status: {resolveProjectStatus(project.status)}</p>
-                          <p>Confidence: —</p>
-                        </div>
-                      </div>
-                      <div className="text-xs text-white/40">
-                        {project.created_at
-                          ? `Created ${new Date(project.created_at).toLocaleDateString()}`
-                          : "Created date unavailable"}
+                    <div className="space-y-3">
+                      <p className="text-2xl sm:text-3xl font-semibold text-white">
+                        {project.name}
+                      </p>
+                      <div className="text-sm text-white/60">
+                        <span>Type: {resolveProjectType(project)}</span>
+                        <span className="mx-2 text-white/40">·</span>
+                        <span>Status: {resolveProjectStatus(project.status)}</span>
+                        <span className="mx-2 text-white/40">·</span>
+                        <span>Confidence: —</span>
                       </div>
                     </div>
                   </Link>
