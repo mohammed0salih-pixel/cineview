@@ -149,9 +149,8 @@ export default function AnalysisPage() {
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       
-      <section className="pt-24 pb-16">
+      <section className="pt-24 pb-16 legacy-ui">
         <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 motion-fade">
-          {/* Page Header */}
           <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -187,68 +186,66 @@ export default function AnalysisPage() {
             </div>
           </div>
 
-          <div className="space-y-14">
-            <div className="space-y-8">
-              <section className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Latest Upload</p>
-                <div className="aspect-video bg-black/40 flex items-center justify-center">
-                  {uploadedMedia ? (
-                    <div className="relative w-full h-full">
-                      {uploadedMedia.type === "image" ? (
-                        <img
-                          src={uploadedMedia.url}
-                          alt="Uploaded preview"
-                          className="absolute inset-0 h-full w-full object-contain bg-black/60"
-                        />
-                      ) : (
-                        <video
-                          src={uploadedMedia.url}
-                          controls
-                          className="absolute inset-0 h-full w-full object-contain bg-black/60"
-                        />
-                      )}
-                      <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white/70">
-                        Latest upload{uploadedMedia.name ? ` • ${uploadedMedia.name}` : ""}
-                      </div>
+          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <section className="panel-card p-6 space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Latest Upload</p>
+              <div className="aspect-video panel-inset flex items-center justify-center">
+                {uploadedMedia ? (
+                  <div className="relative w-full h-full">
+                    {uploadedMedia.type === "image" ? (
+                      <img
+                        src={uploadedMedia.url}
+                        alt="Uploaded preview"
+                        className="absolute inset-0 h-full w-full object-contain bg-black/60"
+                      />
+                    ) : (
+                      <video
+                        src={uploadedMedia.url}
+                        controls
+                        className="absolute inset-0 h-full w-full object-contain bg-black/60"
+                      />
+                    )}
+                    <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white/70">
+                      Latest upload{uploadedMedia.name ? ` • ${uploadedMedia.name}` : ""}
                     </div>
-                  ) : (
-                    <div className="text-center">
-                      <p className="text-sm text-white/60">No recent upload found</p>
-                      <Link href="/upload" className="mt-3 inline-flex items-center text-sm font-medium text-white/70 hover:text-white">
-                        Upload content to analyze
-                      </Link>
-                    </div>
-                  )}
-                </div>
-                {uploadedMedia && (
-                  <div className="flex items-center justify-between gap-4 px-4 py-3 text-xs text-white/50">
-                    <span className="truncate">
-                      {uploadedMedia.name || "Untitled file"}
-                    </span>
-                    <span className="whitespace-nowrap">
-                      {uploadedMedia.analyzedAt
-                        ? `Analyzed ${new Date(uploadedMedia.analyzedAt).toLocaleString()}`
-                        : "Analysis timestamp unavailable"}
-                    </span>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <p className="text-sm text-white/60">No recent upload found</p>
+                    <Link href="/upload" className="mt-3 inline-flex items-center text-sm font-medium text-white/70 hover:text-white">
+                      Upload content to analyze
+                    </Link>
                   </div>
                 )}
-              </section>
+              </div>
+              {uploadedMedia && (
+                <div className="flex items-center justify-between gap-4 px-4 py-3 text-xs text-white/50">
+                  <span className="truncate">
+                    {uploadedMedia.name || "Untitled file"}
+                  </span>
+                  <span className="whitespace-nowrap">
+                    {uploadedMedia.analyzedAt
+                      ? `Analyzed ${new Date(uploadedMedia.analyzedAt).toLocaleString()}`
+                      : "Analysis timestamp unavailable"}
+                  </span>
+                </div>
+              )}
+            </section>
 
-              {/* Analysis Tabs */}
+            <section className="panel-card p-6 space-y-6">
               <Tabs defaultValue="lighting" className="w-full">
-              <TabsList className="flex flex-wrap gap-4 bg-transparent p-0">
-                <TabsTrigger value="lighting" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
-                  Lighting
-                </TabsTrigger>
-                <TabsTrigger value="color" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
-                  Color
-                </TabsTrigger>
-                <TabsTrigger value="technical" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
-                  Technical
-                </TabsTrigger>
-              </TabsList>
+                <TabsList className="flex flex-wrap gap-4 bg-transparent p-0">
+                  <TabsTrigger value="lighting" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                    Lighting
+                  </TabsTrigger>
+                  <TabsTrigger value="color" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                    Color
+                  </TabsTrigger>
+                  <TabsTrigger value="technical" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                    Technical
+                  </TabsTrigger>
+                </TabsList>
 
-                {/* Lighting Tab */}
                 <TabsContent value="lighting" className="mt-6 space-y-6">
                   <div className="space-y-3 text-sm text-white/70">
                     <p>Lighting reads as {analysis.lighting.type} with {analysis.lighting.quality} quality from {analysis.lighting.source}.</p>
@@ -283,7 +280,6 @@ export default function AnalysisPage() {
                   )}
                 </TabsContent>
 
-                {/* Color Tab */}
                 <TabsContent value="color" className="mt-6 space-y-6">
                   <div className="space-y-3 text-sm text-white/70">
                     <p>Color temperature reads as {analysis.color.temperature}, anchoring the tonal direction.</p>
@@ -330,7 +326,6 @@ export default function AnalysisPage() {
                   )}
                 </TabsContent>
 
-                {/* Technical Tab */}
                 <TabsContent value="technical" className="mt-6 space-y-6">
                   <div className="space-y-3 text-sm text-white/70">
                     <p>Contrast and saturation define the dramatic range of the frame.</p>
@@ -370,60 +365,60 @@ export default function AnalysisPage() {
                   )}
                 </TabsContent>
               </Tabs>
-            </div>
-
-            <div className="space-y-10">
-              <section className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Overall Assessment</p>
-                <h3 className="text-xl font-semibold text-white">AI-detected style and mood</h3>
-                <div className="space-y-4 text-sm text-white/70">
-                  <div>
-                    <p className="text-white/50">Detected Mood</p>
-                    <p className="text-white">{analysis.mood}</p>
-                  </div>
-                  <div>
-                    <p className="text-white/50">Visual Style</p>
-                    <p className="text-white">{analysis.style}</p>
-                  </div>
-                </div>
-              </section>
-
-              <section className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Next Steps</p>
-                <h3 className="text-xl font-semibold text-white">Continue with your content</h3>
-                <div className="space-y-3">
-                  <Button asChild className="bg-white/10 text-white hover:bg-white/20 justify-start px-0">
-                    <Link href="/export">
-                      Export Results
-                    </Link>
-                  </Button>
-                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                    <Link href="/presets">
-                      Get Preset Suggestions
-                    </Link>
-                  </Button>
-                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                    <Link href="/assistant">
-                      Plan Pre-Production
-                    </Link>
-                  </Button>
-                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                    <Link href="/upload">
-                      Analyze Another
-                    </Link>
-                  </Button>
-                </div>
-              </section>
-
-              <section className="space-y-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Save Analysis</p>
-                <h3 className="text-xl font-semibold text-white">Add to your project library</h3>
-                <Button className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                  Save to Project
-                </Button>
-              </section>
-            </div>
+            </section>
           </div>
+
+          <div className="grid gap-6 lg:grid-cols-2 mt-8">
+            <section className="panel-card p-6 space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Overall Assessment</p>
+              <h3 className="text-xl font-semibold text-white">AI-detected style and mood</h3>
+              <div className="space-y-4 text-sm text-white/70">
+                <div>
+                  <p className="text-white/50">Detected Mood</p>
+                  <p className="text-white">{analysis.mood}</p>
+                </div>
+                <div>
+                  <p className="text-white/50">Visual Style</p>
+                  <p className="text-white">{analysis.style}</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="panel-card p-6 space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Next Steps</p>
+              <h3 className="text-xl font-semibold text-white">Continue with your content</h3>
+              <div className="space-y-3">
+                <Button asChild className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] w-full justify-center">
+                  <Link href="/export">
+                    Export Results
+                  </Link>
+                </Button>
+                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
+                  <Link href="/presets">
+                    Get Preset Suggestions
+                  </Link>
+                </Button>
+                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
+                  <Link href="/assistant">
+                    Plan Pre-Production
+                  </Link>
+                </Button>
+                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
+                  <Link href="/upload">
+                    Analyze Another
+                  </Link>
+                </Button>
+              </div>
+            </section>
+          </div>
+
+          <section className="panel-card p-6 space-y-4 mt-8">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Save Analysis</p>
+            <h3 className="text-xl font-semibold text-white">Add to your project library</h3>
+            <Button className="bg-transparent text-white/60 hover:text-white justify-start px-0">
+              Save to Project
+            </Button>
+          </section>
         </div>
       </section>
 

@@ -304,6 +304,25 @@
     background-color: color-mix(in srgb, var(--cv-accent) 80%, #000) !important;
   }
 
+  .legacy-ui .grid {
+    display: grid !important;
+    gap: 1.5rem !important;
+  }
+  .legacy-ui svg {
+    display: inline-block !important;
+  }
+  .legacy-ui .panel-card {
+    background: linear-gradient(180deg, rgba(18, 19, 21, 0.98), rgba(12, 12, 13, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  .legacy-ui .panel-inset {
+    background: rgba(9, 9, 10, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+  }
+
   :where(div, section, header, footer, nav, main, article, aside, ul, ol, li, span, p, a, button, input, textarea, select)[class*="border"]:not(.keep-border) {
     border-width: 0 !important;
     border-style: none !important;

@@ -369,61 +369,45 @@ export default function UploadPage() {
   <main className="min-h-screen bg-background text-foreground">
    <Header />
 
-   <section className="pt-24 pb-20">
-    <div className="mx-auto max-w-5xl px-4 lg:px-8 motion-fade">
-     <div className="mb-10 text-center">
-      <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.3em]">AI Analysis</div>
-      <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">
-       Upload Your Content
-      </h1>
-      <p className="mt-3 text-base sm:text-lg text-white/60">
-       Upload a photograph or video for AI-powered cinematic analysis
-      </p>
+   <section className="pt-24 pb-20 legacy-ui">
+    <div className="mx-auto max-w-7xl px-4 lg:px-8 motion-fade">
+     <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+       <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.3em]">AI Analysis</div>
+       <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">
+        Upload Your Content
+       </h1>
+       <p className="mt-3 text-base sm:text-lg text-white/60">
+        Upload a photograph or video for AI-powered cinematic analysis
+       </p>
+      </div>
+      <Button
+       asChild={isFormValid ? true : false}
+       size="lg"
+       disabled={!isFormValid}
+       className="h-12 bg-[var(--cv-accent)] px-8 text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+       {isFormValid ? (
+        <Link href="/analysis" onClick={markAnalysisStart}>
+         Analyze Content
+        </Link>
+       ) : (
+        <>Analyze Content</>
+       )}
+      </Button>
      </div>
 
-     <section className="mb-10 space-y-4">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Type</p>
-      <p className="text-sm text-white/60">Select what you want to analyze</p>
-      <RadioGroup
-       value={contentType}
-       onValueChange={(value) => setContentType(value as "image" | "video")}
-       className="space-y-4"
-      >
-       <div>
-        <RadioGroupItem value="image" id="image" className="peer sr-only" />
-        <Label
-         htmlFor="image"
-         className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
-        >
-         <span className="text-lg font-semibold">Photograph</span>
-         <span className="text-xs text-white/50">JPG, PNG, WebP</span>
-        </Label>
-       </div>
-       <div>
-        <RadioGroupItem value="video" id="video" className="peer sr-only" />
-        <Label
-         htmlFor="video"
-         className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
-        >
-         <span className="text-lg font-semibold">Video</span>
-         <span className="text-xs text-white/50">MP4, MOV, WebM</span>
-        </Label>
-       </div>
-      </RadioGroup>
-     </section>
-
-     <section className="mb-10 space-y-4">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Upload File</p>
-      <p className="text-sm text-white/60">Drag and drop or click to select</p>
+     <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr]">
+      <section className="panel-card p-6 space-y-4">
+       <p className="text-xs uppercase tracking-[0.3em] text-white/50">Upload File</p>
+       <p className="text-sm text-white/60">Drag and drop or click to select</p>
        {!preview ? (
         <div
          onDrop={handleDrop}
          onDragOver={handleDragOver}
          onDragLeave={handleDragLeave}
-         className={`relative flex min-h-[220px] flex-col items-center justify-center rounded-2xl bg-black/40 transition-all ${
-          isDragging
-           ? "bg-black/50"
-           : "hover:bg-black/50"
+         className={`relative flex min-h-[320px] flex-col items-center justify-center rounded-2xl bg-black/50 transition-all ${
+          isDragging ? "bg-black/60" : "hover:bg-black/60"
          }`}
         >
          <input
@@ -435,101 +419,116 @@ export default function UploadPage() {
          <p className="mt-4 text-sm font-semibold text-white">
           Drop your {contentType === "image" ? "image" : "video"} here
          </p>
-          <p className="mt-1 text-xs text-white/50">or click to browse files</p>
+         <p className="mt-1 text-xs text-white/50">or click to browse files</p>
         </div>
        ) : (
         <div className="relative">
          <button
           type="button"
           onClick={clearFile}
-          className="absolute -right-2 -top-2 z-10 rounded-full bg-white px-3 py-1 text-xs font-semibold text-black transition-colors hover:bg-white/80"
+          className="absolute -right-2 -top-2 z-10 rounded-full bg-[var(--cv-accent)] px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]"
          >
           Remove
          </button>
-         <div className="overflow-hidden rounded-2xl bg-black/40">
+         <div className="overflow-hidden rounded-2xl bg-black/50">
           {contentType === "image" ? (
            <img
             src={preview || "/placeholder.svg"}
             alt="Preview"
-            className="h-auto max-h-[380px] w-full object-contain bg-black/50"
+            className="h-auto max-h-[420px] w-full object-contain bg-black/60"
            />
           ) : (
-           <video src={preview} controls className="h-auto max-h-[380px] w-full bg-black/50" />
-         )}
+           <video src={preview} controls className="h-auto max-h-[420px] w-full bg-black/60" />
+          )}
+         </div>
+         <div className="mt-3 text-sm text-white/60 truncate">{file?.name}</div>
         </div>
-        <div className="mt-3 text-sm text-white/60 truncate">{file?.name}</div>
-       </div>
-      )}
-     </section>
-
-     <section className="mb-12 space-y-4">
-      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Project Details</p>
-      <p className="text-sm text-white/60">Help us understand your content better</p>
-      <div className="space-y-6">
-       <div className="space-y-2">
-        <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
-        <Select value={projectType} onValueChange={setProjectType}>
-         <SelectTrigger id="project-type" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
-          <SelectValue placeholder="Select project type" />
-         </SelectTrigger>
-         <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-          {projectTypes.map((type) => (
-           <SelectItem key={type.value} value={type.value} className="text-white">
-            {type.label}
-           </SelectItem>
-          ))}
-         </SelectContent>
-        </Select>
-       </div>
-
-       <div className="space-y-2">
-        <Label htmlFor="platform" className="text-white/70">Target Platform</Label>
-        <Select value={platform} onValueChange={setPlatform}>
-         <SelectTrigger id="platform" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
-          <SelectValue placeholder="Select platform" />
-         </SelectTrigger>
-         <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-          {platforms.map((p) => (
-           <SelectItem key={p.value} value={p.value} className="text-white">
-            {p.label}
-           </SelectItem>
-          ))}
-         </SelectContent>
-        </Select>
-       </div>
-
-       <div className="space-y-2">
-        <Label htmlFor="objective" className="text-white/70">
-         Shot Objective <span className="text-white/40 font-normal">(Optional)</span>
-        </Label>
-        <Textarea
-         id="objective"
-         value={objective}
-         onChange={(e) => setObjective(e.target.value)}
-         placeholder="Describe what you want to achieve with this shot..."
-         className="min-h-[120px] resize-none bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
-        />
-       </div>
-      </div>
-     </section>
-
-     <div className="flex justify-center">
-      <Button
-       asChild={isFormValid ? true : false}
-       size="lg"
-       disabled={!isFormValid}
-       className="h-12 rounded-full bg-white px-8 text-black shadow-lg shadow-black/30 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-       {isFormValid ? (
-        <Link href="/analysis" onClick={markAnalysisStart}>
-         Analyze Content
-        </Link>
-       ) : (
-        <>
-         Analyze Content
-        </>
        )}
-      </Button>
+      </section>
+
+      <div className="space-y-6">
+       <section className="panel-card p-6 space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Type</p>
+        <p className="text-sm text-white/60">Select what you want to analyze</p>
+        <RadioGroup
+         value={contentType}
+         onValueChange={(value) => setContentType(value as "image" | "video")}
+         className="space-y-4"
+        >
+         <div>
+          <RadioGroupItem value="image" id="image" className="peer sr-only" />
+          <Label
+           htmlFor="image"
+           className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
+          >
+           <span className="text-lg font-semibold">Photograph</span>
+           <span className="text-xs text-white/50">JPG, PNG, WebP</span>
+          </Label>
+         </div>
+         <div>
+          <RadioGroupItem value="video" id="video" className="peer sr-only" />
+          <Label
+           htmlFor="video"
+           className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
+          >
+           <span className="text-lg font-semibold">Video</span>
+           <span className="text-xs text-white/50">MP4, MOV, WebM</span>
+          </Label>
+         </div>
+        </RadioGroup>
+       </section>
+
+       <section className="panel-card p-6 space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Project Details</p>
+        <p className="text-sm text-white/60">Help us understand your content better</p>
+        <div className="space-y-6">
+         <div className="space-y-2">
+          <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
+          <Select value={projectType} onValueChange={setProjectType}>
+           <SelectTrigger id="project-type" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
+            <SelectValue placeholder="Select project type" />
+           </SelectTrigger>
+           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+            {projectTypes.map((type) => (
+             <SelectItem key={type.value} value={type.value} className="text-white">
+              {type.label}
+             </SelectItem>
+            ))}
+           </SelectContent>
+          </Select>
+         </div>
+
+         <div className="space-y-2">
+          <Label htmlFor="platform" className="text-white/70">Target Platform</Label>
+          <Select value={platform} onValueChange={setPlatform}>
+           <SelectTrigger id="platform" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
+            <SelectValue placeholder="Select platform" />
+           </SelectTrigger>
+           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+            {platforms.map((p) => (
+             <SelectItem key={p.value} value={p.value} className="text-white">
+              {p.label}
+             </SelectItem>
+            ))}
+           </SelectContent>
+          </Select>
+         </div>
+
+         <div className="space-y-2">
+          <Label htmlFor="objective" className="text-white/70">
+           Shot Objective <span className="text-white/40 font-normal">(Optional)</span>
+          </Label>
+          <Textarea
+           id="objective"
+           value={objective}
+           onChange={(e) => setObjective(e.target.value)}
+           placeholder="Describe what you want to achieve with this shot..."
+           className="min-h-[120px] resize-none bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
+          />
+         </div>
+        </div>
+       </section>
+      </div>
      </div>
     </div>
    </section>
