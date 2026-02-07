@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { supabaseBrowser } from "@/lib/supabase-browser"
@@ -88,20 +87,20 @@ export default function AuthPage() {
       <Header />
       <section className="pt-24 pb-16">
         <div className="mx-auto max-w-2xl px-6 lg:px-8">
-          <Card className="bg-transparent">
-            <CardHeader>
-              <CardTitle className="text-2xl font-display">Sign in</CardTitle>
-              <CardDescription>
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Access</p>
+              <h1 className="text-2xl font-display text-white">Sign in</h1>
+              <p className="text-sm text-white/60">
                 Use this to obtain a valid session token for API testing.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
+              </p>
+            </div>
               <div className="flex gap-2">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setMode("sign-in")}
-                  className={mode === "sign-in" ? "bg-white text-black" : "bg-transparent text-foreground/70"}
+                  className={mode === "sign-in" ? "bg-white text-black" : "bg-transparent text-white/70"}
                 >
                   Sign in
                 </Button>
@@ -109,7 +108,7 @@ export default function AuthPage() {
                   type="button"
                   variant="outline"
                   onClick={() => setMode("sign-up")}
-                  className={mode === "sign-up" ? "bg-white text-black" : "bg-transparent text-foreground/70"}
+                  className={mode === "sign-up" ? "bg-white text-black" : "bg-transparent text-white/70"}
                 >
                   Create account
                 </Button>
@@ -117,23 +116,25 @@ export default function AuthPage() {
 
               <div className="space-y-3">
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-white/70">Email</Label>
                   <Input
                     id="email"
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
+                    className="bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-white/70">Password</Label>
                   <Input
                     id="password"
                     type="password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder="••••••••"
+                    className="bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
                   />
                 </div>
               </div>
@@ -150,7 +151,7 @@ export default function AuthPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="sm:flex-1 bg-transparent text-foreground/70"
+                  className="sm:flex-1 bg-transparent text-white/70"
                   onClick={handleSignOut}
                   disabled={status === "loading"}
                 >
@@ -159,21 +160,15 @@ export default function AuthPage() {
               </div>
 
               {message && (
-                <div
-                  className={`rounded-md border px-3 py-2 text-sm ${
-                    status === "error"
-                      ? "border-border/70 bg-secondary/40 text-foreground"
-                      : "border-border/50 bg-secondary/20 text-foreground"
-                  }`}
-                >
+                <div className="text-sm text-white/60">
                   {message}
                 </div>
               )}
 
-              <div className="rounded-md border border-border/60 bg-background/60 px-4 py-3">
-                <p className="text-xs text-muted-foreground mb-2">Access Token</p>
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Access Token</p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <code className="flex-1 break-all text-xs text-foreground/80">
+                  <code className="flex-1 break-all text-xs text-white/60">
                     {accessToken ?? "No active session"}
                   </code>
                   <Button
@@ -187,8 +182,7 @@ export default function AuthPage() {
                   </Button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+          </section>
         </div>
       </section>
       <Footer />
