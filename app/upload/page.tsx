@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -382,47 +381,40 @@ export default function UploadPage() {
       </p>
      </div>
 
-     <Card className="mb-6 cinematic-card">
-      <CardHeader>
-       <CardTitle className="text-white">Content Type</CardTitle>
-       <CardDescription className="text-white/60">Select what you want to analyze</CardDescription>
-      </CardHeader>
-      <CardContent>
-       <RadioGroup
-        value={contentType}
-        onValueChange={(value) => setContentType(value as "image" | "video")}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-       >
-        <div>
-         <RadioGroupItem value="image" id="image" className="peer sr-only" />
-         <Label
-          htmlFor="image"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 px-6 py-8 text-center transition-colors text-white/50 hover:text-white peer-data-[state=checked]:text-white"
-         >
-          <span className="text-sm font-semibold">Photograph</span>
-          <span className="text-xs text-white/50">JPG, PNG, WebP</span>
-         </Label>
-        </div>
-        <div>
-         <RadioGroupItem value="video" id="video" className="peer sr-only" />
-         <Label
-          htmlFor="video"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 px-6 py-8 text-center transition-colors text-white/50 hover:text-white peer-data-[state=checked]:text-white"
-         >
-          <span className="text-sm font-semibold">Video</span>
-          <span className="text-xs text-white/50">MP4, MOV, WebM</span>
-         </Label>
-        </div>
-       </RadioGroup>
-      </CardContent>
-     </Card>
+     <section className="mb-10 space-y-4">
+      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Type</p>
+      <p className="text-sm text-white/60">Select what you want to analyze</p>
+      <RadioGroup
+       value={contentType}
+       onValueChange={(value) => setContentType(value as "image" | "video")}
+       className="space-y-4"
+      >
+       <div>
+        <RadioGroupItem value="image" id="image" className="peer sr-only" />
+        <Label
+         htmlFor="image"
+         className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
+        >
+         <span className="text-lg font-semibold">Photograph</span>
+         <span className="text-xs text-white/50">JPG, PNG, WebP</span>
+        </Label>
+       </div>
+       <div>
+        <RadioGroupItem value="video" id="video" className="peer sr-only" />
+        <Label
+         htmlFor="video"
+         className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
+        >
+         <span className="text-lg font-semibold">Video</span>
+         <span className="text-xs text-white/50">MP4, MOV, WebM</span>
+        </Label>
+       </div>
+      </RadioGroup>
+     </section>
 
-     <Card className="mb-6 cinematic-card">
-      <CardHeader>
-       <CardTitle className="text-white">Upload File</CardTitle>
-       <CardDescription className="text-white/60">Drag and drop or click to select</CardDescription>
-      </CardHeader>
-      <CardContent>
+     <section className="mb-10 space-y-4">
+      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Upload File</p>
+      <p className="text-sm text-white/60">Drag and drop or click to select</p>
        {!preview ? (
         <div
          onDrop={handleDrop}
@@ -443,7 +435,7 @@ export default function UploadPage() {
          <p className="mt-4 text-sm font-semibold text-white">
           Drop your {contentType === "image" ? "image" : "video"} here
          </p>
-         <p className="mt-1 text-xs text-white/50">or click to browse files</p>
+          <p className="mt-1 text-xs text-white/50">or click to browse files</p>
         </div>
        ) : (
         <div className="relative">
@@ -463,26 +455,21 @@ export default function UploadPage() {
            />
           ) : (
            <video src={preview} controls className="h-auto max-h-[380px] w-full bg-black/50" />
-          )}
-         </div>
-         <div className="mt-4 flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3">
-          <span className="text-sm font-medium text-white truncate">{file?.name}</span>
-         </div>
+         )}
         </div>
-       )}
-      </CardContent>
-     </Card>
+        <div className="mt-3 text-sm text-white/60 truncate">{file?.name}</div>
+       </div>
+      )}
+     </section>
 
-     <Card className="mb-10 cinematic-card">
-      <CardHeader>
-       <CardTitle className="text-white">Project Details</CardTitle>
-       <CardDescription className="text-white/60">Help us understand your content better</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
+     <section className="mb-12 space-y-4">
+      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Project Details</p>
+      <p className="text-sm text-white/60">Help us understand your content better</p>
+      <div className="space-y-6">
        <div className="space-y-2">
-        <Label htmlFor="project-type" className="text-white font-medium">Project Type</Label>
+        <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
         <Select value={projectType} onValueChange={setProjectType}>
-         <SelectTrigger id="project-type" className="h-12 bg-white/5 text-white border-0 shadow-none">
+         <SelectTrigger id="project-type" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
           <SelectValue placeholder="Select project type" />
          </SelectTrigger>
          <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
@@ -496,9 +483,9 @@ export default function UploadPage() {
        </div>
 
        <div className="space-y-2">
-        <Label htmlFor="platform" className="text-white font-medium">Target Platform</Label>
+        <Label htmlFor="platform" className="text-white/70">Target Platform</Label>
         <Select value={platform} onValueChange={setPlatform}>
-         <SelectTrigger id="platform" className="h-12 bg-white/5 text-white border-0 shadow-none">
+         <SelectTrigger id="platform" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
           <SelectValue placeholder="Select platform" />
          </SelectTrigger>
          <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
@@ -512,7 +499,7 @@ export default function UploadPage() {
        </div>
 
        <div className="space-y-2">
-        <Label htmlFor="objective" className="text-white font-medium">
+        <Label htmlFor="objective" className="text-white/70">
          Shot Objective <span className="text-white/40 font-normal">(Optional)</span>
         </Label>
         <Textarea
@@ -520,11 +507,11 @@ export default function UploadPage() {
          value={objective}
          onChange={(e) => setObjective(e.target.value)}
          placeholder="Describe what you want to achieve with this shot..."
-         className="min-h-[120px] resize-none bg-white/5 border-transparent text-white placeholder:text-white/40"
+         className="min-h-[120px] resize-none bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
         />
        </div>
-      </CardContent>
-     </Card>
+      </div>
+     </section>
 
      <div className="flex justify-center">
       <Button
