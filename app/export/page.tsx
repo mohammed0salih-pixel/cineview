@@ -295,7 +295,7 @@ export default function ExportPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8 fade-soft">
      {/* Page Header */}
      <div className="mb-10">
-      <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-1.5 mb-4">
+      <div className="text-xs font-medium text-white/60 uppercase tracking-[0.3em] mb-4">
        <span className="text-xs font-medium text-white/70 uppercase tracking-[0.3em]">Director&#39;s Deck</span>
       </div>
       <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white font-display">
@@ -306,9 +306,9 @@ export default function ExportPage() {
       </p>
       <div className="mt-4 flex flex-wrap gap-3">
        <Link href="/analysis">
-        <Button className="bg-white/5 text-white hover:bg-white/10">
-         Back to Results
-        </Button>
+       <Button className="bg-transparent text-white/60 hover:text-white">
+        Back to Results
+       </Button>
        </Link>
        {!exportComplete ? (
         <Button
@@ -327,19 +327,19 @@ export default function ExportPage() {
        )}
       </div>
       {exportComplete && (
-       <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70">
+       <div className="mt-3 text-xs font-medium text-white/60">
         تم حفظ مشروعك
        </div>
       )}
       {exportStatus === "error" && (
-       <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/70">
+       <div className="mt-3 text-xs font-medium text-white/60">
         {exportError || "Export failed"}
        </div>
       )}
       {exportUrl && (
        <div className="mt-4">
         <Link href={exportUrl} target="_blank" rel="noreferrer">
-         <Button className="bg-white/5 text-white hover:bg-white/10">
+         <Button className="bg-transparent text-white/60 hover:text-white">
           Download PDF
          </Button>
         </Link>
@@ -348,7 +348,7 @@ export default function ExportPage() {
      </div>
 
      <div className="mb-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <div className="rounded-3xl bg-white/5 p-8">
+      <div className="p-8">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">PDF Output</p>
        <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-white">{deckProjectName}</h2>
        <p className="mt-2 text-sm text-white/60">
@@ -375,7 +375,7 @@ export default function ExportPage() {
         </div>
        </div>
       </div>
-      <div className="rounded-3xl bg-white/5 p-6">
+      <div className="p-6">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Preview</p>
        <div className="mt-4 overflow-hidden rounded-2xl bg-black/40">
         {latest ? (
@@ -408,17 +408,17 @@ export default function ExportPage() {
      </div>
 
      <Tabs defaultValue="software" className="space-y-6">
-      <TabsList className="bg-white/5 p-1 rounded-full backdrop-blur">
-       <TabsTrigger value="software" className="rounded-full text-white/50 data-[state=active]:bg-white data-[state=active]:text-black">
+      <TabsList className="bg-transparent p-0">
+       <TabsTrigger value="software" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
         Editing Software
        </TabsTrigger>
-       <TabsTrigger value="cloud" className="rounded-full text-white/50 data-[state=active]:bg-white data-[state=active]:text-black">
+       <TabsTrigger value="cloud" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
         Cloud Storage
        </TabsTrigger>
-       <TabsTrigger value="social" className="rounded-full text-white/50 data-[state=active]:bg-white data-[state=active]:text-black">
+       <TabsTrigger value="social" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
         Social Publishing
        </TabsTrigger>
-       <TabsTrigger value="luts" className="rounded-full text-white/50 data-[state=active]:bg-white data-[state=active]:text-black">
+       <TabsTrigger value="luts" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
         LUT Export
        </TabsTrigger>
       </TabsList>
@@ -447,7 +447,7 @@ export default function ExportPage() {
            <div className="mt-4 pt-4 flex gap-2">
             {software.connected ? (
              <>
-              <Button className="flex-1 bg-white/5 text-white hover:bg-white/10">
+              <Button className="flex-1 bg-transparent text-white/60 hover:text-white">
                Configure
               </Button>
               <Button className="flex-1 bg-white text-black hover:bg-white/80">
@@ -486,7 +486,7 @@ export default function ExportPage() {
            return (
             <div
              key={service.id}
-             className="p-4 rounded-lg transition-all bg-white/5"
+             className="p-4 transition-all"
             >
              <div className="flex items-center gap-3 mb-3">
               <div className="flex-1">
@@ -503,7 +503,7 @@ export default function ExportPage() {
                )}
               </div>
               {service.connected ? (
-               <Button variant="ghost" size="sm" className="text-white/70 hover:text-white">
+               <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
                 Refresh
                </Button>
               ) : (
@@ -580,7 +580,7 @@ export default function ExportPage() {
           {socialPlatforms.map((platform) => (
            <div
             key={platform.id}
-            className="flex items-center gap-4 p-3 rounded-lg transition-all bg-white/5"
+            className="flex items-center gap-4 p-3 transition-all"
            >
             <div className="flex-1">
              <p className="font-medium text-white">{platform.name}</p>
@@ -592,10 +592,10 @@ export default function ExportPage() {
             </div>
             {platform.connected ? (
              <div className="flex gap-2">
-              <Button variant="ghost" size="sm" className="text-white/70 hover:text-white">
+              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
                Manage
               </Button>
-              <Button size="sm" className="bg-white/5 text-white hover:bg-white/10">
+              <Button size="sm" className="bg-transparent text-white/60 hover:text-white">
                Disconnect
               </Button>
              </div>
@@ -645,7 +645,7 @@ export default function ExportPage() {
           <div className="space-y-2">
            <Label className="text-white/60">Export Format</Label>
            <Select value={selectedFormat} onValueChange={setSelectedFormat}>
-           <SelectTrigger className="bg-white/5 text-white border-0 shadow-none">
+           <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
              <SelectValue />
            </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
@@ -664,7 +664,7 @@ export default function ExportPage() {
           <div className="space-y-2">
            <Label className="text-white/60">LUT Size</Label>
            <Select value={lutSize} onValueChange={setLutSize}>
-           <SelectTrigger className="bg-white/5 text-white border-0 shadow-none">
+           <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
              <SelectValue />
            </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
@@ -677,7 +677,7 @@ export default function ExportPage() {
 
           <div className="space-y-2">
            <Label className="text-white/60">Output Name</Label>
-           <Input placeholder="my_custom_lut" className="bg-white/5 border-transparent text-white placeholder:text-white/40" />
+           <Input placeholder="my_custom_lut" className="bg-transparent border-transparent text-white placeholder:text-white/40" />
           </div>
 
           <div className="space-y-3 pt-4 ">
@@ -708,7 +708,7 @@ export default function ExportPage() {
            <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
             Your LUT Library
            </CardTitle>
-           <Button className="bg-white/5 text-white hover:bg-white/10">
+           <Button className="bg-transparent text-white/60 hover:text-white">
             Import LUT
            </Button>
           </div>
@@ -721,11 +721,7 @@ export default function ExportPage() {
              className="group rounded-lg overflow-hidden transition-all"
             >
              <div className="relative aspect-video bg-black/40">
-              <img
-               src={preset.preview || "/placeholder.svg"}
-               alt={preset.name}
-               className="w-full h-full object-cover"
-              />
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                <Button size="sm" variant="secondary" className="bg-white/10 text-white hover:bg-white/20">
                 Preview
@@ -763,13 +759,13 @@ export default function ExportPage() {
         <CardContent className="p-6">
          <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
-           <div className="aspect-video rounded-lg bg-white/5 flex items-center justify-center ">
+          <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
             <span className="text-sm text-white/50">Original</span>
-           </div>
+          </div>
            <p className="text-center text-sm font-medium text-white">Before</p>
           </div>
           <div className="space-y-2">
-          <div className="aspect-video rounded-lg bg-white/5 flex items-center justify-center ">
+          <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
             <span className="text-sm text-white/70">With LUT Applied</span>
            </div>
            <p className="text-center text-sm font-medium text-white/70">Preview</p>
