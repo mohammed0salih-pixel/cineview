@@ -167,7 +167,12 @@
   a,
   button,
   [role="button"] {
-    transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, transform 200ms ease, opacity 200ms ease;
+    transition: color 260ms ease, background-color 260ms ease, border-color 260ms ease, transform 260ms ease, opacity 260ms ease;
+  }
+  input,
+  textarea,
+  select {
+    transition: color 260ms ease, background-color 260ms ease, border-color 260ms ease, box-shadow 260ms ease, opacity 260ms ease;
   }
 }
 
@@ -241,7 +246,22 @@
     opacity: 0.8;
   }
   .fade-soft {
-    animation: fade-soft 700ms ease-out both;
+    animation: fade-soft 900ms ease-out both;
+  }
+  .motion-fade {
+    animation: fade-soft 1100ms ease-out both;
+  }
+  .motion-rise {
+    animation: rise-soft 1100ms ease-out both;
+  }
+  .motion-delay-1 {
+    animation-delay: 120ms;
+  }
+  .motion-delay-2 {
+    animation-delay: 220ms;
+  }
+  .transition-soft {
+    transition: color 320ms ease, background-color 320ms ease, border-color 320ms ease, transform 320ms ease, opacity 320ms ease;
   }
 
   .narrative-flow [data-slot="card"] {
@@ -279,7 +299,17 @@
   @keyframes fade-soft {
     from {
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes rise-soft {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
     }
     to {
       opacity: 1;
@@ -296,6 +326,15 @@
     100% {
       transform: translate3d(0, 0, 0) scale(1);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
