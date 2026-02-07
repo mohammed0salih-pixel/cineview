@@ -107,7 +107,7 @@ export default function PresetsPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Preset List */}
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-primary">Recommended Presets</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Recommended Presets</h2>
               {presets.map((preset) => (
                 <Card
                   key={preset.id}
@@ -182,7 +182,7 @@ export default function PresetsPage() {
                       max={2}
                       step={0.1}
                       onValueChange={([value]) => updateAdjustment("exposure", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
 
@@ -202,7 +202,7 @@ export default function PresetsPage() {
                       max={50}
                       step={1}
                       onValueChange={([value]) => updateAdjustment("contrast", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
 
@@ -222,7 +222,7 @@ export default function PresetsPage() {
                       max={50}
                       step={1}
                       onValueChange={([value]) => updateAdjustment("saturation", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
 
@@ -240,7 +240,7 @@ export default function PresetsPage() {
                       max={50}
                       step={1}
                       onValueChange={([value]) => updateAdjustment("temperature", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ export default function PresetsPage() {
                       max={50}
                       step={1}
                       onValueChange={([value]) => updateAdjustment("highlights", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
 
@@ -276,7 +276,7 @@ export default function PresetsPage() {
                       max={50}
                       step={1}
                       onValueChange={([value]) => updateAdjustment("shadows", value)}
-                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-primary"
+                      className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
                 </CardContent>
@@ -284,10 +284,10 @@ export default function PresetsPage() {
 
               {/* Actions */}
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button className="flex-1 bg-primary text-background hover:bg-primary/90">
+                <Button className="flex-1 bg-white text-black hover:bg-white/80">
                   Download Preset
                 </Button>
-                <Button variant="outline" className="flex-1 border-border text-foreground hover:bg-secondary hover:text-primary bg-transparent">
+                <Button variant="outline" className="flex-1 border-border text-foreground hover:bg-secondary hover:text-foreground bg-transparent">
                   Save to Project
                 </Button>
                 <Button asChild variant="outline" className="flex-1 border-border text-foreground hover:bg-secondary bg-transparent">

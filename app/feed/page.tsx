@@ -352,7 +352,7 @@ export default function FeedPage() {
           {/* Load More */}
           {filteredItems.length > 0 && (
             <div className="mt-12 text-center">
-              <Button variant="outline" className="border-border text-foreground hover:bg-secondary hover:text-primary bg-transparent">
+              <Button variant="outline" className="border-border text-foreground hover:bg-secondary hover:text-foreground bg-transparent">
                 Load More
               </Button>
             </div>

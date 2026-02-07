@@ -204,15 +204,15 @@ export default function ToolsPage() {
               >
                 Back to Home
               </Link>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+              <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground font-display">
                 Complete Visual Analysis
               </h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 All-in-one analysis tools for photographers and videographers
               </p>
-              <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-3 py-1 text-xs text-muted-foreground">
+              <div className="mt-3 inline-flex items-center gap-2 text-xs text-muted-foreground">
                 <span>New here?</span>
-                <Link href="/upload" className="font-medium text-primary hover:underline">
+                <Link href="/upload" className="font-medium text-foreground/70 hover:text-foreground">
                   Start with Upload
                 </Link>
               </div>
@@ -225,10 +225,10 @@ export default function ToolsPage() {
                 accept="image/*,video/*"
                 className="hidden"
               />
-              <Button variant="outline" className="border-border/50 bg-transparent" onClick={triggerFileInput}>
+              <Button variant="outline" className="bg-transparent text-foreground/70" onClick={triggerFileInput}>
                 Upload Image/Video
               </Button>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button className="bg-white text-black hover:bg-white/80">
                 Export Report
               </Button>
             </div>
@@ -319,15 +319,14 @@ export default function ToolsPage() {
                           style={{ transform: `scale(${zoomLevel / 100})` }}
                         />
                         {analysisApplied && (
-                          <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded font-medium z-10">
+                          <div className="absolute top-3 right-3 text-xs text-white/70 uppercase tracking-[0.3em] z-10">
                             Analysis Applied
                           </div>
                         )}
                         {isAnalyzing && (
                           <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
                             <div className="text-center">
-                              <div className="keep-border w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                              <p className="text-sm text-white">Analyzing...</p>
+                              <p className="text-sm text-white/70">Analyzing…</p>
                             </div>
                           </div>
                         )}
@@ -338,7 +337,7 @@ export default function ToolsPage() {
                           <p className="text-muted-foreground text-sm mb-3">Upload an image or video to analyze</p>
                           <Button 
                             size="sm"
-                            className="bg-primary text-primary-foreground hover:bg-primary/90"
+                            className="bg-white text-black hover:bg-white/80"
                             onClick={triggerFileInput}
                           >
                             Select File
@@ -352,35 +351,35 @@ export default function ToolsPage() {
                       <>
                         {selectedOverlay === "thirds" && (
                           <div className="absolute inset-0 pointer-events-none">
-                            <div className="absolute top-1/3 left-0 right-0 h-px bg-primary/60" />
-                            <div className="absolute top-2/3 left-0 right-0 h-px bg-primary/60" />
-                            <div className="absolute top-0 bottom-0 left-1/3 w-px bg-primary/60" />
-                            <div className="absolute top-0 bottom-0 left-2/3 w-px bg-primary/60" />
-                            <div className="absolute top-1/3 left-1/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
-                            <div className="absolute top-1/3 left-2/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
-                            <div className="absolute top-2/3 left-1/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
-                            <div className="absolute top-2/3 left-2/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
+                            <div className="absolute top-1/3 left-0 right-0 h-px bg-white/30" />
+                            <div className="absolute top-2/3 left-0 right-0 h-px bg-white/30" />
+                            <div className="absolute top-0 bottom-0 left-1/3 w-px bg-white/30" />
+                            <div className="absolute top-0 bottom-0 left-2/3 w-px bg-white/30" />
+                            <div className="absolute top-1/3 left-1/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40" />
+                            <div className="absolute top-1/3 left-2/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40" />
+                            <div className="absolute top-2/3 left-1/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40" />
+                            <div className="absolute top-2/3 left-2/3 w-2 h-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40" />
                           </div>
                         )}
                         {selectedOverlay === "golden" && (
                           <div className="absolute inset-0 pointer-events-none">
-                            <div className="absolute top-[38.2%] left-0 right-0 h-px bg-primary/60" />
-                            <div className="absolute top-[61.8%] left-0 right-0 h-px bg-primary/60" />
-                            <div className="absolute top-0 bottom-0 left-[38.2%] w-px bg-primary/60" />
-                            <div className="absolute top-0 bottom-0 left-[61.8%] w-px bg-primary/60" />
+                            <div className="absolute top-[38.2%] left-0 right-0 h-px bg-white/30" />
+                            <div className="absolute top-[61.8%] left-0 right-0 h-px bg-white/30" />
+                            <div className="absolute top-0 bottom-0 left-[38.2%] w-px bg-white/30" />
+                            <div className="absolute top-0 bottom-0 left-[61.8%] w-px bg-white/30" />
                           </div>
                         )}
                         {selectedOverlay === "center" && (
                           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                            <div className="w-6 h-6 rounded-full border-2 border-primary" />
-                            <div className="absolute w-px h-full bg-primary/30" />
-                            <div className="absolute w-full h-px bg-primary/30" />
+                            <div className="w-6 h-6 rounded-full border-2 border-white/50" />
+                            <div className="absolute w-px h-full bg-white/20" />
+                            <div className="absolute w-full h-px bg-white/20" />
                           </div>
                         )}
                         {selectedOverlay === "diagonal" && (
                           <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                            <line x1="0" y1="0" x2="100%" y2="100%" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
-                            <line x1="100%" y1="0" x2="0" y2="100%" stroke="currentColor" strokeWidth="1" className="text-primary/60" />
+                            <line x1="0" y1="0" x2="100%" y2="100%" stroke="currentColor" strokeWidth="1" className="text-white/30" />
+                            <line x1="100%" y1="0" x2="0" y2="100%" stroke="currentColor" strokeWidth="1" className="text-white/30" />
                           </svg>
                         )}
                       </>
@@ -525,15 +524,15 @@ export default function ToolsPage() {
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="p-3 rounded-lg bg-secondary/30 border border-border/30">
+                      <div className="p-3">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Harmony</p>
                         <p className="text-sm font-medium mt-0.5">{colorAnalysis.harmony}</p>
                       </div>
-                      <div className="p-3 rounded-lg bg-secondary/30 border border-border/30">
+                      <div className="p-3">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Mood</p>
                         <p className="text-sm font-medium mt-0.5">{colorAnalysis.mood}</p>
                       </div>
-                      <div className="p-3 rounded-lg bg-secondary/30 border border-border/30 col-span-2">
+                      <div className="p-3 col-span-2">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Visual Style</p>
                         <p className="text-sm font-medium mt-0.5">{colorAnalysis.style}</p>
                       </div>
@@ -553,15 +552,15 @@ export default function ToolsPage() {
                       Quick Adjustments
                     </CardTitle>
                     <div className="flex gap-2">
-<Button 
+                      <Button 
                         variant="outline" 
                         size="sm" 
-                        className="h-7 text-xs border-border hover:bg-secondary/40 bg-transparent" 
+                        className="h-7 text-xs bg-transparent text-foreground/70" 
                         onClick={handleResetAdjustments}
                       >
                         Reset
                       </Button>
-                      <Button size="sm" className="h-7 text-xs bg-primary text-primary-foreground hover:bg-primary/90" onClick={handleApplyToAnalysis} disabled={isAnalyzing}>
+                      <Button size="sm" className="h-7 text-xs bg-white text-black hover:bg-white/80" onClick={handleApplyToAnalysis} disabled={isAnalyzing}>
                         {isAnalyzing ? "Applying..." : "Apply"}
                       </Button>
                     </div>
@@ -660,25 +659,25 @@ export default function ToolsPage() {
                       <div className="space-y-1.5">
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Exposure</span>
-                          <span className={`text-xs font-mono font-medium ${exposure[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${exposure[0] !== 0 ? "text-foreground" : ""}`}>
                             {exposure[0] > 0 ? "+" : ""}{exposure[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Contrast</span>
-                          <span className={`text-xs font-mono font-medium ${contrast[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${contrast[0] !== 0 ? "text-foreground" : ""}`}>
                             {contrast[0] > 0 ? "+" : ""}{contrast[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Highlights</span>
-                          <span className={`text-xs font-mono font-medium ${highlights[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${highlights[0] !== 0 ? "text-foreground" : ""}`}>
                             {highlights[0] > 0 ? "+" : ""}{highlights[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Shadows</span>
-                          <span className={`text-xs font-mono font-medium ${shadows[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${shadows[0] !== 0 ? "text-foreground" : ""}`}>
                             {shadows[0] > 0 ? "+" : ""}{shadows[0]}
                           </span>
                         </div>
@@ -689,25 +688,25 @@ export default function ToolsPage() {
                       <div className="space-y-1.5">
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Saturation</span>
-                          <span className={`text-xs font-mono font-medium ${saturation[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${saturation[0] !== 0 ? "text-foreground" : ""}`}>
                             {saturation[0] > 0 ? "+" : ""}{saturation[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Vibrance</span>
-                          <span className={`text-xs font-mono font-medium ${vibrance[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${vibrance[0] !== 0 ? "text-foreground" : ""}`}>
                             {vibrance[0] > 0 ? "+" : ""}{vibrance[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Temperature</span>
-                          <span className={`text-xs font-mono font-medium ${temperature[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${temperature[0] !== 0 ? "text-foreground" : ""}`}>
                             {temperature[0] > 0 ? "+" : ""}{temperature[0]}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Tint</span>
-                          <span className={`text-xs font-mono font-medium ${tint[0] !== 0 ? "text-primary" : ""}`}>
+                          <span className={`text-xs font-mono font-medium ${tint[0] !== 0 ? "text-foreground" : ""}`}>
                             {tint[0] > 0 ? "+" : ""}{tint[0]}
                           </span>
                         </div>
@@ -726,7 +725,7 @@ export default function ToolsPage() {
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Analysis</span>
-                          <span className={`text-xs font-medium ${analysisApplied ? "text-primary" : "text-muted-foreground"}`}>
+                          <span className={`text-xs font-medium ${analysisApplied ? "text-foreground" : "text-muted-foreground"}`}>
                             {analysisApplied ? "Applied" : "Pending"}
                           </span>
                         </div>
@@ -737,19 +736,19 @@ export default function ToolsPage() {
                       <div className="space-y-1.5">
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Modified Values</span>
-                          <span className="text-xs font-mono font-medium text-primary">
+                          <span className="text-xs font-mono font-medium text-foreground">
                             {[exposure[0], contrast[0], highlights[0], shadows[0], saturation[0], vibrance[0], temperature[0], tint[0]].filter(v => v !== 0).length}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Favorite</span>
-                          <span className={`text-xs font-medium ${isFavorite ? "text-primary" : "text-muted-foreground"}`}>
+                          <span className={`text-xs font-medium ${isFavorite ? "text-foreground" : "text-muted-foreground"}`}>
                             {isFavorite ? "Yes" : "No"}
                           </span>
                         </div>
                         <div className="flex justify-between items-center p-2 rounded bg-secondary/30">
                           <span className="text-xs text-muted-foreground">Bookmarked</span>
-                          <span className={`text-xs font-medium ${isBookmarked ? "text-primary" : "text-muted-foreground"}`}>
+                          <span className={`text-xs font-medium ${isBookmarked ? "text-foreground" : "text-muted-foreground"}`}>
                             {isBookmarked ? "Yes" : "No"}
                           </span>
                         </div>
@@ -904,25 +903,25 @@ export default function ToolsPage() {
                 </CardHeader>
                 <CardContent className="p-4">
                   <div className="grid gap-3 sm:grid-cols-3">
-                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 border-border/50 bg-transparent hover:bg-primary/10 hover:border-primary/30">
+                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 bg-transparent text-foreground/70 hover:text-foreground">
                       <span className="text-xs">Download</span>
                       <span className="text-[10px] text-muted-foreground">Original Quality</span>
                     </Button>
-                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 border-border/50 bg-transparent hover:bg-primary/10 hover:border-primary/30">
+                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 bg-transparent text-foreground/70 hover:text-foreground">
                       <span className="text-xs">Share</span>
                       <span className="text-[10px] text-muted-foreground">Get Link</span>
                     </Button>
-                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 border-border/50 bg-transparent hover:bg-primary/10 hover:border-primary/30">
+                    <Button variant="outline" className="h-auto py-3 flex-col gap-1.5 bg-transparent text-foreground/70 hover:text-foreground">
                       <span className="text-xs">AI Enhance</span>
                       <span className="text-[10px] text-muted-foreground">Auto Improve</span>
                     </Button>
                   </div>
                   <div className="mt-4 pt-4 border-t border-border/30">
                     <Label className="text-xs text-muted-foreground mb-2 block">Add Tags</Label>
-                    <div className="flex gap-2 flex-wrap">
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">Portrait</Badge>
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">Cinematic</Badge>
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">Saudi</Badge>
+                    <div className="flex gap-2 flex-wrap text-xs text-muted-foreground">
+                      <span>Portrait</span>
+                      <span>Cinematic</span>
+                      <span>Saudi</span>
                       <Button variant="ghost" size="sm" className="h-6 px-2 text-xs text-muted-foreground">+ Add Tag</Button>
                     </div>
                   </div>

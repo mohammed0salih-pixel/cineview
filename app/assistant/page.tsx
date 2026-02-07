@@ -233,7 +233,7 @@ export default function AssistantPage() {
                       </CardHeader>
                       <CardContent className="space-y-6">
                         <div className="p-4 rounded-lg bg-secondary/50">
-                          <h4 className="font-semibold text-primary mb-2">{recommendations.lighting.primary}</h4>
+                          <h4 className="font-semibold text-foreground mb-2">{recommendations.lighting.primary}</h4>
                           <div className="space-y-2 text-sm text-foreground">
                             <p><span className="text-muted-foreground">Key Light:</span> {recommendations.lighting.keyLight}</p>
                             <p><span className="text-muted-foreground">Fill Light:</span> {recommendations.lighting.fillLight}</p>
@@ -274,7 +274,7 @@ export default function AssistantPage() {
                       <CardContent className="space-y-6">
                         <div className="p-4 rounded-lg bg-secondary/50">
                           <p className="text-sm text-muted-foreground">Recommended Style</p>
-                          <p className="text-lg font-semibold text-primary">{recommendations.artDirection.style}</p>
+                          <p className="text-lg font-semibold text-foreground">{recommendations.artDirection.style}</p>
                         </div>
 
                         <div className="space-y-2">

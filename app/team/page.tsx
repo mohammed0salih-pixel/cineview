@@ -360,7 +360,7 @@ export default function TeamPage() {
                             </Button>
                           </div>
                         </div>
-                        <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shrink-0">
+                        <Button className="bg-white text-black hover:bg-white/80 shrink-0">
                           Send
                         </Button>
                       </div>
@@ -380,7 +380,7 @@ export default function TeamPage() {
                           <div className="relative">
                             <Input placeholder="Search files..." className="pl-4 w-48 bg-secondary/30 border-border/50" />
                           </div>
-                          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                          <Button className="bg-white text-black hover:bg-white/80">
                             Upload
                           </Button>
                         </div>

@@ -99,15 +99,17 @@ export default function AuthPage() {
               <div className="flex gap-2">
                 <Button
                   type="button"
-                  variant={mode === "sign-in" ? "default" : "outline"}
+                  variant="outline"
                   onClick={() => setMode("sign-in")}
+                  className={mode === "sign-in" ? "bg-white text-black" : "bg-transparent text-foreground/70"}
                 >
                   Sign in
                 </Button>
                 <Button
                   type="button"
-                  variant={mode === "sign-up" ? "default" : "outline"}
+                  variant="outline"
                   onClick={() => setMode("sign-up")}
+                  className={mode === "sign-up" ? "bg-white text-black" : "bg-transparent text-foreground/70"}
                 >
                   Create account
                 </Button>
@@ -139,7 +141,7 @@ export default function AuthPage() {
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button
                   type="button"
-                  className="sm:flex-1"
+                  className="sm:flex-1 bg-white text-black hover:bg-white/80"
                   disabled={!isFormValid || status === "loading"}
                   onClick={handleAuth}
                 >
@@ -148,7 +150,7 @@ export default function AuthPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="sm:flex-1"
+                  className="sm:flex-1 bg-transparent text-foreground/70"
                   onClick={handleSignOut}
                   disabled={status === "loading"}
                 >
