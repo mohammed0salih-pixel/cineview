@@ -3,7 +3,6 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import { useState } from "react"
 import Link from "next/link"
@@ -96,83 +95,71 @@ export default function PresetsPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           {/* Page Header */}
           <div className="mb-12">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Cinematic Preset Suggestions
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-white/60">
               AI-recommended presets based on your visual analysis
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Preset List */}
-            <div className="space-y-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Recommended Presets</h2>
+          <div className="space-y-12">
+            <section className="space-y-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-white/50">Recommended Presets</p>
               {presets.map((preset) => (
-                <Card
+                <button
                   key={preset.id}
-                  className="cursor-pointer bg-transparent transition-all"
+                  className="block w-full text-left space-y-2"
                   onClick={() => handlePresetSelect(preset)}
                 >
-                  <CardHeader className="pb-2">
-                    <div className="space-y-2">
-                      <CardTitle className="flex items-center gap-2 text-foreground">
-                        {preset.name}
-                        {preset.recommended && (
-                          <span className="text-xs uppercase tracking-[0.3em] text-foreground/60">
-                            Best Match
-                          </span>
-                        )}
-                      </CardTitle>
-                      <CardDescription className="mt-1">{preset.style} Style</CardDescription>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <p className="text-sm text-muted-foreground">{preset.description}</p>
-                    <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                      {preset.tags.join(" · ")}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <div className="flex flex-wrap items-center gap-2 text-white">
+                    <span className="text-lg font-semibold">{preset.name}</span>
+                    {preset.recommended && (
+                      <span className="text-xs uppercase tracking-[0.3em] text-white/50">
+                        Best Match
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-white/60">{preset.style} Style</p>
+                  <p className="text-sm text-white/50">{preset.description}</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/40">
+                    {preset.tags.join(" · ")}
+                  </p>
+                </button>
               ))}
-            </div>
+            </section>
 
-            {/* Preview & Adjustments */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Preview Card */}
-              <Card className="border-border bg-card overflow-hidden">
-                <div className="aspect-video bg-black/40 flex items-center justify-center relative">
-                  <div className="absolute inset-0 flex">
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-center">
-                        <p className="text-sm text-muted-foreground mb-2">Before</p>
-                        <div className="h-32 w-32 rounded-lg bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-                      </div>
+            <section className="space-y-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Preview</p>
+              <div className="aspect-video bg-black/40 flex items-center justify-center relative">
+                <div className="absolute inset-0 flex">
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                      <p className="text-sm text-white/50 mb-2">Before</p>
+                      <div className="h-32 w-32 rounded-lg bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
                     </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="text-center">
-                        <p className="text-sm text-muted-foreground mb-2">After: {selectedPreset.name}</p>
-                        <div className="h-32 w-32 rounded-lg bg-gradient-to-br from-white/15 via-black/20 to-black/80" />
-                      </div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                      <p className="text-sm text-white/50 mb-2">After: {selectedPreset.name}</p>
+                      <div className="h-32 w-32 rounded-lg bg-gradient-to-br from-white/15 via-black/20 to-black/80" />
                     </div>
                   </div>
                 </div>
-              </Card>
+              </div>
+            </section>
 
-              {/* Adjustment Controls */}
-              <Card className="border-border bg-card">
-                <CardHeader>
-                  <CardTitle className="text-foreground">Fine-tune Adjustments</CardTitle>
-                  <CardDescription>Customize the preset to your preference</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
+            <section className="space-y-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Fine-tune Adjustments</p>
+              <p className="text-sm text-white/60">Customize the preset to your preference</p>
+              <div className="space-y-6">
                   {/* Exposure */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">
+                      <label className="text-sm font-medium text-white">
                         Exposure
                       </label>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-white/50">
                         {adjustments.exposure > 0 ? "+" : ""}{adjustments.exposure.toFixed(1)}
                       </span>
                     </div>
@@ -189,10 +176,10 @@ export default function PresetsPage() {
                   {/* Contrast */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">
+                      <label className="text-sm font-medium text-white">
                         Contrast
                       </label>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-white/50">
                         {adjustments.contrast > 0 ? "+" : ""}{adjustments.contrast}
                       </span>
                     </div>
@@ -209,10 +196,10 @@ export default function PresetsPage() {
                   {/* Saturation */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">
+                      <label className="text-sm font-medium text-white">
                         Saturation
                       </label>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-white/50">
                         {adjustments.saturation > 0 ? "+" : ""}{adjustments.saturation}
                       </span>
                     </div>
@@ -229,8 +216,8 @@ export default function PresetsPage() {
                   {/* Temperature */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">Temperature</label>
-                      <span className="text-sm text-muted-foreground">
+                      <label className="text-sm font-medium text-white">Temperature</label>
+                      <span className="text-sm text-white/50">
                         {adjustments.temperature > 0 ? "+" : ""}{adjustments.temperature}
                       </span>
                     </div>
@@ -247,8 +234,8 @@ export default function PresetsPage() {
                   {/* Highlights */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">Highlights</label>
-                      <span className="text-sm text-muted-foreground">
+                      <label className="text-sm font-medium text-white">Highlights</label>
+                      <span className="text-sm text-white/50">
                         {adjustments.highlights > 0 ? "+" : ""}{adjustments.highlights}
                       </span>
                     </div>
@@ -265,8 +252,8 @@ export default function PresetsPage() {
                   {/* Shadows */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-foreground">Shadows</label>
-                      <span className="text-sm text-muted-foreground">
+                      <label className="text-sm font-medium text-white">Shadows</label>
+                      <span className="text-sm text-white/50">
                         {adjustments.shadows > 0 ? "+" : ""}{adjustments.shadows}
                       </span>
                     </div>
@@ -279,24 +266,25 @@ export default function PresetsPage() {
                       className="[&>span:first-child]:bg-secondary [&>span:first-child>span]:bg-white/40"
                     />
                   </div>
-                </CardContent>
-              </Card>
+              </div>
+            </section>
 
-              {/* Actions */}
+            <section className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Actions</p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button className="flex-1 bg-white text-black hover:bg-white/80">
                   Download Preset
                 </Button>
-                <Button variant="outline" className="flex-1 border-border text-foreground hover:bg-secondary hover:text-foreground bg-transparent">
+                <Button variant="outline" className="flex-1 bg-transparent text-white/70 hover:text-white">
                   Save to Project
                 </Button>
-                <Button asChild variant="outline" className="flex-1 border-border text-foreground hover:bg-secondary bg-transparent">
+                <Button asChild variant="outline" className="flex-1 bg-transparent text-white/70 hover:text-white">
                   <Link href="/assistant">
                     Plan Shoot
                   </Link>
                 </Button>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </section>
