@@ -5,59 +5,59 @@
 
 /* CineView AI - Cinematic Noir Theme */
 :root {
-  --background: oklch(0.11 0 0);
-  --foreground: oklch(0.96 0.01 260);
-  --card: oklch(0.13 0 0);
-  --card-foreground: oklch(0.96 0.01 260);
-  --popover: oklch(0.13 0 0);
-  --popover-foreground: oklch(0.96 0.01 260);
+  --background: #f6f6f7;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
   --primary: var(--cv-accent);
   --primary-foreground: #ffffff;
-  --secondary: oklch(0.14 0 0);
-  --secondary-foreground: oklch(0.96 0.01 260);
-  --muted: oklch(0.14 0 0);
-  --muted-foreground: oklch(0.68 0.01 260);
+  --secondary: #f2f2f4;
+  --secondary-foreground: #1b1b1b;
+  --muted: #f2f2f4;
+  --muted-foreground: #6b6f76;
   --accent: var(--cv-accent-soft);
-  --accent-foreground: #ffffff;
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: color-mix(in srgb, var(--cv-accent) 60%, transparent);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.14 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
+  --accent-foreground: #111111;
+  --destructive: #d32f2f;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: color-mix(in srgb, var(--cv-accent) 30%, transparent);
+  --chart-1: #e11d2f;
+  --chart-2: #f97316;
+  --chart-3: #10b981;
+  --chart-4: #3b82f6;
+  --chart-5: #6366f1;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111111;
   --sidebar-primary: var(--cv-accent);
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: oklch(0.2 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: color-mix(in srgb, var(--cv-accent) 55%, transparent);
-  --red: #ff3b3b;
-  --red-dark: #e13232;
-  --red-light: #ff5e5e;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #111111;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: color-mix(in srgb, var(--cv-accent) 40%, transparent);
+  --red: #e11d2f;
+  --red-dark: #c81e2b;
+  --red-light: #f05454;
   --shadow-x: 0px;
-  --shadow-y: 2px;
-  --shadow-blur: 6px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.68;
-  --shadow-color: #000000;
+  --shadow-y: 8px;
+  --shadow-blur: 24px;
+  --shadow-spread: -6px;
+  --shadow-opacity: 0.15;
+  --shadow-color: rgba(15, 15, 15, 0.45);
   /* CineView AI Brand Tokens */
-  --cv-base: #0b0b0c;
-  --cv-carbon: #111214;
-  --cv-ash: #1a1b1e;
-  --cv-mist: #5c5f66;
-  --cv-fog: #8b9097;
-  --cv-ivory: #f1f2f4;
-  --cv-white: #f7f8fa;
-  --cv-accent: #ff3b3b;
-  --cv-accent-soft: color-mix(in srgb, var(--cv-accent) 22%, #0b0b0c);
-  --cv-border: rgb(255 255 255 / 8%);
+  --cv-base: #f6f6f7;
+  --cv-carbon: #ffffff;
+  --cv-ash: #f3f4f6;
+  --cv-mist: #9aa0a6;
+  --cv-fog: #70757a;
+  --cv-ivory: #ffffff;
+  --cv-white: #ffffff;
+  --cv-accent: #e11d2f;
+  --cv-accent-soft: #fde8ea;
+  --cv-border: rgba(0, 0, 0, 0.08);
   --cv-radius: var(--radius);
 }
 
@@ -188,7 +188,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: color-mix(in srgb, var(--cv-accent) 70%, transparent);
+    color: var(--cv-accent);
   }
   .section-spacing {
     @apply py-24 lg:py-32;
@@ -218,9 +218,9 @@
     background-clip: text;
   }
   .cinematic-surface {
-    background: radial-gradient(1200px 600px at 10% 10%, oklch(0.2 0 0 / 0.35), transparent),
-      radial-gradient(900px 500px at 90% 0%, oklch(0.18 0 0 / 0.3), transparent),
-      linear-gradient(180deg, oklch(0.12 0 0), oklch(0.1 0 0));
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(225, 29, 47, 0.08), transparent),
+      radial-gradient(900px 500px at 90% 0%, rgba(0, 0, 0, 0.06), transparent),
+      linear-gradient(180deg, #ffffff, #f6f6f7);
   }
   .cinematic-card {
     background: transparent;
@@ -229,8 +229,8 @@
     transition: transform 200ms ease, opacity 200ms ease;
   }
   .cinematic-panel {
-    background: linear-gradient(180deg, oklch(0.2 0 0 / 0.75), oklch(0.12 0 0 / 0.95));
-    border: 0;
+    background: linear-gradient(180deg, #ffffff, #f6f6f7);
+    border: 1px solid var(--cv-border);
   }
   .cinematic-divider {
     border-color: oklch(1 0 0 / 0.08);
@@ -239,16 +239,15 @@
     box-shadow: 0 12px 40px color-mix(in srgb, var(--cv-accent) 20%, transparent);
   }
   .hero-diffusion {
-    background: radial-gradient(520px 340px at 50% 12%, color-mix(in srgb, var(--cv-accent) 35%, transparent), transparent),
-      radial-gradient(900px 500px at 15% 10%, oklch(0.24 0 0 / 0.45), transparent),
-      radial-gradient(700px 480px at 85% 20%, oklch(0.2 0 0 / 0.35), transparent),
-      radial-gradient(600px 600px at 50% 100%, oklch(0.18 0 0 / 0.5), transparent);
-    opacity: 0.85;
+    background: radial-gradient(520px 340px at 50% 12%, rgba(225, 29, 47, 0.16), transparent),
+      radial-gradient(800px 520px at 50% 45%, rgba(225, 29, 47, 0.08), transparent),
+      radial-gradient(900px 600px at 50% 100%, rgba(0, 0, 0, 0.05), transparent);
+    opacity: 0.9;
     animation: hero-drift 18s ease-in-out infinite;
   }
   .hero-veil {
-    background: linear-gradient(180deg, oklch(0.1 0 0 / 0.6) 0%, transparent 45%, oklch(0.08 0 0 / 0.7) 100%);
-    opacity: 0.8;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, transparent 45%, rgba(255, 255, 255, 0.9) 100%);
+    opacity: 0.9;
   }
   .fade-soft {
     animation: fade-soft 900ms ease-out both;
@@ -269,39 +268,39 @@
     transition: color 320ms ease, background-color 320ms ease, border-color 320ms ease, transform 320ms ease, opacity 320ms ease;
   }
 
-  .narrative-flow [data-slot="card"] {
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    gap: 1.5rem !important;
+  .legacy-ui [class*="text-white"] {
+    color: #111111 !important;
   }
-  .narrative-flow [data-slot="card-header"],
-  .narrative-flow [data-slot="card-content"],
-  .narrative-flow [data-slot="card-footer"] {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  .legacy-ui [class*="text-white/50"] {
+    color: rgba(17, 17, 17, 0.55) !important;
   }
-  .narrative-flow :is(div, section, article, ul, li)[class*="bg-card"],
-  .narrative-flow :is(div, section, article, ul, li)[class*="bg-secondary"],
-  .narrative-flow :is(div, section, article, ul, li)[class*="bg-white/5"],
-  .narrative-flow :is(div, section, article, ul, li)[class*="bg-white/10"] {
-    background: transparent !important;
-    box-shadow: none !important;
+  .legacy-ui [class*="text-white/60"] {
+    color: rgba(17, 17, 17, 0.65) !important;
   }
-  .narrative-flow .grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 2.5rem !important;
+  .legacy-ui [class*="text-white/70"] {
+    color: rgba(17, 17, 17, 0.75) !important;
   }
-  .narrative-flow svg {
-    display: none !important;
+  .legacy-ui [class*="text-white/80"] {
+    color: rgba(17, 17, 17, 0.85) !important;
   }
-  .narrative-flow [data-slot="button"][class~="bg-white"] {
-    background-color: var(--cv-accent) !important;
-    color: #ffffff !important;
+  .legacy-ui [class*="bg-black"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 14px 30px rgba(17, 17, 17, 0.08);
   }
-  .narrative-flow [data-slot="button"][class~="bg-white"]:hover {
-    background-color: color-mix(in srgb, var(--cv-accent) 80%, #000) !important;
+  .legacy-ui [class*="bg-white/5"],
+  .legacy-ui [class*="bg-white/10"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 14px 30px rgba(17, 17, 17, 0.08);
+  }
+  .legacy-ui [data-slot="button"][class~="bg-white"] {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  .legacy-ui [data-slot="button"][class~="bg-white"]:hover {
+    background-color: #f3f4f6 !important;
   }
 
   .legacy-ui .grid {
@@ -312,18 +311,18 @@
     display: inline-block !important;
   }
   .legacy-ui .panel-card {
-    background: linear-gradient(180deg, rgba(18, 19, 21, 0.98), rgba(12, 12, 13, 0.96));
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 20px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 18px 40px rgba(17, 17, 17, 0.08);
   }
   .legacy-ui .panel-inset {
-    background: rgba(9, 9, 10, 0.65);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #f7f7f9;
+    border: 1px dashed #e5e7eb;
     border-radius: 16px;
   }
 
-  :where(div, section, header, footer, nav, main, article, aside, ul, ol, li, span, p, a, button, input, textarea, select)[class*="border"]:not(.keep-border) {
+  .narrative-flow :where(div, section, header, footer, nav, main, article, aside, ul, ol, li, span, p, a, button, input, textarea, select)[class*="border"]:not(.keep-border) {
     border-width: 0 !important;
     border-style: none !important;
   }

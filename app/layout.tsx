@@ -49,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body
-        className={`${interTight.variable} ${ibmPlexSans.variable} font-sans antialiased bg-background text-foreground narrative-flow`}
+        className={`${interTight.variable} ${ibmPlexSans.variable} font-sans antialiased bg-background text-foreground legacy-ui`}
       >
         {children}
         <Analytics />

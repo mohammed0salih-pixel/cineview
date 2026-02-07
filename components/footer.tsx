@@ -45,8 +45,8 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-20">
         <div className="flex flex-col gap-8 pb-12 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-white">Stay updated</h3>
-            <p className="mt-2 text-sm text-white/60">Get the latest features, tips, and creator news.</p>
+            <h3 className="text-lg font-semibold text-foreground">Stay updated</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Get the latest features, tips, and creator news.</p>
           </div>
           <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
             <Input
@@ -54,9 +54,9 @@ export function Footer() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-11 rounded-full border-transparent bg-white/5 text-sm text-white placeholder:text-white/40"
+              className="h-11 rounded-full border border-border bg-white text-sm text-foreground placeholder:text-muted-foreground"
             />
-            <Button className="h-11 rounded-full bg-white px-6 text-black hover:bg-white/80">
+            <Button className="h-11 rounded-full bg-[var(--cv-accent)] px-6 text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]">
               Subscribe
             </Button>
           </div>
@@ -64,11 +64,11 @@ export function Footer() {
 
         <div className="grid grid-cols-2 gap-8 py-12 md:grid-cols-3 lg:grid-cols-5">
           <div>
-            <h4 className="text-xs font-semibold text-white/50 uppercase tracking-[0.3em] mb-4">Tools</h4>
+            <h4 className="text-xs font-semibold text-[var(--cv-accent)] uppercase tracking-[0.3em] mb-4">Tools</h4>
             <ul className="space-y-3">
               {footerLinks.tools.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.name}
                   </Link>
                 </li>
@@ -76,11 +76,11 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-white/50 uppercase tracking-[0.3em] mb-4">Creators</h4>
+            <h4 className="text-xs font-semibold text-[var(--cv-accent)] uppercase tracking-[0.3em] mb-4">Creators</h4>
             <ul className="space-y-3">
               {footerLinks.creators.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.name}
                   </Link>
                 </li>
@@ -88,11 +88,11 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-white/50 uppercase tracking-[0.3em] mb-4">Marketplace</h4>
+            <h4 className="text-xs font-semibold text-[var(--cv-accent)] uppercase tracking-[0.3em] mb-4">Marketplace</h4>
             <ul className="space-y-3">
               {footerLinks.marketplace.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.name}
                   </Link>
                 </li>
@@ -100,11 +100,11 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-white/50 uppercase tracking-[0.3em] mb-4">Company</h4>
+            <h4 className="text-xs font-semibold text-[var(--cv-accent)] uppercase tracking-[0.3em] mb-4">Company</h4>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.name}
                   </Link>
                 </li>
@@ -112,11 +112,11 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="text-xs font-semibold text-white/50 uppercase tracking-[0.3em] mb-4">Legal</h4>
+            <h4 className="text-xs font-semibold text-[var(--cv-accent)] uppercase tracking-[0.3em] mb-4">Legal</h4>
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-white/60 transition-colors hover:text-white">
+                  <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
                     {link.name}
                   </Link>
                 </li>
@@ -126,8 +126,8 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 pt-8 md:flex-row md:items-center">
-          <span className="font-semibold text-white">CineView AI</span>
-          <p className="text-sm text-white/50">
+          <span className="font-semibold text-foreground">CineView AI</span>
+          <p className="text-sm text-muted-foreground">
             {new Date().getFullYear()} CineView AI. All rights reserved. Supporting Saudi Vision 2030.
           </p>
         </div>
