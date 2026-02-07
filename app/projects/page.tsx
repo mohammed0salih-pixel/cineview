@@ -385,29 +385,33 @@ export default function ProjectsPage() {
                 <div className="space-y-2">
                   <p className="text-xs uppercase tracking-[0.4em] text-white/50">Mood Direction</p>
                   <h2 className="text-2xl font-semibold text-white">Reference Palette</h2>
+                  <p className="text-sm text-white/60 max-w-2xl">Atmospheric references that prioritize light, texture, and tonal direction.</p>
                 </div>
                 <Button className="h-9 rounded-full bg-white/5 text-white hover:bg-white/10">
                   Share with Client
                 </Button>
               </div>
-              <div className="grid auto-rows-[140px] gap-6 sm:grid-cols-2 lg:grid-cols-6">
+              <div className="flex flex-wrap gap-6">
                 {displayMoodboardItems.length ? (
                   displayMoodboardItems.map((item) => (
-                    <div key={item.id} className={`relative flex h-full items-center justify-center ${item.span}`}>
-                      {item.type === "image" ? (
-                        item.src ? (
-                          <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
+                    <div
+                      key={item.id}
+                      className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] space-y-2"
+                    >
+                      <div className="h-52 overflow-hidden rounded-3xl bg-black/40">
+                        {item.type === "image" ? (
+                          item.src ? (
+                            <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
+                          ) : (
+                            <div className={`h-full w-full ${item.bg}`} />
+                          )
                         ) : (
-                          <div className={`h-full w-full ${item.bg}`} />
-                        )
-                      ) : (
-                        <div className="h-full w-full" style={{ backgroundColor: item.color || "#d4af37" }} />
-                      )}
-                      {item.label && (
-                        <span className="absolute bottom-3 left-3 text-xs font-medium text-white/70">
-                          {item.label}
-                        </span>
-                      )}
+                          <div className="h-full w-full" style={{ backgroundColor: item.color || "#d4af37" }} />
+                        )}
+                      </div>
+                      {item.label ? (
+                        <p className="text-xs uppercase tracking-[0.2em] text-white/50">{item.label}</p>
+                      ) : null}
                     </div>
                   ))
                 ) : (
@@ -423,15 +427,16 @@ export default function ProjectsPage() {
                 <div className="space-y-2">
                   <p className="text-xs uppercase tracking-[0.4em] text-white/50">Storyboard</p>
                   <h2 className="text-2xl font-semibold text-white">Visual Sequence</h2>
+                  <p className="text-sm text-white/60 max-w-2xl">A director’s shot list with a clean, cinematic presentation.</p>
                 </div>
                 <Button className="h-9 rounded-full bg-white text-black hover:bg-white/80">Export PDF</Button>
               </div>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-10">
                 {displayStoryboardFrames.length ? (
                   displayStoryboardFrames.map((frame) => (
                     <div key={frame.id} className="space-y-3">
-                      <div className="aspect-video bg-white/5" />
-                      <p className="text-sm font-medium text-white">{frame.label}</p>
+                      <div className="aspect-[21/9] overflow-hidden rounded-3xl bg-black/40" />
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">{frame.label}</p>
                     </div>
                   ))
                 ) : (

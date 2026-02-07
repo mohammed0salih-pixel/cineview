@@ -814,19 +814,20 @@ export default function ProjectDetailPage() {
       </TabsContent>
 
             <TabsContent value="storyboard" className="space-y-12">
-       <section className="space-y-4">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Storyboard</p>
-        <h2 className="text-2xl font-semibold text-white">Visual Sequence</h2>
-        {displayStoryboard.length ? (
-         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="space-y-6">
+       <p className="text-xs uppercase tracking-[0.4em] text-white/50">Storyboard</p>
+       <h2 className="text-2xl font-semibold text-white">Visual Sequence</h2>
+       <p className="max-w-2xl text-sm text-white/60">A director’s shot list, presented as a cinematic sequence with minimal annotation.</p>
+       {displayStoryboard.length ? (
+         <div className="space-y-10">
           {displayStoryboard.map((frame) => (
-           <div key={frame.id} className="overflow-hidden rounded-3xl">
-            <div className="aspect-video bg-white/10">
+           <div key={frame.id} className="space-y-3">
+            <div className="aspect-[21/9] overflow-hidden rounded-3xl bg-black/40">
              <img src={frame.image} alt={`Frame ${frame.frame}`} className="h-full w-full object-cover" />
             </div>
-            <div className="p-4 text-sm text-white/70">
-             <p className="text-white font-medium">Frame {frame.frame}</p>
-             <p className="text-white/50">{frame.notes}</p>
+            <div className="space-y-1">
+             <p className="text-xs uppercase tracking-[0.3em] text-white/60">Frame {frame.frame}</p>
+             <p className="text-sm text-white/60">{frame.notes}</p>
             </div>
            </div>
           ))}
@@ -864,19 +865,27 @@ export default function ProjectDetailPage() {
       </TabsContent>
 
             <TabsContent value="mood" className="space-y-12">
-       <section className="space-y-4">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Mood Direction</p>
-        <h2 className="text-2xl font-semibold text-white">Reference Palette</h2>
-        {displayMoodboard.length ? (
-         <div className="grid gap-6 grid-cols-2 sm:grid-cols-3">
+      <section className="space-y-6">
+       <p className="text-xs uppercase tracking-[0.4em] text-white/50">Mood Direction</p>
+       <h2 className="text-2xl font-semibold text-white">Reference Palette</h2>
+       <p className="max-w-2xl text-sm text-white/60">Atmospheric references prioritizing light, texture, and tonal direction.</p>
+       {displayMoodboard.length ? (
+         <div className="flex flex-wrap gap-6">
           {displayMoodboard.map((item) => (
-           <div key={item.id} className="overflow-hidden rounded-3xl">
-            {item.type === "image" ? (
-             <img src={item.src} alt={item.label} className="h-36 w-full object-cover" />
-            ) : (
-             <div className="h-36 w-full" style={{ backgroundColor: item.color }} />
-            )}
-            <div className="p-3 text-xs text-white/60">{item.label}</div>
+           <div
+            key={item.id}
+            className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] space-y-2"
+           >
+            <div className="h-52 overflow-hidden rounded-3xl bg-black/40">
+             {item.type === "image" ? (
+              <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
+             ) : (
+              <div className="h-full w-full" style={{ backgroundColor: item.color }} />
+             )}
+            </div>
+            {item.label ? (
+             <p className="text-xs uppercase tracking-[0.2em] text-white/50">{item.label}</p>
+            ) : null}
            </div>
           ))}
          </div>
