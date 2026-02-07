@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -249,9 +248,9 @@ export default function ToolsPage() {
                         <span className="text-xs text-muted-foreground truncate max-w-[150px]">{fileName}</span>
                       )}
                       {(uploadedImage || uploadedVideo) && (
-                        <Badge variant="outline" className="text-xs border-primary/30 text-primary">
+                        <span className="text-xs uppercase tracking-[0.3em] text-white/50">
                           {contentType === "video" ? "Video" : "Image"}
-                        </Badge>
+                        </span>
                       )}
                     </div>
                     <div className="flex items-center gap-1">
@@ -299,15 +298,14 @@ export default function ToolsPage() {
                           }}
                         />
                         {analysisApplied && (
-                          <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded font-medium">
+                          <div className="absolute top-3 right-3 text-xs text-white/70 uppercase tracking-[0.3em]">
                             Analysis Applied
                           </div>
                         )}
                         {isAnalyzing && (
                           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                             <div className="text-center">
-                              <div className="keep-border w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                              <p className="text-sm text-white">Analyzing...</p>
+                              <p className="text-sm text-white/70">Analyzing…</p>
                             </div>
                           </div>
                         )}
@@ -420,7 +418,7 @@ export default function ToolsPage() {
                             key={ch}
                             variant="ghost"
                             size="sm"
-                            className={`h-6 px-2 text-xs ${histogramChannel === ch ? "bg-primary/20 text-primary" : ""}`}
+                            className={`h-6 px-2 text-xs ${histogramChannel === ch ? "text-white" : "text-white/50"}`}
                             onClick={() => setHistogramChannel(ch)}
                           >
                             {ch.toUpperCase()}
@@ -445,7 +443,6 @@ export default function ToolsPage() {
                           <path d={`M0,100 ${histogramData.map((d, i) => `L${i},${100 - d.lum}`).join(" ")} L256,100 Z`} fill="rgba(255, 255, 255, 0.4)" stroke="white" strokeWidth="0.5" />
                         )}
                       </svg>
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-black via-gray-500 to-white" />
                     </div>
                     <div className="flex justify-between mt-1.5 text-[10px] text-muted-foreground">
                       <span>Shadows</span>
@@ -482,7 +479,7 @@ export default function ToolsPage() {
                           variant="ghost"
                           size="sm"
                           className={`h-auto py-2 ${
-                            selectedOverlay === overlay.id ? "bg-primary/20 text-primary border border-primary/30" : "hover:bg-secondary"
+                            selectedOverlay === overlay.id ? "text-white" : "text-white/50"
                           }`}
                           onClick={() => setSelectedOverlay(selectedOverlay === overlay.id ? null : overlay.id)}
                         >
