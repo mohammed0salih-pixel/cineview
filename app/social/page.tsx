@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -123,308 +122,211 @@ export default function SocialPage() {
           <div className="mb-8">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
+              className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white mb-4"
             >
               Back to Home
             </Link>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <div className="text-xs font-medium text-foreground/60 uppercase tracking-wider mb-4">
+                <div className="text-xs font-medium text-white/50 uppercase tracking-wider mb-4">
                   Social Optimizer
                 </div>
-                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground font-display">
-                  Social Media <span className="text-foreground">Optimizer</span>
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white font-display">
+                  Social Media <span className="text-white">Optimizer</span>
                 </h1>
-                <p className="mt-2 text-muted-foreground">
+                <p className="mt-2 text-white/60">
                   Optimize your content for maximum engagement across all platforms
                 </p>
               </div>
-              <Button className="bg-foreground text-background hover:bg-foreground/90">
+              <Button className="bg-white text-black hover:bg-white/80">
                 Publish Now
               </Button>
             </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {/* Main Content Area */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Platform Selection */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Select Platform
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {platforms.map((platform) => (
-                      <Button
-                        key={platform.id}
-                        variant={selectedPlatform === platform.id ? "default" : "outline"}
-                        className={`h-auto py-4 flex-col gap-2 ${
-                          selectedPlatform === platform.id
-                            ? "bg-foreground text-background border-0"
-                            : "border-border/50 bg-transparent hover:bg-secondary"
-                        }`}
-                        onClick={() => {
-                          setSelectedPlatform(platform.id);
-                          setSelectedSize(Object.keys(platform.sizes)[0]);
-                        }}
+          <div className="space-y-12">
+            <section className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Select Platform</p>
+              <div className="flex flex-wrap gap-3">
+                {platforms.map((platform) => (
+                  <Button
+                    key={platform.id}
+                    variant="outline"
+                    className={selectedPlatform === platform.id ? "bg-white text-black" : "bg-transparent text-white/60 hover:text-white"}
+                    onClick={() => {
+                      setSelectedPlatform(platform.id);
+                      setSelectedSize(Object.keys(platform.sizes)[0]);
+                    }}
+                  >
+                    {platform.name}
+                  </Button>
+                ))}
+              </div>
+
+              {currentPlatform && (
+                <div className="space-y-3">
+                  <p className="text-sm text-white/50">Export Size</p>
+                  <div className="flex flex-wrap gap-3 text-xs uppercase tracking-[0.2em] text-white/50">
+                    {Object.entries(currentPlatform.sizes).map(([key, size]) => (
+                      <button
+                        key={key}
+                        className={selectedSize === key ? "text-white" : "text-white/50 hover:text-white"}
+                        onClick={() => setSelectedSize(key)}
                       >
-                        <span className="text-sm font-medium">{platform.name}</span>
-                      </Button>
+                        {size.label} ({size.width}x{size.height})
+                      </button>
                     ))}
                   </div>
-
-                  {currentPlatform && (
-                    <div className="mt-4 pt-4 border-t border-border/50">
-                      <p className="text-sm text-muted-foreground mb-3">Export Size</p>
-                      <div className="flex flex-wrap gap-2">
-                        {Object.entries(currentPlatform.sizes).map(([key, size]) => (
-                          <Button
-                            key={key}
-                            variant={selectedSize === key ? "default" : "outline"}
-                            size="sm"
-                            className={selectedSize === key ? "bg-foreground text-background" : "border-border/50 bg-transparent"}
-                            onClick={() => setSelectedSize(key)}
-                          >
-                            {size.label} ({size.width}x{size.height})
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Preview & Export */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg font-semibold">
-                      Preview & Export
-                    </CardTitle>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="border-border/50 bg-transparent">
-                        Smart Crop
-                      </Button>
-                      <Button size="sm" className="bg-foreground text-background hover:bg-foreground/90">
-                        Export
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="aspect-square max-w-md mx-auto bg-secondary/30 rounded-lg flex items-center justify-center border-2 border-dashed border-border/50">
-                    <div className="text-center p-8">
-                      <p className="text-muted-foreground">Upload content to preview</p>
-                      <p className="text-sm text-muted-foreground/70 mt-1">
-                        Will be resized to {currentPlatform?.sizes[selectedSize as keyof typeof currentPlatform.sizes]?.width}x
-                        {currentPlatform?.sizes[selectedSize as keyof typeof currentPlatform.sizes]?.height}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Caption & Hashtags */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Caption & Hashtags
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 space-y-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <Label>Caption</Label>
-                      <Button variant="ghost" size="sm" className="h-8 text-foreground">
-                        AI Generate
-                      </Button>
-                    </div>
-                    <Textarea
-                      placeholder="Write your caption here..."
-                      value={caption}
-                      onChange={(e) => setCaption(e.target.value)}
-                      className="min-h-[100px] bg-secondary/30 border-border/50"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1 text-right">
-                      {caption.length}/2200 characters
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <Label>Suggested Hashtags</Label>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8"
-                        onClick={copyHashtags}
-                        disabled={selectedHashtags.length === 0}
-                      >
-                        {copiedHashtags ? (
-                          <>
-                            Copied!
-                          </>
-                        ) : (
-                          <>
-                            Copy Selected
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {hashtagSuggestions.map((hashtag) => (
-                        <Button
-                          key={hashtag.tag}
-                          variant={selectedHashtags.includes(hashtag.tag) ? "default" : "outline"}
-                          size="sm"
-                          className={`h-auto py-1.5 ${
-                            selectedHashtags.includes(hashtag.tag)
-                              ? "bg-foreground text-background"
-                              : "border-border/50 bg-transparent"
-                          }`}
-                          onClick={() => toggleHashtag(hashtag.tag)}
-                        >
-                          {hashtag.tag}
-                          <span className="ml-1 text-xs opacity-70">{hashtag.posts}</span>
-                        </Button>
-                      ))}
-                    </div>
-                    {selectedHashtags.length > 0 && (
-                      <div className="mt-3 p-3 rounded-lg bg-secondary/30">
-                        <p className="text-sm text-muted-foreground mb-2">Selected ({selectedHashtags.length}/30):</p>
-                        <p className="text-sm">{selectedHashtags.join(" ")}</p>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Thumbnail Analysis */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Thumbnail Analysis
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 space-y-4">
-                  <div className="text-center">
-                    <div className="relative inline-flex">
-                    <div className="w-24 h-24 rounded-full bg-foreground/10 flex items-center justify-center">
-                      <span className="text-3xl font-bold text-foreground">{thumbnailAnalysis.score}</span>
-                    </div>
-                    <div className="mt-2 text-xs text-muted-foreground">
-                      {thumbnailAnalysis.clickPotential} CTR
-                    </div>
-                  </div>
                 </div>
+              )}
+            </section>
 
-                <div className="space-y-3">
-                  {Object.entries(thumbnailAnalysis.metrics).map(([key, value]) => (
-                    <div key={key}>
-                      <div className="flex justify-between text-sm mb-1">
-                        <span className="text-muted-foreground capitalize">
-                          {key.replace(/([A-Z])/g, " $1").trim()}
-                        </span>
-                        <span className="font-medium">{value}%</span>
-                      </div>
-                    </div>
+            <section className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Preview & Export</p>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" className="bg-transparent text-white/70">
+                    Smart Crop
+                  </Button>
+                  <Button size="sm" className="bg-white text-black hover:bg-white/80">
+                    Export
+                  </Button>
+                </div>
+              </div>
+              <div className="aspect-square max-w-md bg-black/40 rounded-lg flex items-center justify-center">
+                <div className="text-center p-8">
+                  <p className="text-white/60">Upload content to preview</p>
+                  <p className="text-sm text-white/40 mt-1">
+                    Will be resized to {currentPlatform?.sizes[selectedSize as keyof typeof currentPlatform.sizes]?.width}x
+                    {currentPlatform?.sizes[selectedSize as keyof typeof currentPlatform.sizes]?.height}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section className="space-y-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Caption & Hashtags</p>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <Label className="text-white/70">Caption</Label>
+                  <Button variant="ghost" size="sm" className="h-8 text-white/60 hover:text-white">
+                    AI Generate
+                  </Button>
+                </div>
+                <Textarea
+                  placeholder="Write your caption here..."
+                  value={caption}
+                  onChange={(e) => setCaption(e.target.value)}
+                  className="min-h-[100px] bg-transparent border-0 text-white/80 placeholder:text-white/40"
+                />
+                <p className="text-xs text-white/40 mt-1 text-right">
+                  {caption.length}/2200 characters
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-white/70">Suggested Hashtags</Label>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 text-white/60 hover:text-white"
+                    onClick={copyHashtags}
+                    disabled={selectedHashtags.length === 0}
+                  >
+                    {copiedHashtags ? "Copied!" : "Copy Selected"}
+                  </Button>
+                </div>
+                <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.2em]">
+                  {hashtagSuggestions.map((hashtag) => (
+                    <button
+                      key={hashtag.tag}
+                      className={selectedHashtags.includes(hashtag.tag) ? "text-white" : "text-white/50 hover:text-white"}
+                      onClick={() => toggleHashtag(hashtag.tag)}
+                    >
+                      {hashtag.tag} <span className="text-white/40">{hashtag.posts}</span>
+                    </button>
                   ))}
                 </div>
-
-                  <div className="pt-2">
-                    <p className="text-xs text-muted-foreground mb-2">Suggestions</p>
-                    <ul className="space-y-2">
-                      {thumbnailAnalysis.suggestions.map((suggestion, i) => (
-                        <li key={i} className="text-xs text-muted-foreground">
-                          {suggestion}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Best Posting Times */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Best Posting Times
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="space-y-3">
-                    {bestPostingTimes.map((day) => (
-                      <div
-                        key={day.day}
-                        className="flex items-center justify-between p-2 rounded-lg hover:bg-secondary/30 transition-colors"
-                      >
-                        <div>
-                          <p className="text-sm font-medium">{day.day}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {day.times.join(", ")}
-                          </p>
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {day.engagement}% engagement
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-border/50">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="auto-schedule">Auto-Schedule</Label>
-                        <p className="text-xs text-muted-foreground">Post at optimal times</p>
-                      </div>
-                      <Switch
-                        id="auto-schedule"
-                        checked={autoSchedule}
-                        onCheckedChange={setAutoSchedule}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Engagement Prediction */}
-              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                <CardHeader className="border-b border-border/50 pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Engagement Prediction
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-4">
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center justify-between">
-                      <span>Est. Likes</span>
-                      <span className="text-foreground">2.4K</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Est. Comments</span>
-                      <span className="text-foreground">156</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Est. Shares</span>
-                      <span className="text-foreground">89</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>Est. Saves</span>
-                      <span className="text-foreground">342</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground text-center mt-3">
-                    Based on your account analytics and content type
+                {selectedHashtags.length > 0 && (
+                  <p className="text-sm text-white/60">
+                    Selected ({selectedHashtags.length}/30): {selectedHashtags.join(" ")}
                   </p>
-                </CardContent>
-              </Card>
-            </div>
+                )}
+              </div>
+            </section>
+
+            <section className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Thumbnail Analysis</p>
+              <div className="space-y-2">
+                <p className="text-4xl font-semibold text-white">{thumbnailAnalysis.score}</p>
+                <p className="text-sm text-white/50">{thumbnailAnalysis.clickPotential} CTR</p>
+              </div>
+              <div className="space-y-2 text-sm text-white/70">
+                {Object.entries(thumbnailAnalysis.metrics).map(([key, value]) => (
+                  <div key={key} className="flex items-center justify-between">
+                    <span className="capitalize">{key.replace(/([A-Z])/g, " $1").trim()}</span>
+                    <span className="text-white">{value}%</span>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Suggestions</p>
+                <div className="space-y-2 text-xs text-white/50">
+                  {thumbnailAnalysis.suggestions.map((suggestion, i) => (
+                    <p key={i}>{suggestion}</p>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Best Posting Times</p>
+              <div className="space-y-3">
+                {bestPostingTimes.map((day) => (
+                  <div key={day.day} className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <p className="text-sm text-white">{day.day}</p>
+                      <p className="text-xs text-white/50">{day.times.join(", ")}</p>
+                    </div>
+                    <div className="text-xs text-white/50">{day.engagement}% engagement</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <div>
+                  <Label htmlFor="auto-schedule" className="text-white/70">Auto-Schedule</Label>
+                  <p className="text-xs text-white/50">Post at optimal times</p>
+                </div>
+                <Switch id="auto-schedule" checked={autoSchedule} onCheckedChange={setAutoSchedule} />
+              </div>
+            </section>
+
+            <section className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Engagement Prediction</p>
+              <div className="space-y-2 text-sm text-white/70">
+                <div className="flex items-center justify-between">
+                  <span>Est. Likes</span>
+                  <span className="text-white">2.4K</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Est. Comments</span>
+                  <span className="text-white">156</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Est. Shares</span>
+                  <span className="text-white">89</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Est. Saves</span>
+                  <span className="text-white">342</span>
+                </div>
+              </div>
+              <p className="text-xs text-white/50">
+                Based on your account analytics and content type
+              </p>
+            </section>
           </div>
         </div>
       </main>
