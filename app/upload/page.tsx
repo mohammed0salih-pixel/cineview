@@ -373,9 +373,7 @@ export default function UploadPage() {
    <section className="pt-24 pb-20">
     <div className="mx-auto max-w-5xl px-4 lg:px-8 fade-soft">
      <div className="mb-10 text-center">
-      <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-1.5">
-       <span className="text-xs font-semibold text-white/70 uppercase tracking-[0.3em]">AI Analysis</span>
-      </div>
+      <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.3em]">AI Analysis</div>
       <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">
        Upload Your Content
       </h1>
@@ -399,9 +397,9 @@ export default function UploadPage() {
          <RadioGroupItem value="image" id="image" className="peer sr-only" />
          <Label
           htmlFor="image"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-white/5 px-6 py-8 text-center transition-all hover:bg-white/10 peer-data-[state=checked]:bg-white/10"
+          className="flex cursor-pointer flex-col items-center justify-center gap-2 px-6 py-8 text-center transition-colors text-white/50 hover:text-white peer-data-[state=checked]:text-white"
          >
-          <span className="text-sm font-semibold text-white">Photograph</span>
+          <span className="text-sm font-semibold">Photograph</span>
           <span className="text-xs text-white/50">JPG, PNG, WebP</span>
          </Label>
         </div>
@@ -409,9 +407,9 @@ export default function UploadPage() {
          <RadioGroupItem value="video" id="video" className="peer sr-only" />
          <Label
           htmlFor="video"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl bg-white/5 px-6 py-8 text-center transition-all hover:bg-white/10 peer-data-[state=checked]:bg-white/10"
+          className="flex cursor-pointer flex-col items-center justify-center gap-2 px-6 py-8 text-center transition-colors text-white/50 hover:text-white peer-data-[state=checked]:text-white"
          >
-          <span className="text-sm font-semibold text-white">Video</span>
+          <span className="text-sm font-semibold">Video</span>
           <span className="text-xs text-white/50">MP4, MOV, WebM</span>
          </Label>
         </div>
@@ -430,10 +428,10 @@ export default function UploadPage() {
          onDrop={handleDrop}
          onDragOver={handleDragOver}
          onDragLeave={handleDragLeave}
-         className={`relative flex min-h-[220px] flex-col items-center justify-center rounded-2xl  bg-white/5 transition-all ${
+         className={`relative flex min-h-[220px] flex-col items-center justify-center rounded-2xl bg-black/40 transition-all ${
           isDragging
-           ? "bg-white/10"
-           : "hover:bg-white/10"
+           ? "bg-black/50"
+           : "hover:bg-black/50"
          }`}
         >
          <input
@@ -442,7 +440,6 @@ export default function UploadPage() {
           onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
           className="absolute inset-0 cursor-pointer opacity-0"
          />
-         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5" />
          <p className="mt-4 text-sm font-semibold text-white">
           Drop your {contentType === "image" ? "image" : "video"} here
          </p>

@@ -119,30 +119,30 @@ export default function AnalysisPage() {
   const statusConfig = {
     loading: {
       label: "Loading",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
     analyzing: {
       label: "Analyzing",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
     completed: {
       label: "Completed",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
   } as const
 
   const saveConfig = {
     saving: {
       label: "Saving to Projects",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
     saved: {
       label: "Saved to Projects",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
     error: {
       label: "Save failed",
-      className: "bg-white/5 text-white/70",
+      className: "text-white/70",
     },
   } as const
 
@@ -157,13 +157,13 @@ export default function AnalysisPage() {
             <div>
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 ${statusConfig[status].className}`}
+                  className={`inline-flex items-center gap-2 px-2 ${statusConfig[status].className}`}
                 >
                   <span className="text-xs font-medium uppercase tracking-wider">{statusConfig[status].label}</span>
                 </div>
                 {saveState !== "idle" && (
                   <div
-                    className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wider ${saveConfig[saveState].className}`}
+                    className={`inline-flex items-center gap-2 px-2 text-xs font-medium uppercase tracking-wider ${saveConfig[saveState].className}`}
                   >
                     {saveConfig[saveState].label}
                   </div>
@@ -177,7 +177,7 @@ export default function AnalysisPage() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button className="text-white hover:bg-white/10 bg-white/5">
+              <Button className="bg-transparent text-white/60 hover:text-white">
                 Share
               </Button>
               <Link href="/export">
@@ -215,7 +215,6 @@ export default function AnalysisPage() {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <div className="mx-auto mb-4 h-24 w-24 rounded-full bg-white/10" />
                       <p className="text-sm text-white/60">No recent upload found</p>
                       <Link href="/upload" className="mt-3 inline-flex items-center text-sm font-medium text-white/70 hover:text-white">
                         Upload content to analyze
@@ -470,17 +469,17 @@ export default function AnalysisPage() {
                       Export Results
                     </Link>
                   </Button>
-                  <Button asChild className="w-full text-white hover:bg-white/10 bg-white/5">
+                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
                     <Link href="/presets">
                       Get Preset Suggestions
                     </Link>
                   </Button>
-                  <Button asChild className="w-full text-white hover:bg-white/10 bg-white/5">
+                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
                     <Link href="/assistant">
                       Plan Pre-Production
                     </Link>
                   </Button>
-                  <Button asChild className="w-full text-white hover:bg-white/10 bg-white/5">
+                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
                     <Link href="/upload">
                       Analyze Another
                     </Link>
@@ -495,7 +494,7 @@ export default function AnalysisPage() {
                   <CardDescription className="text-white/60">Add to your project library</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button className="w-full text-white hover:bg-white/10 hover:text-white bg-white/5">
+                  <Button className="w-full bg-transparent text-white/60 hover:text-white">
                     Save to Project
                   </Button>
                 </CardContent>
