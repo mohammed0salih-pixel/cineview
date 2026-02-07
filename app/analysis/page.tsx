@@ -180,7 +180,7 @@ export default function AnalysisPage() {
                 Share
               </Button>
               <Link href="/export">
-                <Button className="bg-white text-black hover:bg-white/80">
+                <Button className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]">
                   Export Options
                 </Button>
               </Link>

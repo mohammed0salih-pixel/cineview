@@ -11,19 +11,20 @@ export function HeroSection() {
       <div className="absolute inset-0 hero-veil" />
 
       <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="max-w-4xl motion-rise">
+        <div className="mx-auto max-w-4xl text-center motion-rise">
           <p className="text-eyebrow mb-6">CineView AI</p>
           <h1 className="text-6xl sm:text-7xl lg:text-[5.5rem] font-semibold tracking-tight leading-[1.02] text-balance text-white font-display">
-            Cinematic Intelligence for Creative Decisions
+            Cinematic Intelligence for{" "}
+            <span className="text-[var(--cv-accent)]">Creative Decisions</span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl motion-fade motion-delay-1">
             Decisions shaped by visual intelligence.
           </p>
-          <div className="mt-12 flex motion-fade motion-delay-2">
+          <div className="mt-12 flex justify-center motion-fade motion-delay-2">
             <Link href="/upload">
               <Button
                 size="lg"
-                className="bg-white/5 text-white hover:bg-white/10 h-12 px-10 text-base font-semibold tracking-wide"
+                className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] h-12 px-10 text-base font-semibold tracking-wide"
               >
                 Run Analysis →
               </Button>

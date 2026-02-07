@@ -311,7 +311,7 @@ export default function ExportPage() {
        </Link>
        {!exportComplete ? (
         <Button
-         className="bg-white text-black hover:bg-white/80"
+         className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]"
          onClick={handleExport}
          disabled={exportStatus === "generating"}
         >
@@ -319,7 +319,7 @@ export default function ExportPage() {
         </Button>
        ) : (
         <Link href="/projects">
-         <Button className="bg-white text-black hover:bg-white/80">
+         <Button className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]">
           Go to Projects
          </Button>
         </Link>

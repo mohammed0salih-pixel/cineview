@@ -19,7 +19,7 @@ export function CTASection() {
 
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
               <Link href="/upload">
-                <Button size="lg" className="bg-white text-black hover:bg-white/80 h-12 px-8 text-base w-full sm:w-auto">
+                <Button size="lg" className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] h-12 px-8 text-base w-full sm:w-auto">
                   Start for free
                 </Button>
               </Link>
