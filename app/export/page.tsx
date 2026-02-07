@@ -346,7 +346,7 @@ export default function ExportPage() {
       )}
      </div>
 
-     <div className="mb-12 space-y-8">
+     <div className="mb-12 space-y-10">
       <div className="space-y-4">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">PDF Output</p>
        <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-white">{deckProjectName}</h2>
@@ -376,7 +376,7 @@ export default function ExportPage() {
       </div>
       <div className="space-y-3">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Preview</p>
-       <div className="mt-4 overflow-hidden rounded-2xl bg-black/40">
+       <div className="mt-4 overflow-hidden rounded-2xl">
         {latest ? (
          latest.type === "image" ? (
           <img
@@ -580,65 +580,65 @@ export default function ExportPage() {
 
       {/* LUT Export Tab */}
       <TabsContent value="luts" className="space-y-6">
-       <div className="space-y-10">
+       <div className="space-y-12">
         <section className="space-y-6">
          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Export Settings</p>
          <div className="space-y-2">
           <Label className="text-white/60">Export Format</Label>
           <Select value={selectedFormat} onValueChange={setSelectedFormat}>
            <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
-             <SelectValue />
+            <SelectValue />
            </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-             {exportFormats.map((format) => (
-              <SelectItem key={format.id} value={format.id}>
-               <div>
-                <p>{format.name}</p>
-                <p className="text-xs text-white/50">{format.description}</p>
-               </div>
-              </SelectItem>
-             ))}
-            </SelectContent>
-           </Select>
-          </div>
+            {exportFormats.map((format) => (
+             <SelectItem key={format.id} value={format.id}>
+              <div>
+               <p>{format.name}</p>
+               <p className="text-xs text-white/50">{format.description}</p>
+              </div>
+             </SelectItem>
+            ))}
+           </SelectContent>
+          </Select>
+         </div>
 
-          <div className="space-y-2">
-           <Label className="text-white/60">LUT Size</Label>
-           <Select value={lutSize} onValueChange={setLutSize}>
+         <div className="space-y-2">
+          <Label className="text-white/60">LUT Size</Label>
+          <Select value={lutSize} onValueChange={setLutSize}>
            <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
-             <SelectValue />
+            <SelectValue />
            </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-             <SelectItem value="17">17x17x17 (Small)</SelectItem>
-             <SelectItem value="33">33x33x33 (Standard)</SelectItem>
-             <SelectItem value="65">65x65x65 (High Quality)</SelectItem>
-            </SelectContent>
-           </Select>
-          </div>
+            <SelectItem value="17">17x17x17 (Small)</SelectItem>
+            <SelectItem value="33">33x33x33 (Standard)</SelectItem>
+            <SelectItem value="65">65x65x65 (High Quality)</SelectItem>
+           </SelectContent>
+          </Select>
+         </div>
 
-          <div className="space-y-2">
-           <Label className="text-white/60">Output Name</Label>
-           <Input placeholder="my_custom_lut" className="bg-transparent border-transparent text-white placeholder:text-white/40" />
-          </div>
+         <div className="space-y-2">
+          <Label className="text-white/60">Output Name</Label>
+          <Input placeholder="my_custom_lut" className="bg-transparent border-transparent text-white placeholder:text-white/40" />
+         </div>
 
-          <div className="space-y-3 pt-4 ">
-           <div className="flex items-center justify-between">
-            <Label className="text-white/60">Include Metadata</Label>
-            <Switch defaultChecked />
-           </div>
-           <div className="flex items-center justify-between">
-            <Label className="text-white/60">Embed Copyright</Label>
-            <Switch defaultChecked />
-           </div>
-           <div className="flex items-center justify-between">
-            <Label className="text-white/60">Generate Preview</Label>
-            <Switch defaultChecked />
-           </div>
+         <div className="space-y-3 pt-4">
+          <div className="flex items-center justify-between">
+           <Label className="text-white/60">Include Metadata</Label>
+           <Switch defaultChecked />
           </div>
+          <div className="flex items-center justify-between">
+           <Label className="text-white/60">Embed Copyright</Label>
+           <Switch defaultChecked />
+          </div>
+          <div className="flex items-center justify-between">
+           <Label className="text-white/60">Generate Preview</Label>
+           <Switch defaultChecked />
+          </div>
+         </div>
 
-          <Button className="w-full bg-white text-black hover:bg-white/80">
-           Export LUT
-          </Button>
+         <Button className="w-full bg-white text-black hover:bg-white/80">
+          Export LUT
+         </Button>
         </section>
 
         <section className="space-y-4">
@@ -648,26 +648,23 @@ export default function ExportPage() {
            Import LUT
           </Button>
          </div>
-         <div className="space-y-6">
+         <div className="space-y-5">
           {lutPresets.map((preset) => (
-           <div key={preset.id} className="space-y-3">
-            <div className="relative aspect-video bg-black/40">
-             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-              <Button size="sm" variant="secondary" className="bg-white/10 text-white hover:bg-white/20">
-               Preview
-              </Button>
-              <Button size="sm" className="bg-white text-black hover:bg-white/80">
-               Export
-              </Button>
+           <div key={preset.id} className="space-y-2">
+            <div className="flex items-center justify-between gap-4">
+             <div>
+              <p className="text-sm font-semibold text-white">{preset.name}</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/50">{preset.category}</p>
              </div>
-             <span className="absolute top-2 left-2 text-xs uppercase tracking-[0.3em] text-white/70">
-              {preset.category}
-             </span>
+             <span className="text-xs text-white/50">{preset.downloads} downloads</span>
             </div>
-            <div className="flex items-center justify-between">
-             <h3 className="font-semibold text-sm text-white">{preset.name}</h3>
-             <span className="text-xs text-white/50">{preset.downloads}</span>
+            <div className="flex gap-3 pt-2">
+             <Button size="sm" className="bg-transparent text-white/60 hover:text-white">
+              Preview
+             </Button>
+             <Button size="sm" className="bg-white text-black hover:bg-white/80">
+              Export
+             </Button>
             </div>
            </div>
           ))}
@@ -677,22 +674,16 @@ export default function ExportPage() {
 
        <section className="space-y-4">
         <p className="text-xs uppercase tracking-[0.3em] text-white/50">LUT Preview</p>
-        <div className="space-y-6">
-         <div className="flex flex-wrap gap-6">
-          <div className="space-y-2">
-           <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
-            <span className="text-sm text-white/50">Original</span>
-           </div>
-           <p className="text-center text-sm font-medium text-white">Before</p>
-          </div>
-          <div className="space-y-2">
-           <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
-            <span className="text-sm text-white/70">With LUT Applied</span>
-           </div>
-           <p className="text-center text-sm font-medium text-white/70">Preview</p>
-          </div>
+        <div className="space-y-4 text-sm text-white/70">
+         <div className="flex items-center justify-between">
+          <span>Original</span>
+          <span>Preview ready</span>
          </div>
-         <div className="space-y-3 text-sm text-white/70">
+         <div className="flex items-center justify-between">
+          <span>With LUT Applied</span>
+          <span>Preview ready</span>
+         </div>
+         <div className="space-y-2 pt-2">
           <div className="flex items-center justify-between">
            <span>Exposure</span>
            <span>+0.3</span>
