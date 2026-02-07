@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/header";
@@ -202,49 +201,49 @@ export default function LearnPage() {
         <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
           {/* Page Header */}
           <div className="mb-8">
-            <div className="text-xs font-medium text-foreground/60 uppercase tracking-wider mb-4">
+            <div className="text-xs font-medium text-white/50 uppercase tracking-wider mb-4">
               Learning Hub
             </div>
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground font-display">
-              Learn & <span className="text-foreground">Grow</span>
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white font-display">
+              Learn & <span className="text-white">Grow</span>
             </h1>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-white/60">
               Master cinematic techniques with expert-led courses and tutorials
             </p>
           </div>
 
           {/* Stats Bar */}
-          <div className="flex flex-wrap gap-8 mb-8 text-sm text-muted-foreground">
+          <div className="flex flex-wrap gap-8 mb-8 text-sm text-white/60">
             <div>
-              <p className="text-2xl font-semibold text-foreground">{skillAssessment.totalXP}</p>
-              <p className="text-xs">Total XP</p>
+              <p className="text-2xl font-semibold text-white">{skillAssessment.totalXP}</p>
+              <p className="text-xs text-white/50">Total XP</p>
             </div>
             <div>
-              <p className="text-2xl font-semibold text-foreground">{skillAssessment.streak}</p>
-              <p className="text-xs">Day Streak</p>
+              <p className="text-2xl font-semibold text-white">{skillAssessment.streak}</p>
+              <p className="text-xs text-white/50">Day Streak</p>
             </div>
             <div>
-              <p className="text-2xl font-semibold text-foreground">3</p>
-              <p className="text-xs">Courses Active</p>
+              <p className="text-2xl font-semibold text-white">3</p>
+              <p className="text-xs text-white/50">Courses Active</p>
             </div>
             <div>
-              <p className="text-2xl font-semibold text-foreground">{skillAssessment.overallLevel}</p>
-              <p className="text-xs">Current Level</p>
+              <p className="text-2xl font-semibold text-white">{skillAssessment.overallLevel}</p>
+              <p className="text-xs text-white/50">Current Level</p>
             </div>
           </div>
 
           <Tabs defaultValue="courses" className="space-y-6">
             <TabsList className="bg-transparent p-0">
-              <TabsTrigger value="courses" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="courses" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Courses
               </TabsTrigger>
-              <TabsTrigger value="techniques" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="techniques" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Technique Guides
               </TabsTrigger>
-              <TabsTrigger value="beforeafter" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="beforeafter" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Before/After
               </TabsTrigger>
-              <TabsTrigger value="skills" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="skills" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Skill Assessment
               </TabsTrigger>
             </TabsList>
@@ -254,10 +253,13 @@ export default function LearnPage() {
               {/* Search */}
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="relative flex-1 max-w-md">
-                  <Input placeholder="Search courses..." className="pl-4 bg-transparent border-border/50" />
+                  <Input
+                    placeholder="Search courses..."
+                    className="pl-0 bg-transparent border-0 text-white/80 placeholder:text-white/40"
+                  />
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" className="bg-transparent text-foreground/70">
+                  <Button variant="outline" className="bg-transparent text-white/70">
                     Filter
                   </Button>
                 </div>
@@ -265,54 +267,54 @@ export default function LearnPage() {
 
               {/* Featured Courses */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Featured Courses</h2>
-                <div className="grid gap-6 sm:grid-cols-2">
+                <h2 className="text-xl font-semibold mb-4 text-white">Featured Courses</h2>
+                <div className="space-y-6">
                   {courses.filter(c => c.featured).map((course) => (
-                    <Card key={course.id} className="bg-transparent">
+                    <div key={course.id} className="space-y-3">
                       <div className="relative aspect-video rounded-3xl bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-                      <CardContent className="p-0 pt-4 space-y-2">
-                        <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                      <div className="space-y-2">
+                        <div className="text-xs uppercase tracking-[0.3em] text-white/50">
                           Featured {course.progress === 100 ? "· Completed" : ""}
                         </div>
-                        <h3 className="font-semibold line-clamp-1">{course.title}</h3>
-                        <p className="text-sm text-muted-foreground">{course.instructor}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <h3 className="font-semibold text-white line-clamp-1">{course.title}</h3>
+                        <p className="text-sm text-white/60">{course.instructor}</p>
+                        <p className="text-xs text-white/50">
                           {course.duration} · {course.lessons} lessons · {course.rating} · {course.level}
                         </p>
-                        <p className="text-xs text-muted-foreground">{course.tags.join(" · ")}</p>
+                        <p className="text-xs text-white/50">{course.tags.join(" · ")}</p>
                         {course.progress > 0 && (
-                          <p className="text-xs text-muted-foreground">Progress {course.progress}%</p>
+                          <p className="text-xs text-white/50">Progress {course.progress}%</p>
                         )}
-                        <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90">
+                        <Button size="lg" className="bg-white text-black hover:bg-white/80">
                           Continue Learning
                         </Button>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
 
               {/* All Courses */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">All Courses</h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <h2 className="text-xl font-semibold mb-4 text-white">All Courses</h2>
+                <div className="space-y-6">
                   {courses.filter(c => !c.featured).map((course) => (
-                    <Card key={course.id} className="bg-transparent">
+                    <div key={course.id} className="space-y-3">
                       <div className="relative aspect-video rounded-3xl bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-                      <CardContent className="p-0 pt-4 space-y-2">
-                        <h3 className="font-semibold line-clamp-1">{course.title}</h3>
-                        <p className="text-sm text-muted-foreground">{course.instructor}</p>
-                        <p className="text-xs text-muted-foreground">
+                      <div className="space-y-2">
+                        <h3 className="font-semibold text-white line-clamp-1">{course.title}</h3>
+                        <p className="text-sm text-white/60">{course.instructor}</p>
+                        <p className="text-xs text-white/50">
                           {course.duration} · {course.rating} · {course.level}
                         </p>
                         {course.progress > 0 && (
-                          <p className="text-xs text-muted-foreground">Progress {course.progress}%</p>
+                          <p className="text-xs text-white/50">Progress {course.progress}%</p>
                         )}
-                        <Button className="bg-foreground text-background hover:bg-foreground/90">
+                        <Button className="bg-white text-black hover:bg-white/80">
                           {course.progress > 0 ? "Continue" : "Start"}
                         </Button>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -320,25 +322,23 @@ export default function LearnPage() {
 
             {/* Techniques Tab */}
             <TabsContent value="techniques" className="space-y-6">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-4">
                 {techniques.map((tech) => (
-                  <Card key={tech.id} className="bg-transparent cursor-pointer">
-                    <CardContent className="p-0 space-y-2">
-                      <h3 className="font-semibold">{tech.title}</h3>
-                      <p className="text-xs text-muted-foreground">
+                  <div key={tech.id} className="space-y-2 cursor-pointer">
+                      <h3 className="font-semibold text-white">{tech.title}</h3>
+                      <p className="text-xs text-white/50">
                         {tech.category} · {tech.duration} · {tech.difficulty}
                       </p>
-                    </CardContent>
-                  </Card>
+                  </div>
                 ))}
               </div>
             </TabsContent>
 
             {/* Before/After Tab */}
             <TabsContent value="beforeafter" className="space-y-6">
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="space-y-8">
                 {beforeAfter.map((item) => (
-                  <Card key={item.id} className="bg-transparent overflow-hidden">
+                  <div key={item.id} className="space-y-3">
                     <div className="relative aspect-video overflow-hidden">
                       <div className="absolute inset-0">
                         <div className="w-full h-full bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
@@ -364,120 +364,88 @@ export default function LearnPage() {
                       <div className="absolute top-2 left-2 text-white/70 text-xs uppercase tracking-[0.3em]">Before</div>
                       <div className="absolute top-2 right-2 text-white/70 text-xs uppercase tracking-[0.3em]">After</div>
                     </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold mb-1">{item.title}</h3>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="space-y-1">
+                      <h3 className="font-semibold text-white">{item.title}</h3>
+                      <div className="flex items-center justify-between text-sm text-white/50">
                         <span>{item.technique}</span>
                         <span>{item.views.toLocaleString()} views</span>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 ))}
               </div>
             </TabsContent>
 
             {/* Skills Tab */}
             <TabsContent value="skills" className="space-y-6">
-              <div className="grid gap-6 lg:grid-cols-3">
-                <div className="lg:col-span-2 space-y-6">
-                  <Card className="bg-transparent">
-                    <CardHeader className="">
-                      <CardTitle className="text-lg font-semibold">
-                        Skill Breakdown
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0 space-y-4">
-                      {skillAssessment.skills.map((skill) => (
-                        <div key={skill.name}>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium">{skill.name}</span>
-                            <span className="text-sm text-muted-foreground">{skill.level}%</span>
-                          </div>
-                          <div className="text-xs text-muted-foreground">Level {skill.level}%</div>
+              <div className="space-y-10">
+                <section className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Skill Breakdown</p>
+                  <div className="space-y-3">
+                    {skillAssessment.skills.map((skill) => (
+                      <div key={skill.name} className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium text-white">{skill.name}</span>
+                          <span className="text-sm text-white/50">{skill.level}%</span>
                         </div>
-                      ))}
-                    </CardContent>
-                  </Card>
-
-                  <Card className="bg-transparent">
-                    <CardHeader className="">
-                      <CardTitle className="text-lg font-semibold">
-                        Recommended Next Steps
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-4 py-2 cursor-pointer">
-                          <div className="flex-1">
-                            <p className="font-medium">Improve Color Grading</p>
-                            <p className="text-sm text-muted-foreground">Take the advanced color grading course</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 py-2 cursor-pointer">
-                          <div className="flex-1">
-                            <p className="font-medium">Practice Storytelling</p>
-                            <p className="text-sm text-muted-foreground">Complete 3 narrative exercises</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-4 py-2 cursor-pointer">
-                          <div className="flex-1">
-                            <p className="font-medium">Master Lighting</p>
-                            <p className="text-sm text-muted-foreground">Practice with 5 lighting setups</p>
-                          </div>
-                        </div>
+                        <div className="text-xs text-white/50">Level {skill.level}%</div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                    ))}
+                  </div>
+                </section>
 
-                <div className="space-y-6">
-                  <Card className="bg-transparent">
-                    <CardHeader className="">
-                      <CardTitle className="text-lg font-semibold">
-                        Achievements
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="space-y-2 text-sm text-muted-foreground">
-                        {skillAssessment.achievements.map((achievement, i) => (
-                          <div key={i} className="flex items-center justify-between">
-                            <span className="text-foreground">{achievement.name}</span>
-                            <span>{achievement.unlocked ? "Unlocked" : "Locked"}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-3">
-                        {skillAssessment.achievements.filter(a => a.unlocked).length} of {skillAssessment.achievements.length} unlocked
-                      </p>
-                    </CardContent>
-                  </Card>
+                <section className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Recommended Next Steps</p>
+                  <div className="space-y-3">
+                    <div className="space-y-1 cursor-pointer">
+                      <p className="font-medium text-white">Improve Color Grading</p>
+                      <p className="text-sm text-white/50">Take the advanced color grading course</p>
+                    </div>
+                    <div className="space-y-1 cursor-pointer">
+                      <p className="font-medium text-white">Practice Storytelling</p>
+                      <p className="text-sm text-white/50">Complete 3 narrative exercises</p>
+                    </div>
+                    <div className="space-y-1 cursor-pointer">
+                      <p className="font-medium text-white">Master Lighting</p>
+                      <p className="text-sm text-white/50">Practice with 5 lighting setups</p>
+                    </div>
+                  </div>
+                </section>
 
-                  <Card className="bg-transparent">
-                    <CardHeader className="">
-                      <CardTitle className="text-lg font-semibold">
-                        Weekly Progress
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                      <div className="space-y-2 text-sm text-muted-foreground">
-                        {[
-                          { day: "Mon", xp: 40 },
-                          { day: "Tue", xp: 65 },
-                          { day: "Wed", xp: 45 },
-                          { day: "Thu", xp: 80 },
-                          { day: "Fri", xp: 55 },
-                          { day: "Sat", xp: 90 },
-                          { day: "Sun", xp: 70 },
-                        ].map((entry) => (
-                          <div key={entry.day} className="flex items-center justify-between">
-                            <span className="text-foreground">{entry.day}</span>
-                            <span>{entry.xp} XP</span>
-                          </div>
-                        ))}
+                <section className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Achievements</p>
+                  <div className="space-y-2 text-sm text-white/60">
+                    {skillAssessment.achievements.map((achievement, i) => (
+                      <div key={i} className="flex items-center justify-between">
+                        <span className="text-white">{achievement.name}</span>
+                        <span>{achievement.unlocked ? "Unlocked" : "Locked"}</span>
                       </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-white/50">
+                    {skillAssessment.achievements.filter(a => a.unlocked).length} of {skillAssessment.achievements.length} unlocked
+                  </p>
+                </section>
+
+                <section className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Weekly Progress</p>
+                  <div className="space-y-2 text-sm text-white/60">
+                    {[
+                      { day: "Mon", xp: 40 },
+                      { day: "Tue", xp: 65 },
+                      { day: "Wed", xp: 45 },
+                      { day: "Thu", xp: 80 },
+                      { day: "Fri", xp: 55 },
+                      { day: "Sat", xp: 90 },
+                      { day: "Sun", xp: 70 },
+                    ].map((entry) => (
+                      <div key={entry.day} className="flex items-center justify-between">
+                        <span className="text-white">{entry.day}</span>
+                        <span>{entry.xp} XP</span>
+                      </div>
+                    ))}
+                  </div>
+                </section>
               </div>
             </TabsContent>
           </Tabs>
