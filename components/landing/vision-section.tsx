@@ -54,7 +54,7 @@ export function VisionSection() {
         </div>
 
         <div className="mt-16">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="space-y-10">
             <div>
               <p className="text-eyebrow mb-4">Saudi Vision 2030</p>
               <h3 className="text-2xl lg:text-3xl font-semibold tracking-tight mb-4 text-white font-display">

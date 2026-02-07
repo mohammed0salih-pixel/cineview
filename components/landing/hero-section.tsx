@@ -5,20 +5,21 @@ import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[85vh] pt-40 pb-28 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section className="relative min-h-[90vh] pt-40 pb-32 lg:pt-52 lg:pb-36 overflow-hidden">
       <div className="absolute inset-0 cinematic-surface" />
       <div className="absolute inset-0 hero-diffusion" />
       <div className="absolute inset-0 hero-veil" />
 
       <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="text-center max-w-4xl mx-auto fade-soft">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.04] text-balance text-white font-display">
+        <div className="max-w-4xl fade-soft">
+          <p className="text-eyebrow mb-6">CineView AI</p>
+          <h1 className="text-6xl sm:text-7xl lg:text-[5.5rem] font-semibold tracking-tight leading-[1.02] text-balance text-white font-display">
             Cinematic Intelligence for Creative Decisions
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-white/60">
+          <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl">
             Decisions shaped by visual intelligence.
           </p>
-          <div className="mt-12 flex justify-center">
+          <div className="mt-12 flex">
             <Link href="/upload">
               <Button
                 size="lg"

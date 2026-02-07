@@ -8,16 +8,16 @@ export function CTASection() {
     <section className="section-spacing">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-4xl">
             <h2 className="text-3xl lg:text-5xl font-semibold tracking-tight mb-6 text-balance text-white font-display">
               Ready to elevate your creative work?
             </h2>
-            <p className="text-lg text-white/60 mb-10 max-w-2xl mx-auto">
+            <p className="text-lg text-white/60 mb-10 max-w-2xl">
               Join thousands of photographers and videographers who are using CineView AI to
               improve their craft and monetize their content.
             </p>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row gap-4 mb-16">
               <Link href="/upload">
                 <Button size="lg" className="bg-white text-black hover:bg-white/80 h-12 px-8 text-base w-full sm:w-auto">
                   Start for free
@@ -30,7 +30,7 @@ export function CTASection() {
               </Link>
             </div>
 
-            <div className="grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto text-left">
+            <div className="space-y-6 max-w-2xl text-left">
               <Link href="/upload" className="space-y-2 text-white/80 hover:text-white transition-colors">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em]">AI Analysis</p>
                 <p className="text-sm text-white/60">Analyze your work</p>
