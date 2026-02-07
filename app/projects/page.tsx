@@ -200,19 +200,19 @@ export default function ProjectsPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <Button className="rounded-full bg-white/10 text-white hover:bg-white/20">New Project</Button>
+              <Button className="bg-white/5 text-white hover:bg-white/10">New Project</Button>
             </div>
           </div>
 
           <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="relative w-full lg:max-w-md">
               <Input
-                className="h-11 rounded-full border-transparent bg-white/5 px-4 text-white placeholder:text-white/40"
+                className="h-11 rounded-none border-transparent bg-transparent px-0 text-white placeholder:text-white/40"
                 placeholder="Search projects..."
               />
             </div>
             <div className="flex items-center gap-2">
-              <Button className="h-10 rounded-full bg-white/5 text-white hover:bg-white/10">
+              <Button className="h-10 bg-transparent text-white/60 hover:text-white">
                 Filter
               </Button>
             </div>
@@ -282,7 +282,7 @@ export default function ProjectsPage() {
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
-                    className="block py-4"
+                    className="block py-6"
                   >
                     <div className="space-y-3">
                       <p className="text-2xl sm:text-3xl font-semibold text-white">
@@ -309,7 +309,7 @@ export default function ProjectsPage() {
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
-                    className="block py-4"
+                    className="block py-6"
                   >
                     <div className="space-y-3">
                       <p className="text-2xl sm:text-3xl font-semibold text-white">
@@ -344,11 +344,11 @@ export default function ProjectsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button className="h-9 rounded-full bg-white/5 text-white hover:bg-white/10">
-                    Share with Client
-                  </Button>
-                  <Button className="h-9 rounded-full bg-white text-black hover:bg-white/80">Export PDF</Button>
-                </div>
+                <Button className="h-9 bg-transparent text-white/60 hover:text-white">
+                  Share with Client
+                </Button>
+                <Button className="h-9 bg-white text-black hover:bg-white/80">Export PDF</Button>
+              </div>
               </div>
 
               {displayShotList.length ? (
@@ -387,7 +387,7 @@ export default function ProjectsPage() {
                   <h2 className="text-2xl font-semibold text-white">Reference Palette</h2>
                   <p className="text-sm text-white/60 max-w-2xl">Atmospheric references that prioritize light, texture, and tonal direction.</p>
                 </div>
-                <Button className="h-9 rounded-full bg-white/5 text-white hover:bg-white/10">
+                <Button className="h-9 bg-transparent text-white/60 hover:text-white">
                   Share with Client
                 </Button>
               </div>
@@ -429,7 +429,7 @@ export default function ProjectsPage() {
                   <h2 className="text-2xl font-semibold text-white">Visual Sequence</h2>
                   <p className="text-sm text-white/60 max-w-2xl">A director’s shot list with a clean, cinematic presentation.</p>
                 </div>
-                <Button className="h-9 rounded-full bg-white text-black hover:bg-white/80">Export PDF</Button>
+                <Button className="h-9 bg-white text-black hover:bg-white/80">Export PDF</Button>
               </div>
               <div className="space-y-10">
                 {displayStoryboardFrames.length ? (
@@ -454,10 +454,10 @@ export default function ProjectsPage() {
               </div>
               <div className="flex w-full max-w-md items-center gap-3">
                 <Input
-                  className="h-11 rounded-full border-transparent bg-white/5 text-white placeholder:text-white/40"
+                  className="h-11 rounded-none border-transparent bg-transparent text-white placeholder:text-white/40"
                   placeholder="Enter your email"
                 />
-                <Button className="h-11 rounded-full bg-white px-6 text-black hover:bg-white/80">Subscribe</Button>
+                <Button className="h-11 bg-white px-6 text-black hover:bg-white/80">Subscribe</Button>
               </div>
             </div>
           </div>

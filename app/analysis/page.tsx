@@ -180,7 +180,7 @@ export default function AnalysisPage() {
                 Share
               </Button>
               <Link href="/export">
-                <Button className="bg-white text-black hover:bg-white/80 shadow-lg shadow-black/30">
+                <Button className="bg-white text-black hover:bg-white/80">
                   Export Options
                 </Button>
               </Link>
@@ -207,7 +207,7 @@ export default function AnalysisPage() {
                           className="absolute inset-0 h-full w-full object-contain bg-black/60"
                         />
                       )}
-                      <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white/70 shadow-sm">
+                      <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white/70">
                         Latest upload{uploadedMedia.name ? ` • ${uploadedMedia.name}` : ""}
                       </div>
                     </div>
@@ -392,22 +392,22 @@ export default function AnalysisPage() {
                 <p className="text-xs uppercase tracking-[0.3em] text-white/50">Next Steps</p>
                 <h3 className="text-xl font-semibold text-white">Continue with your content</h3>
                 <div className="space-y-3">
-                  <Button asChild className="w-full bg-white text-black hover:bg-white/80">
+                  <Button asChild className="bg-white/10 text-white hover:bg-white/20 justify-start px-0">
                     <Link href="/export">
                       Export Results
                     </Link>
                   </Button>
-                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
+                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
                     <Link href="/presets">
                       Get Preset Suggestions
                     </Link>
                   </Button>
-                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
+                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
                     <Link href="/assistant">
                       Plan Pre-Production
                     </Link>
                   </Button>
-                  <Button asChild className="w-full bg-transparent text-white/60 hover:text-white">
+                  <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
                     <Link href="/upload">
                       Analyze Another
                     </Link>
@@ -418,7 +418,7 @@ export default function AnalysisPage() {
               <section className="space-y-4">
                 <p className="text-xs uppercase tracking-[0.3em] text-white/50">Save Analysis</p>
                 <h3 className="text-xl font-semibold text-white">Add to your project library</h3>
-                <Button className="w-full bg-transparent text-white/60 hover:text-white">
+                <Button className="bg-transparent text-white/60 hover:text-white justify-start px-0">
                   Save to Project
                 </Button>
               </section>

@@ -29,18 +29,18 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="absolute inset-0 bg-background/90 backdrop-blur-xl" />
-      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
+      <div className="absolute inset-0 bg-background/85 backdrop-blur-xl" />
+      <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-lg font-semibold tracking-tight text-white">CineView AI</span>
+          <span className="text-xl font-semibold tracking-tight text-white font-display">CineView AI</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex lg:items-center lg:gap-1">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex items-center px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white data-[state=open]:text-white">
+              <button className="flex items-center px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 transition-colors hover:text-white data-[state=open]:text-white">
                 Tools
               </button>
             </DropdownMenuTrigger>
@@ -58,7 +58,7 @@ export function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex items-center px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white data-[state=open]:text-white">
+              <button className="flex items-center px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 transition-colors hover:text-white data-[state=open]:text-white">
                 Creators
               </button>
             </DropdownMenuTrigger>
@@ -74,24 +74,24 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link href="/sell" className="px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors">
+          <Link href="/sell" className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors">
             Sell Content
           </Link>
-          <Link href="/marketplace" className="px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors">
+          <Link href="/marketplace" className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors">
             Marketplace
           </Link>
-          <Link href="/feed" className="px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors">
+          <Link href="/feed" className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors">
             Inspiration
           </Link>
         </div>
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex lg:items-center lg:gap-4">
-          <Link href="/auth" className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors">
+          <Link href="/auth" className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/60 hover:text-white transition-colors">
             Sign in
           </Link>
           <Link href="/upload">
-            <Button className="bg-white text-black hover:bg-white/80 h-10 px-5 text-sm font-semibold">
+            <Button className="bg-white/10 text-white hover:bg-white/20 h-10 px-5 text-sm font-semibold">
               Start Free
             </Button>
           </Link>
