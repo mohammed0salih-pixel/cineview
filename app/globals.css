@@ -244,6 +244,34 @@
     animation: fade-soft 700ms ease-out both;
   }
 
+  .narrative-flow [data-slot="card"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    gap: 1.5rem !important;
+  }
+  .narrative-flow [data-slot="card-header"],
+  .narrative-flow [data-slot="card-content"],
+  .narrative-flow [data-slot="card-footer"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .narrative-flow :is(div, section, article, ul, li)[class*="bg-card"],
+  .narrative-flow :is(div, section, article, ul, li)[class*="bg-secondary"],
+  .narrative-flow :is(div, section, article, ul, li)[class*="bg-white/5"],
+  .narrative-flow :is(div, section, article, ul, li)[class*="bg-white/10"] {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .narrative-flow .grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+  }
+  .narrative-flow svg {
+    display: none !important;
+  }
+
   :where(div, section, header, footer, nav, main, article, aside, ul, ol, li, span, p, a, button, input, textarea, select)[class*="border"]:not(.keep-border) {
     border-width: 0 !important;
     border-style: none !important;
