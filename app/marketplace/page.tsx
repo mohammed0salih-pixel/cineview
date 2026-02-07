@@ -3,7 +3,6 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { 
   Select, 
@@ -185,18 +184,18 @@ export default function MarketplacePage() {
           {/* Page Header */}
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl font-display">
+              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl font-display">
                 Stock Marketplace
               </h1>
-              <p className="mt-2 text-muted-foreground">
+              <p className="mt-2 text-white/60">
                 Buy and sell professional photos and videos
               </p>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" className="bg-transparent text-foreground/70 rounded-full">
+              <Button variant="outline" className="bg-transparent text-white/70 rounded-full">
                 Cart ({cart.length})
               </Button>
-              <Button asChild className="bg-foreground text-background hover:bg-foreground/90 rounded-full">
+              <Button asChild className="bg-white text-black hover:bg-white/80 rounded-full">
                 <Link href="/marketplace/sell">
                   Sell Content
                 </Link>
@@ -207,13 +206,13 @@ export default function MarketplacePage() {
           {/* Tabs */}
           <Tabs value={contentType} onValueChange={setContentType} className="mb-8">
             <TabsList className="inline-flex flex-wrap gap-4 bg-transparent p-0">
-              <TabsTrigger value="all" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="all" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 All
               </TabsTrigger>
-              <TabsTrigger value="photo" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="photo" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Photos
               </TabsTrigger>
-              <TabsTrigger value="video" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-muted-foreground data-[state=active]:text-foreground">
+              <TabsTrigger value="video" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
                 Videos
               </TabsTrigger>
             </TabsList>
@@ -228,23 +227,23 @@ export default function MarketplacePage() {
                   placeholder="Search stock content..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-4 bg-transparent text-foreground placeholder:text-muted-foreground"
+                  className="pl-0 bg-transparent border-0 text-white/80 placeholder:text-white/40"
                 />
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-sm text-white/50">
                 <span>Filters:</span>
               </div>
 
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-[160px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[160px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {categories.map((cat) => (
-                    <SelectItem key={cat.value} value={cat.value} className="text-foreground hover:bg-secondary/40">
+                    <SelectItem key={cat.value} value={cat.value} className="text-white/80">
                       {cat.label}
                     </SelectItem>
                   ))}
@@ -252,12 +251,12 @@ export default function MarketplacePage() {
               </Select>
 
               <Select value={license} onValueChange={setLicense}>
-                <SelectTrigger className="w-[140px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {licenses.map((lic) => (
-                    <SelectItem key={lic.value} value={lic.value} className="text-foreground hover:bg-secondary/40">
+                    <SelectItem key={lic.value} value={lic.value} className="text-white/80">
                       {lic.label}
                     </SelectItem>
                   ))}
@@ -265,12 +264,12 @@ export default function MarketplacePage() {
               </Select>
 
               <Select value={sort} onValueChange={setSort}>
-                <SelectTrigger className="w-[160px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[160px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {sortOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value} className="text-foreground hover:bg-secondary/40">
+                    <SelectItem key={opt.value} value={opt.value} className="text-white/80">
                       {opt.label}
                     </SelectItem>
                   ))}
@@ -281,62 +280,62 @@ export default function MarketplacePage() {
 
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-sm text-muted-foreground">
-              Showing <span className="text-foreground font-medium">{sortedItems.length}</span> results
+            <p className="text-sm text-white/50">
+              Showing <span className="text-white font-medium">{sortedItems.length}</span> results
             </p>
           </div>
 
           {/* Stock Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-8">
             {sortedItems.map((item) => (
-              <Card key={item.id} className="group bg-transparent">
+              <div key={item.id} className="space-y-3">
                 <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
 
-                <CardContent className="p-0 pt-4 space-y-2">
-                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/50">
                     <span>{item.type}{item.featured ? " · Featured" : ""}</span>
                     <button
                       type="button"
                       onClick={() => toggleFavorite(item.id)}
-                      className="text-muted-foreground hover:text-foreground"
+                      className="text-white/50 hover:text-white"
                     >
                       {favorites.includes(item.id) ? "Saved" : "Save"}
                     </button>
                   </div>
-                  <h3 className="font-semibold text-foreground line-clamp-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.author}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <h3 className="font-semibold text-white line-clamp-1">{item.title}</h3>
+                  <p className="text-sm text-white/60">{item.author}</p>
+                  <p className="text-xs text-white/50">
                     {item.category} · {item.license} · {item.downloads.toLocaleString()} downloads · {item.rating}
                   </p>
-                </CardContent>
+                </div>
 
-                <CardFooter className="p-0 pt-4 flex items-center justify-between">
-                  <div className="text-2xl font-bold text-foreground">${item.price}</div>
+                <div className="flex items-center justify-between">
+                  <div className="text-2xl font-bold text-white">${item.price}</div>
                   <Button
                     size="sm"
                     onClick={() => toggleCart(item.id)}
-                    className={cart.includes(item.id) 
-                      ? "bg-transparent text-foreground/70 hover:text-foreground" 
-                      : "bg-foreground text-background hover:bg-foreground/90"
+                    className={cart.includes(item.id)
+                      ? "bg-transparent text-white/70 hover:text-white"
+                      : "bg-white text-black hover:bg-white/80"
                     }
                   >
                     {cart.includes(item.id) ? "In Cart" : "Add"}
                   </Button>
-                </CardFooter>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
 
           {sortedItems.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-muted-foreground">No results found. Try adjusting your filters.</p>
+              <p className="text-white/50">No results found. Try adjusting your filters.</p>
             </div>
           )}
 
           {/* Load More */}
           {sortedItems.length > 0 && (
             <div className="mt-12 text-center">
-              <Button variant="outline" className="bg-transparent text-foreground/70 rounded-full">
+              <Button variant="outline" className="bg-transparent text-white/70 rounded-full">
                 Load More
               </Button>
             </div>
