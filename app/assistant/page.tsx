@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
 import { 
   Select, 
   SelectContent, 
@@ -86,7 +85,7 @@ export default function AssistantPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           {/* Page Header */}
           <div className="mb-12">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl font-display">
               Pre-Production Assistant
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
@@ -109,7 +108,7 @@ export default function AssistantPage() {
                   <div className="space-y-2">
                     <Label htmlFor="project-type" className="text-foreground">Project Type</Label>
                     <Select value={projectType} onValueChange={setProjectType}>
-                      <SelectTrigger id="project-type" className="bg-secondary/50 text-foreground">
+                    <SelectTrigger id="project-type" className="bg-transparent text-foreground">
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent className="bg-card">
@@ -126,7 +125,7 @@ export default function AssistantPage() {
                   <div className="space-y-2">
                     <Label htmlFor="mood" className="text-foreground">Desired Mood</Label>
                     <Select value={mood} onValueChange={setMood}>
-                      <SelectTrigger id="mood" className="bg-secondary/50 text-foreground">
+                    <SelectTrigger id="mood" className="bg-transparent text-foreground">
                         <SelectValue placeholder="Select mood" />
                       </SelectTrigger>
                       <SelectContent className="bg-card">
@@ -143,7 +142,7 @@ export default function AssistantPage() {
                   <div className="space-y-2">
                     <Label htmlFor="location" className="text-foreground">Location Type</Label>
                     <Select value={location} onValueChange={setLocation}>
-                      <SelectTrigger id="location" className="bg-secondary/50 text-foreground">
+                    <SelectTrigger id="location" className="bg-transparent text-foreground">
                         <SelectValue placeholder="Select location" />
                       </SelectTrigger>
                       <SelectContent className="bg-card">
@@ -171,7 +170,7 @@ export default function AssistantPage() {
                   <Button
                     onClick={handleGenerate}
                     disabled={!canGenerate || isGenerating}
-                    className="w-full bg-primary text-background hover:bg-primary/90 disabled:opacity-50"
+                    className="w-full bg-white text-black hover:bg-white/80 disabled:opacity-50"
                   >
                     {isGenerating ? "Generating..." : "Generate Recommendations"}
                   </Button>
@@ -184,10 +183,10 @@ export default function AssistantPage() {
                     <CardTitle className="text-foreground">Quick Actions</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full text-foreground hover:bg-secondary hover:text-primary bg-transparent">
+                    <Button variant="outline" className="w-full bg-transparent text-foreground/70 hover:text-foreground">
                       Export as PDF
                     </Button>
-                    <Button variant="outline" className="w-full text-foreground hover:bg-secondary hover:text-primary bg-transparent">
+                    <Button variant="outline" className="w-full bg-transparent text-foreground/70 hover:text-foreground">
                       Save to Project
                     </Button>
                   </CardContent>
@@ -200,7 +199,6 @@ export default function AssistantPage() {
               {!showResults ? (
                 <Card className="bg-card h-full flex items-center justify-center min-h-[500px]">
                   <CardContent className="text-center">
-                    <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/20" />
                     <h3 className="text-lg font-semibold text-foreground">Ready to Plan Your Shoot</h3>
                     <p className="mt-2 text-muted-foreground max-w-md">
                       Fill in the project brief and click generate to receive AI-powered lighting, art direction, and technical recommendations.
@@ -209,17 +207,17 @@ export default function AssistantPage() {
                 </Card>
               ) : (
                 <Tabs defaultValue="lighting" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4 bg-secondary">
-                    <TabsTrigger value="lighting" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                  <TabsList className="flex flex-wrap gap-4 bg-transparent p-0">
+                    <TabsTrigger value="lighting" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] data-[state=active]:text-foreground text-foreground/60">
                       Lighting
                     </TabsTrigger>
-                    <TabsTrigger value="direction" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                    <TabsTrigger value="direction" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] data-[state=active]:text-foreground text-foreground/60">
                       Art Direction
                     </TabsTrigger>
-                    <TabsTrigger value="moodboard" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                    <TabsTrigger value="moodboard" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] data-[state=active]:text-foreground text-foreground/60">
                       Moodboard
                     </TabsTrigger>
-                    <TabsTrigger value="technical" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                    <TabsTrigger value="technical" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] data-[state=active]:text-foreground text-foreground/60">
                       Technical
                     </TabsTrigger>
                   </TabsList>
@@ -254,13 +252,11 @@ export default function AssistantPage() {
                           </div>
                         </div>
 
-                        <div>
-                          <p className="text-sm text-muted-foreground mb-2">Recommended Modifiers</p>
-                          <div className="flex flex-wrap gap-2">
-                            {recommendations.lighting.modifiers.map((modifier) => (
-                              <Badge key={modifier} className="bg-primary/20 text-primary">{modifier}</Badge>
-                            ))}
-                          </div>
+                          <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground">Recommended Modifiers</p>
+                          <p className="text-sm text-foreground/80">
+                            {recommendations.lighting.modifiers.join(" · ")}
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
@@ -281,19 +277,11 @@ export default function AssistantPage() {
                           <p className="text-lg font-semibold text-primary">{recommendations.artDirection.style}</p>
                         </div>
 
-                        <div>
-                          <p className="text-sm text-muted-foreground mb-3">Color Palette</p>
-                          <div className="flex gap-3">
-                            {recommendations.artDirection.colorPalette.map((color) => (
-                              <div key={color} className="text-center">
-                                <div 
-                                  className="h-16 w-16 rounded-lg"
-                                  style={{ backgroundColor: color }}
-                                />
-                                <p className="mt-1 text-xs text-muted-foreground">{color}</p>
-                              </div>
-                            ))}
-                          </div>
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground">Color Palette</p>
+                          <p className="text-sm text-foreground/80">
+                            {recommendations.artDirection.colorPalette.join(" · ")}
+                          </p>
                         </div>
 
                         <div className="grid gap-4 sm:grid-cols-2">
@@ -307,13 +295,11 @@ export default function AssistantPage() {
                           </div>
                         </div>
 
-                        <div>
-                          <p className="text-sm text-muted-foreground mb-2">Suggested Props</p>
-                          <div className="flex flex-wrap gap-2">
-                            {recommendations.artDirection.props.map((prop) => (
-                              <Badge key={prop} variant="outline" className="text-foreground">{prop}</Badge>
-                            ))}
-                          </div>
+                        <div className="space-y-2">
+                          <p className="text-sm text-muted-foreground">Suggested Props</p>
+                          <p className="text-sm text-foreground/80">
+                            {recommendations.artDirection.props.join(" · ")}
+                          </p>
                         </div>
                       </CardContent>
                     </Card>
