@@ -3,7 +3,6 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { 
   Select, 
@@ -174,10 +173,10 @@ export default function FeedPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl font-display">
+            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl font-display">
               Visual Feed
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-white/60">
               Discover inspiration filtered by shooting type, lighting, mood, and sector
             </p>
           </div>
@@ -192,7 +191,7 @@ export default function FeedPage() {
                   placeholder="Search inspiration..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-4 bg-transparent text-foreground placeholder:text-muted-foreground"
+                  className="pl-0 bg-transparent border-0 text-white/80 placeholder:text-white/40"
                 />
               </div>
               <div className="flex gap-2">
@@ -200,7 +199,7 @@ export default function FeedPage() {
                   variant={viewMode === "grid" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setViewMode("grid")}
-                  className={viewMode === "grid" ? "bg-foreground text-background" : "bg-transparent text-foreground/70"}
+                  className={viewMode === "grid" ? "bg-white text-black" : "bg-transparent text-white/70"}
                 >
                   Grid
                 </Button>
@@ -208,7 +207,7 @@ export default function FeedPage() {
                   variant={viewMode === "masonry" ? "default" : "outline"}
                   size="sm"
                   onClick={() => setViewMode("masonry")}
-                  className={viewMode === "masonry" ? "bg-foreground text-background" : "bg-transparent text-foreground/70"}
+                  className={viewMode === "masonry" ? "bg-white text-black" : "bg-transparent text-white/70"}
                 >
                   Masonry
                 </Button>
@@ -217,17 +216,17 @@ export default function FeedPage() {
 
             {/* Filter Row */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2 text-sm text-white/50">
                 <span>Filters:</span>
               </div>
               
               <Select value={filters.type} onValueChange={(v) => setFilters(prev => ({ ...prev, type: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {filterOptions.type.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
+                    <SelectItem key={option.value} value={option.value} className="text-white/80">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -235,12 +234,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.lighting} onValueChange={(v) => setFilters(prev => ({ ...prev, lighting: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {filterOptions.lighting.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
+                    <SelectItem key={option.value} value={option.value} className="text-white/80">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -248,12 +247,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.mood} onValueChange={(v) => setFilters(prev => ({ ...prev, mood: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {filterOptions.mood.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
+                    <SelectItem key={option.value} value={option.value} className="text-white/80">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -261,12 +260,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.sector} onValueChange={(v) => setFilters(prev => ({ ...prev, sector: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-foreground">
+                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-card">
+                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
                   {filterOptions.sector.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
+                    <SelectItem key={option.value} value={option.value} className="text-white/80">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -278,7 +277,7 @@ export default function FeedPage() {
                   variant="ghost" 
                   size="sm"
                   onClick={() => setFilters({ type: "all", lighting: "all", mood: "all", sector: "all" })}
-                  className="text-muted-foreground hover:text-foreground"
+                  className="text-white/50 hover:text-white"
                 >
                   Clear all
                 </Button>
@@ -288,71 +287,66 @@ export default function FeedPage() {
 
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-sm text-muted-foreground">
-              Showing <span className="text-foreground font-medium">{filteredItems.length}</span> results
+            <p className="text-sm text-white/50">
+              Showing <span className="text-white font-medium">{filteredItems.length}</span> results
             </p>
           </div>
 
           {/* Feed Grid */}
-          <div className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "columns-1 sm:columns-2 lg:columns-3"}`}>
+          <div className={viewMode === "grid" ? "space-y-6" : "space-y-10"}>
             {filteredItems.map((item, index) => (
-              <Card 
-                key={item.id} 
-                className={`group bg-transparent ${
-                  viewMode === "masonry" ? "break-inside-avoid mb-6" : ""
-                }`}
-              >
+              <div key={item.id} className="group space-y-3">
                 {/* Image/Video Preview */}
                 <div className={`relative bg-gradient-to-br from-white/10 via-black/30 to-black/70 ${viewMode === "grid" ? "aspect-[4/3]" : index % 3 === 0 ? "aspect-[4/5]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]"}`}>
                   
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-background/80 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center gap-3">
+                  <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center gap-3">
                     <Button
                       size="sm"
                       variant="outline"
-                      className={`bg-transparent ${likedItems.includes(item.id) ? "text-foreground" : "text-foreground/70 hover:text-foreground"}`}
+                      className={`bg-transparent ${likedItems.includes(item.id) ? "text-white" : "text-white/70 hover:text-white"}`}
                       onClick={() => toggleLike(item.id)}
                     >
                       Like
                     </Button>
-                    <Button size="sm" variant="outline" className="bg-transparent text-foreground/70 hover:text-foreground">
+                    <Button size="sm" variant="outline" className="bg-transparent text-white/70 hover:text-white">
                       Download
                     </Button>
                   </div>
                 </div>
 
-                <CardContent className="p-4">
-                  <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{item.type}</p>
-                  <h3 className="font-semibold text-foreground">{item.title}</h3>
+                <div className="space-y-2">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">{item.type}</p>
+                  <h3 className="font-semibold text-white">{item.title}</h3>
                   
-                  <p className="mt-3 text-xs text-muted-foreground">
+                  <p className="mt-2 text-xs text-white/50">
                     {item.lighting} · {item.mood} · {item.sector}
                   </p>
 
                   {/* Color Palette */}
-                  <div className="mt-3 text-xs text-muted-foreground">
+                  <div className="text-xs text-white/50">
                     Colors: {item.colors.join(" · ")}
                   </div>
 
                   {/* Likes */}
-                  <div className="mt-3 flex items-center gap-1 text-sm text-muted-foreground">
+                  <div className="text-sm text-white/50">
                     <span>{likedItems.includes(item.id) ? item.likes + 1 : item.likes}</span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
 
           {filteredItems.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-muted-foreground">No results found. Try adjusting your filters.</p>
+              <p className="text-white/50">No results found. Try adjusting your filters.</p>
             </div>
           )}
 
           {/* Load More */}
           {filteredItems.length > 0 && (
             <div className="mt-12 text-center">
-              <Button variant="outline" className="border-border text-foreground hover:bg-secondary hover:text-foreground bg-transparent">
+              <Button variant="outline" className="bg-transparent text-white/70 hover:text-white">
                 Load More
               </Button>
             </div>
