@@ -11,15 +11,15 @@ export function HeroSection() {
       <div className="absolute inset-0 hero-veil" />
 
       <div className="relative mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="max-w-4xl fade-soft">
+        <div className="max-w-4xl motion-rise">
           <p className="text-eyebrow mb-6">CineView AI</p>
           <h1 className="text-6xl sm:text-7xl lg:text-[5.5rem] font-semibold tracking-tight leading-[1.02] text-balance text-white font-display">
             Cinematic Intelligence for Creative Decisions
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl">
+          <p className="mt-6 text-base sm:text-lg text-white/60 max-w-2xl motion-fade motion-delay-1">
             Decisions shaped by visual intelligence.
           </p>
-          <div className="mt-12 flex">
+          <div className="mt-12 flex motion-fade motion-delay-2">
             <Link href="/upload">
               <Button
                 size="lg"

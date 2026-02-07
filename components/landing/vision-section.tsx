@@ -25,7 +25,7 @@ const testimonials = [
 
 export function VisionSection() {
   return (
-    <section className="section-spacing">
+    <section className="section-spacing motion-fade">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-16">

@@ -57,7 +57,7 @@ const tiers = [
 
 export function ServicesSection() {
   return (
-    <section className="section-spacing">
+    <section className="section-spacing motion-fade">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-2xl mb-16">
           <p className="text-eyebrow mb-4">Pricing</p>

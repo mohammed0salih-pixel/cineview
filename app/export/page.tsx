@@ -291,7 +291,7 @@ export default function ExportPage() {
    <Header />
 
    <main className="pt-20">
-    <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8 fade-soft">
+    <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8 motion-fade">
      {/* Page Header */}
      <div className="mb-10">
       <div className="text-xs font-medium text-white/60 uppercase tracking-[0.3em] mb-4">

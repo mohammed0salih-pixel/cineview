@@ -191,7 +191,7 @@ export default function ProjectsPage() {
       <Header />
 
       <main className="pt-24">
-        <div className="mx-auto max-w-7xl px-4 pb-20 lg:px-8 fade-soft">
+        <div className="mx-auto max-w-7xl px-4 pb-20 lg:px-8 motion-fade">
           <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.4em]">Project Hub</div>

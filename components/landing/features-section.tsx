@@ -2,7 +2,7 @@
 
 export function FeaturesSection() {
   return (
-    <section className="section-spacing">
+    <section className="section-spacing motion-fade">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="max-w-3xl mb-16">
           <p className="text-eyebrow mb-4">Editorial</p>

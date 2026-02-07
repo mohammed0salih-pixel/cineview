@@ -370,7 +370,7 @@ export default function UploadPage() {
    <Header />
 
    <section className="pt-24 pb-20">
-    <div className="mx-auto max-w-5xl px-4 lg:px-8 fade-soft">
+    <div className="mx-auto max-w-5xl px-4 lg:px-8 motion-fade">
      <div className="mb-10 text-center">
       <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.3em]">AI Analysis</div>
       <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">

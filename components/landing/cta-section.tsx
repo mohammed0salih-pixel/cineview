@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export function CTASection() {
   return (
-    <section className="section-spacing">
+    <section className="section-spacing motion-fade">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative">
           <div className="mx-auto max-w-4xl">

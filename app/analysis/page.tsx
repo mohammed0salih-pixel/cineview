@@ -150,7 +150,7 @@ export default function AnalysisPage() {
       <Header />
       
       <section className="pt-24 pb-16">
-        <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 fade-soft">
+        <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 motion-fade">
           {/* Page Header */}
           <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div>

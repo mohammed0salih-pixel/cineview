@@ -545,7 +545,7 @@ export default function ProjectDetailPage() {
    <Header />
 
    <main className="pt-24">
-    <div className="mx-auto max-w-7xl px-4 pb-24 lg:px-8 fade-soft">
+    <div className="mx-auto max-w-7xl px-4 pb-24 lg:px-8 motion-fade">
      <div className="mb-8">
       <Link href="/projects" className="inline-flex items-center text-sm text-white/60 hover:text-white">
        Back to Projects
