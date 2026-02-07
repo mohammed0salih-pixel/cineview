@@ -594,12 +594,12 @@ export default function ProjectDetailPage() {
       <TabsContent value="overview" className="space-y-12">
        <section className="space-y-4">
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">Overview</p>
-        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
          <div className="space-y-3">
           <h2 className="text-2xl font-semibold text-white">Project Context</h2>
           <p className="text-sm text-white/70">{project.summary}</p>
          </div>
-         <div className="text-sm text-white/70 space-y-2">
+         <div className="text-sm text-white/70 space-y-2 lg:text-right">
           <div className="flex justify-between"><span>Status</span><span className="text-white">{project.status}</span></div>
           <div className="flex justify-between"><span>Client</span><span className="text-white">{project.client}</span></div>
           <div className="flex justify-between"><span>Owner</span><span className="text-white">{project.owner}</span></div>
@@ -610,12 +610,12 @@ export default function ProjectDetailPage() {
 
        <section className="space-y-4">
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">Asset Intake</p>
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
          <div className="p-6 text-center">
           <p className="text-sm text-white/60">Drag and drop or browse</p>
           <Button className="mt-4 bg-white text-black hover:bg-white/80 rounded-full" size="sm">Select File</Button>
          </div>
-         <div className="space-y-3">
+         <div className="space-y-3 flex-1">
           <Input placeholder="Asset name" className="bg-white/5 border-transparent text-white placeholder:text-white/40" />
           <Textarea placeholder="Notes for this upload" className="bg-white/5 border-transparent text-white placeholder:text-white/40 min-h-[120px]" />
          </div>
@@ -727,7 +727,7 @@ export default function ProjectDetailPage() {
         {showVisualData && (
          <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Data Snapshot</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="mt-4 space-y-3">
            <div className="flex justify-between"><span>Sharpness</span><span className="text-white">{analysisSummary.technical.sharpness}%</span></div>
            <div className="flex justify-between"><span>Noise</span><span className="text-white">{analysisSummary.technical.noise}%</span></div>
            <div className="flex justify-between"><span>Contrast</span><span className="text-white">{analysisSummary.technical.contrast}%</span></div>
@@ -791,7 +791,7 @@ export default function ProjectDetailPage() {
         {showCinematicData && (
          <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Data Snapshot</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="mt-4 space-y-3">
            <div className="flex justify-between"><span>Mood</span><span className="text-white">{analysisSummary.cinematic.mood}</span></div>
            <div className="flex justify-between"><span>Energy</span><span className="text-white">{analysisSummary.cinematic.energy}</span></div>
            <div className="flex justify-between"><span>Shot Type</span><span className="text-white">{analysisSummary.cinematic.shotType}</span></div>
@@ -1027,7 +1027,7 @@ export default function ProjectDetailPage() {
         {showInsightsData && (
          <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Decision Metrics</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="mt-4 space-y-3">
            <div className="flex justify-between"><span>Confidence</span><span className="text-white">{decisionOutput?.confidence !== undefined ? Math.round(decisionOutput.confidence * 100) : 0}%</span></div>
            <div className="flex justify-between"><span>Intent Alignment</span><span className="text-white">{decisionOutput?.intent_alignment !== undefined ? Math.round(decisionOutput.intent_alignment * 100) : 0}%</span></div>
            <div className="flex justify-between"><span>Composition Score</span><span className="text-white">{Math.round((decisionOutput?.composition_score ?? 0) * 100)}%</span></div>
@@ -1078,7 +1078,7 @@ export default function ProjectDetailPage() {
          <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Export Metadata</p>
           {displayTraceability ? (
-           <div className="mt-4 grid gap-3 sm:grid-cols-2">
+           <div className="mt-4 space-y-3">
             <div className="flex justify-between"><span>Export Id</span><span className="text-white">{displayTraceability.exportId}</span></div>
             <div className="flex justify-between"><span>Analysis Run</span><span className="text-white">{displayTraceability.runId}</span></div>
             <div className="flex justify-between"><span>Pipeline Version</span><span className="text-white">{displayTraceability.pipelineVersion}</span></div>
