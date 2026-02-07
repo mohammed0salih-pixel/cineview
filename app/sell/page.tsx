@@ -7,8 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const pricingTiers = [
   { name: "Standard", description: "Web use, social media", multiplier: 1 },
@@ -66,129 +64,121 @@ export default function SellPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="space-y-16">
             {/* Main Upload Section */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="space-y-8">
               {/* Content Type Selection */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Content Type</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      onClick={() => setUploadType("photo")}
-                      className={`p-6 transition-colors text-left ${
-                        uploadType === "photo"
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <p className="font-medium">Photo</p>
-                      <p className="text-sm text-muted-foreground mt-1">JPG, PNG, RAW</p>
-                    </button>
-                    <button
-                      onClick={() => setUploadType("video")}
-                      className={`p-6 transition-colors text-left ${
-                        uploadType === "video"
-                          ? "text-foreground"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <p className="font-medium">Video</p>
-                      <p className="text-sm text-muted-foreground mt-1">MP4, MOV, ProRes</p>
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Type</p>
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setUploadType("photo")}
+                    className={`w-full text-left transition-colors ${
+                      uploadType === "photo"
+                        ? "text-white"
+                        : "text-white/50 hover:text-white"
+                    }`}
+                  >
+                    <p className="text-lg font-semibold">Photo</p>
+                    <p className="text-sm text-white/50 mt-1">JPG, PNG, RAW</p>
+                  </button>
+                  <button
+                    onClick={() => setUploadType("video")}
+                    className={`w-full text-left transition-colors ${
+                      uploadType === "video"
+                        ? "text-white"
+                        : "text-white/50 hover:text-white"
+                    }`}
+                  >
+                    <p className="text-lg font-semibold">Video</p>
+                    <p className="text-sm text-white/50 mt-1">MP4, MOV, ProRes</p>
+                  </button>
+                </div>
+              </section>
 
               {/* Upload Zone */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Upload {uploadType === "photo" ? "Photos" : "Videos"}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div
-                    className={`rounded-2xl p-12 text-center transition-colors ${
-                      dragActive ? "bg-black/50" : "bg-black/40"
-                    }`}
-                    onDragEnter={() => setDragActive(true)}
-                    onDragLeave={() => setDragActive(false)}
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={() => setDragActive(false)}
-                  >
-                    <p className="font-medium mb-2 text-foreground">Drag and drop your files here</p>
-                    <p className="text-sm text-muted-foreground mb-6">
-                      {uploadType === "photo" 
-                        ? "Minimum 4MP resolution. JPG, PNG, or RAW formats."
-                        : "Minimum 1080p resolution. MP4, MOV, or ProRes formats."
-                      }
-                    </p>
-                    <Button variant="outline" className="bg-transparent text-foreground/70 rounded-full">
-                      Browse files
-                    </Button>
-                  </div>
+              <section className="space-y-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">
+                  Upload {uploadType === "photo" ? "Photos" : "Videos"}
+                </p>
+                <div
+                  className={`rounded-2xl p-12 text-center transition-colors ${
+                    dragActive ? "bg-black/50" : "bg-black/40"
+                  }`}
+                  onDragEnter={() => setDragActive(true)}
+                  onDragLeave={() => setDragActive(false)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={() => setDragActive(false)}
+                >
+                  <p className="font-medium mb-2 text-white">Drag and drop your files here</p>
+                  <p className="text-sm text-white/50 mb-6">
+                    {uploadType === "photo"
+                      ? "Minimum 4MP resolution. JPG, PNG, or RAW formats."
+                      : "Minimum 1080p resolution. MP4, MOV, or ProRes formats."
+                    }
+                  </p>
+                  <Button variant="outline" className="bg-transparent text-white/70 rounded-full">
+                    Browse files
+                  </Button>
+                </div>
 
-                  {/* Preview area */}
-                  <div className="mt-6 grid grid-cols-4 gap-4">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="aspect-square rounded-2xl bg-black/40" />
-                    ))}
-                    <button className="aspect-square rounded-2xl bg-black/40 flex items-center justify-center transition-colors text-muted-foreground">
-                      +
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
+                {/* Preview area */}
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-16 rounded-2xl bg-black/40" />
+                  ))}
+                  <button className="h-16 rounded-2xl bg-black/40 flex items-center justify-center transition-colors text-white/50">
+                    +
+                  </button>
+                </div>
+              </section>
 
               {/* Details Form */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Content Details</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
+              <section className="space-y-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Details</p>
+                <div className="space-y-4">
                   <div>
-                    <Label htmlFor="title">Title</Label>
+                    <Label htmlFor="title" className="text-white/70">Title</Label>
                     <Input
                       id="title"
                       placeholder="Enter a descriptive title"
-                      className="mt-2 bg-transparent border-border"
+                      className="mt-2 bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="description">Description</Label>
+                    <Label htmlFor="description" className="text-white/70">Description</Label>
                     <Textarea
                       id="description"
                       placeholder="Describe your content, including location, subject, and any relevant details..."
-                      className="mt-2 min-h-[100px] bg-transparent border-border"
+                      className="mt-2 min-h-[120px] bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <Label>Category</Label>
-                    <div className="mt-2 grid grid-cols-3 gap-2">
+                    <Label className="text-white/70">Category</Label>
+                    <div className="mt-3 flex flex-wrap gap-3 text-sm text-white/50">
                       {categories.slice(0, 6).map((category) => (
                         <button
                           key={category}
-                          className="px-3 py-2 text-sm transition-colors text-left text-muted-foreground hover:text-foreground"
+                          className="transition-colors text-left hover:text-white"
                         >
                           {category}
                         </button>
                       ))}
                     </div>
-                    <Button variant="link" className="mt-2 p-0 h-auto text-muted-foreground">
+                    <Button variant="link" className="mt-2 p-0 h-auto text-white/50">
                       Show all categories
                     </Button>
                   </div>
 
                   <div>
-                    <Label>Tags</Label>
-                    <div className="mt-2 flex flex-wrap gap-3 mb-3 text-sm text-foreground">
+                    <Label className="text-white/70">Tags</Label>
+                    <div className="mt-2 flex flex-wrap gap-3 mb-3 text-sm text-white/70">
                       {tags.map((tag) => (
-                        <span key={tag} className="inline-flex items-center gap-2 text-foreground/80">
+                        <span key={tag} className="inline-flex items-center gap-2 text-white/70">
                           {tag}
-                          <button onClick={() => removeTag(tag)} className="text-muted-foreground">
+                          <button onClick={() => removeTag(tag)} className="text-white/40">
                             ×
                           </button>
                         </span>
@@ -200,63 +190,56 @@ export default function SellPage() {
                         onChange={(e) => setTagInput(e.target.value)}
                         onKeyPress={(e) => e.key === "Enter" && addTag()}
                         placeholder="Add a tag"
-                        className="bg-transparent border-border"
+                        className="bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
                       />
-                      <Button onClick={addTag} variant="outline" className="bg-transparent text-foreground/70">
+                      <Button onClick={addTag} variant="outline" className="bg-transparent text-white/70">
                         +
                       </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
               {/* Pricing */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Pricing</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
+              <section className="space-y-6">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Pricing</p>
+                <div className="space-y-4">
                   <div>
-                    <Label htmlFor="basePrice">Base Price (USD)</Label>
+                    <Label htmlFor="basePrice" className="text-white/70">Base Price (USD)</Label>
                     <div className="mt-2 relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                      <span className="absolute left-0 top-1/2 -translate-y-1/2 text-white/40">$</span>
                       <Input
                         id="basePrice"
                         type="number"
                         value={basePrice}
                         onChange={(e) => setBasePrice(e.target.value)}
-                        className="pl-7 bg-transparent border-border"
+                        className="pl-4 bg-transparent border-0 text-white/80"
                       />
                     </div>
-                    <p className="mt-2 text-sm text-muted-foreground">
+                    <p className="mt-2 text-sm text-white/50">
                       You receive 85% (${(Number(basePrice) * 0.85).toFixed(2)}) per standard license sale
                     </p>
                   </div>
 
-                  <div>
-                    <Label className="mb-3 block">License Tiers</Label>
-                    <div className="space-y-3">
-                      {pricingTiers.map((tier) => (
-                        <div
-                          key={tier.name}
-                          className="flex items-center justify-between py-2"
-                        >
-                          <div>
-                            <p className="font-medium text-foreground">{tier.name}</p>
-                            <p className="text-sm text-muted-foreground">{tier.description}</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-semibold text-foreground">${(Number(basePrice) * tier.multiplier).toFixed(0)}</p>
-                            <p className="text-xs text-muted-foreground">
-                              You get ${(Number(basePrice) * tier.multiplier * 0.85).toFixed(0)}
-                            </p>
-                          </div>
+                  <div className="space-y-3">
+                    <Label className="block text-white/70">License Tiers</Label>
+                    {pricingTiers.map((tier) => (
+                      <div key={tier.name} className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                          <p className="font-medium text-white">{tier.name}</p>
+                          <p className="text-sm text-white/50">{tier.description}</p>
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-white">${(Number(basePrice) * tier.multiplier).toFixed(0)}</p>
+                          <p className="text-xs text-white/50">
+                            You get ${(Number(basePrice) * tier.multiplier * 0.85).toFixed(0)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
               {/* Submit */}
               <div className="flex gap-4">
@@ -270,74 +253,53 @@ export default function SellPage() {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Stats Card */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Your Stats</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
+            <div className="space-y-10">
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Your Stats</p>
+                <div className="space-y-3 text-sm text-white/70">
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Total Sales</p>
-                      <p className="font-semibold text-foreground">127</p>
-                    </div>
+                    <span>Total Sales</span>
+                    <span className="text-white">127</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Earnings</p>
-                      <p className="font-semibold text-foreground">$3,245</p>
-                    </div>
+                    <span>Earnings</span>
+                    <span className="text-white">$3,245</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Views</p>
-                      <p className="font-semibold text-foreground">45.2K</p>
-                    </div>
+                    <span>Views</span>
+                    <span className="text-white">45.2K</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Conversion</p>
-                      <p className="font-semibold text-foreground">2.8%</p>
-                    </div>
+                    <span>Conversion</span>
+                    <span className="text-white">2.8%</span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
-              {/* Tips Card */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Selling Tips</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 text-sm">
-                    <li>Use descriptive, keyword-rich titles</li>
-                    <li>Add at least 10 relevant tags</li>
-                    <li>Upload highest resolution available</li>
-                    <li>Include model/property releases</li>
-                    <li>Competitive pricing increases sales</li>
-                  </ul>
-                </CardContent>
-              </Card>
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Selling Tips</p>
+                <div className="space-y-2 text-sm text-white/70">
+                  <p>Use descriptive, keyword-rich titles</p>
+                  <p>Add at least 10 relevant tags</p>
+                  <p>Upload highest resolution available</p>
+                  <p>Include model/property releases</p>
+                  <p>Competitive pricing increases sales</p>
+                </div>
+              </section>
 
-              {/* Revenue Calculator */}
-              <Card className="border-border bg-card shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-lg text-foreground">Revenue Calculator</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="p-4">
-                      <p className="text-sm text-muted-foreground mb-1">If you sell 10 standard licenses</p>
-                      <p className="text-2xl font-bold text-foreground">${(Number(basePrice) * 10 * 0.85).toFixed(0)}</p>
-                    </div>
-                    <div className="p-4">
-                      <p className="text-sm text-muted-foreground mb-1">If you sell 100 standard licenses</p>
-                      <p className="text-2xl font-bold text-foreground">${(Number(basePrice) * 100 * 0.85).toFixed(0)}</p>
-                    </div>
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Revenue Calculator</p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-white/50 mb-1">If you sell 10 standard licenses</p>
+                    <p className="text-2xl font-semibold text-white">${(Number(basePrice) * 10 * 0.85).toFixed(0)}</p>
                   </div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <p className="text-sm text-white/50 mb-1">If you sell 100 standard licenses</p>
+                    <p className="text-2xl font-semibold text-white">${(Number(basePrice) * 100 * 0.85).toFixed(0)}</p>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
