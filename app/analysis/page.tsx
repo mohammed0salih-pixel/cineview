@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 import { defaultVisualAnalysis } from "@/lib/visual-analysis"
@@ -188,11 +187,10 @@ export default function AnalysisPage() {
             </div>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-8">
-              {/* Preview Card */}
-              <Card className="overflow-hidden">
+          <div className="space-y-14">
+            <div className="space-y-8">
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Latest Upload</p>
                 <div className="aspect-video bg-black/40 flex items-center justify-center">
                   {uploadedMedia ? (
                     <div className="relative w-full h-full">
@@ -234,7 +232,7 @@ export default function AnalysisPage() {
                     </span>
                   </div>
                 )}
-              </Card>
+              </section>
 
               {/* Analysis Tabs */}
               <Tabs defaultValue="lighting" className="w-full">
@@ -263,46 +261,24 @@ export default function AnalysisPage() {
                     {showData ? "Hide Data" : "Show Data"}
                   </Button>
                   {showData && (
-                    <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/70">
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Lighting Type
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="text-2xl font-bold text-white">{analysis.lighting.type}</div>
-                          <p className="text-sm text-white/60">
-                            {analysis.lighting.quality} quality from {analysis.lighting.source}
-                          </p>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Light Direction
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div>
-                            <div className="text-2xl font-bold text-white">{analysis.lighting.direction}</div>
-                            <p className="text-sm text-white/60">Primary light source</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="sm:col-span-2">
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Light Intensity
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-lg font-semibold text-white">{analysis.lighting.intensity}%</p>
-                          <p className="text-sm text-white/60">Intensity score</p>
-                        </CardContent>
-                      </Card>
+                    <div className="space-y-6 text-sm text-white/70">
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Lighting Type</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.lighting.type}</p>
+                        <p className="text-sm text-white/60">
+                          {analysis.lighting.quality} quality from {analysis.lighting.source}
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Light Direction</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.lighting.direction}</p>
+                        <p className="text-sm text-white/60">Primary light source</p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Light Intensity</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.lighting.intensity}%</p>
+                        <p className="text-sm text-white/60">Intensity score</p>
+                      </div>
                     </div>
                   )}
                 </TabsContent>
@@ -322,52 +298,34 @@ export default function AnalysisPage() {
                     {showData ? "Hide Data" : "Show Data"}
                   </Button>
                   {showData && (
-                    <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/70">
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Color Temperature
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="text-2xl font-bold text-white">{analysis.color.temperature}</div>
-                          <p className="text-sm text-white/60">~{analysis.color.temperatureKelvin}K</p>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Color Palette
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2 text-sm text-white/70">
-                            {analysis.color.dominantColors.map((color) => (
-                              <li key={color.hex} className="flex items-center justify-between">
-                                <span className="text-white">{color.name}</span>
-                                <span className="text-white/50">{color.percentage}% · {color.hex}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="sm:col-span-2">
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-base text-white">Color Distribution</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-2 text-sm text-white/70">
-                            {analysis.color.dominantColors.map((color) => (
-                              <div key={color.hex} className="flex items-center justify-between">
-                                <span className="text-white">{color.name}</span>
-                                <span className="text-white/50">{color.percentage}% · {color.hex}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
+                    <div className="space-y-6 text-sm text-white/70">
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Temperature</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.color.temperature}</p>
+                        <p className="text-sm text-white/60">~{analysis.color.temperatureKelvin}K</p>
+                      </div>
+                      <div className="space-y-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Palette</p>
+                        <div className="space-y-2">
+                          {analysis.color.dominantColors.map((color) => (
+                            <div key={color.hex} className="flex items-center justify-between text-sm text-white/70">
+                              <span className="text-white">{color.name}</span>
+                              <span className="text-white/50">{color.percentage}% · {color.hex}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="space-y-3">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Distribution</p>
+                        <div className="space-y-2">
+                          {analysis.color.dominantColors.map((color) => (
+                            <div key={color.hex} className="flex items-center justify-between text-sm text-white/70">
+                              <span className="text-white">{color.name}</span>
+                              <span className="text-white/50">{color.percentage}% · {color.hex}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </TabsContent>
@@ -389,81 +347,51 @@ export default function AnalysisPage() {
                     {showData ? "Hide Data" : "Show Data"}
                   </Button>
                   {showData && (
-                    <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/70">
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Contrast
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-lg font-semibold text-white">{analysis.technical.contrast}%</p>
-                          <p className="mt-2 text-sm text-white/60">High contrast for dramatic effect</p>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="flex items-center gap-2 text-base text-white">
-                            Saturation
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-lg font-semibold text-white">{analysis.technical.saturation}%</p>
-                          <p className="mt-2 text-sm text-white/60">Balanced saturation levels</p>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-base text-white">Brightness</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-lg font-semibold text-white">{analysis.technical.brightness}%</p>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-base text-white">Sharpness</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-lg font-semibold text-white">{analysis.technical.sharpness}%</p>
-                        </CardContent>
-                      </Card>
+                    <div className="space-y-6 text-sm text-white/70">
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Contrast</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.technical.contrast}%</p>
+                        <p className="text-sm text-white/60">High contrast for dramatic effect</p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Saturation</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.technical.saturation}%</p>
+                        <p className="text-sm text-white/60">Balanced saturation levels</p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Brightness</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.technical.brightness}%</p>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Sharpness</p>
+                        <p className="text-2xl font-semibold text-white">{analysis.technical.sharpness}%</p>
+                      </div>
                     </div>
                   )}
                 </TabsContent>
               </Tabs>
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Overall Assessment */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-white">Overall Assessment</CardTitle>
-                  <CardDescription className="text-white/60">AI-detected style and mood</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
+            <div className="space-y-10">
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Overall Assessment</p>
+                <h3 className="text-xl font-semibold text-white">AI-detected style and mood</h3>
+                <div className="space-y-4 text-sm text-white/70">
                   <div>
-                    <p className="text-sm text-white/60 mb-1">Detected Mood</p>
-                    <p className="text-white font-medium">{analysis.mood}</p>
+                    <p className="text-white/50">Detected Mood</p>
+                    <p className="text-white">{analysis.mood}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-white/60 mb-1">Visual Style</p>
-                    <p className="text-white font-medium">{analysis.style}</p>
+                    <p className="text-white/50">Visual Style</p>
+                    <p className="text-white">{analysis.style}</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
-              {/* Quick Actions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-white">Next Steps</CardTitle>
-                  <CardDescription className="text-white/60">Continue with your content</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Next Steps</p>
+                <h3 className="text-xl font-semibold text-white">Continue with your content</h3>
+                <div className="space-y-3">
                   <Button asChild className="w-full bg-white text-black hover:bg-white/80">
                     <Link href="/export">
                       Export Results
@@ -484,21 +412,16 @@ export default function AnalysisPage() {
                       Analyze Another
                     </Link>
                   </Button>
-                </CardContent>
-              </Card>
+                </div>
+              </section>
 
-              {/* Save to Project */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-white">Save Analysis</CardTitle>
-                  <CardDescription className="text-white/60">Add to your project library</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button className="w-full bg-transparent text-white/60 hover:text-white">
-                    Save to Project
-                  </Button>
-                </CardContent>
-              </Card>
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Save Analysis</p>
+                <h3 className="text-xl font-semibold text-white">Add to your project library</h3>
+                <Button className="w-full bg-transparent text-white/60 hover:text-white">
+                  Save to Project
+                </Button>
+              </section>
             </div>
           </div>
         </div>
