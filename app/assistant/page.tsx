@@ -3,7 +3,6 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
@@ -93,118 +92,105 @@ export default function AssistantPage() {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Input Form */}
-            <div className="space-y-6">
-              <Card className="bg-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-foreground">
-                    Project Brief
-                  </CardTitle>
-                  <CardDescription>Tell us about your shoot</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {/* Project Type */}
-                  <div className="space-y-2">
-                    <Label htmlFor="project-type" className="text-foreground">Project Type</Label>
-                    <Select value={projectType} onValueChange={setProjectType}>
-                    <SelectTrigger id="project-type" className="bg-transparent text-foreground">
-                        <SelectValue placeholder="Select type" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card">
-                        {projectTypes.map((type) => (
-                          <SelectItem key={type.value} value={type.value} className="text-foreground hover:bg-secondary">
-                            {type.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+          <div className="space-y-16">
+            <section className="space-y-8">
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Project Brief</p>
+                <h2 className="text-2xl font-semibold text-white">Tell us about your shoot</h2>
+                <p className="text-sm text-white/60">Define intent, mood, and location to shape the pre-production plan.</p>
+              </div>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
+                  <Select value={projectType} onValueChange={setProjectType}>
+                    <SelectTrigger id="project-type" className="bg-transparent text-white border-0 px-0">
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                      {projectTypes.map((type) => (
+                        <SelectItem key={type.value} value={type.value} className="text-white/80">
+                          {type.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  {/* Mood */}
-                  <div className="space-y-2">
-                    <Label htmlFor="mood" className="text-foreground">Desired Mood</Label>
-                    <Select value={mood} onValueChange={setMood}>
-                    <SelectTrigger id="mood" className="bg-transparent text-foreground">
-                        <SelectValue placeholder="Select mood" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card">
-                        {moodOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="mood" className="text-white/70">Desired Mood</Label>
+                  <Select value={mood} onValueChange={setMood}>
+                    <SelectTrigger id="mood" className="bg-transparent text-white border-0 px-0">
+                      <SelectValue placeholder="Select mood" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                      {moodOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value} className="text-white/80">
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  {/* Location */}
-                  <div className="space-y-2">
-                    <Label htmlFor="location" className="text-foreground">Location Type</Label>
-                    <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger id="location" className="bg-transparent text-foreground">
-                        <SelectValue placeholder="Select location" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card">
-                        {locationOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-white/70">Location Type</Label>
+                  <Select value={location} onValueChange={setLocation}>
+                    <SelectTrigger id="location" className="bg-transparent text-white border-0 px-0">
+                      <SelectValue placeholder="Select location" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                      {locationOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value} className="text-white/80">
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                  {/* Description */}
-                  <div className="space-y-2">
-                    <Label htmlFor="description" className="text-foreground">Additional Details (Optional)</Label>
-                    <Textarea
-                      id="description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Describe your vision, subject matter, or any specific requirements..."
-                      className="min-h-[100px] bg-secondary/50 text-foreground placeholder:text-muted-foreground"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="description" className="text-white/70">Additional Details (Optional)</Label>
+                  <Textarea
+                    id="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Describe your vision, subject matter, or any specific requirements..."
+                    className="min-h-[120px] bg-transparent text-white/80 placeholder:text-white/40 border-0 px-0"
+                  />
+                </div>
+              </div>
+              <Button
+                onClick={handleGenerate}
+                disabled={!canGenerate || isGenerating}
+                className="bg-white text-black hover:bg-white/80 disabled:opacity-50"
+              >
+                {isGenerating ? "Generating..." : "Generate Recommendations"}
+              </Button>
+            </section>
 
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={!canGenerate || isGenerating}
-                    className="w-full bg-white text-black hover:bg-white/80 disabled:opacity-50"
-                  >
-                    {isGenerating ? "Generating..." : "Generate Recommendations"}
+            {showResults && (
+              <section className="space-y-4">
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Quick Actions</p>
+                <div className="flex flex-col gap-3">
+                  <Button variant="outline" className="bg-transparent text-white/70 hover:text-white">
+                    Export as PDF
                   </Button>
-                </CardContent>
-              </Card>
+                  <Button variant="outline" className="bg-transparent text-white/70 hover:text-white">
+                    Save to Project
+                  </Button>
+                </div>
+              </section>
+            )}
 
-              {showResults && (
-                <Card className="bg-card">
-                  <CardHeader>
-                    <CardTitle className="text-foreground">Quick Actions</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full bg-transparent text-foreground/70 hover:text-foreground">
-                      Export as PDF
-                    </Button>
-                    <Button variant="outline" className="w-full bg-transparent text-foreground/70 hover:text-foreground">
-                      Save to Project
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-
-            {/* Results Section */}
-            <div className="lg:col-span-2">
+            <section className="space-y-8">
               {!showResults ? (
-                <Card className="bg-card h-full flex items-center justify-center min-h-[500px]">
-                  <CardContent className="text-center">
-                    <h3 className="text-lg font-semibold text-foreground">Ready to Plan Your Shoot</h3>
-                    <p className="mt-2 text-muted-foreground max-w-md">
-                      Fill in the project brief and click generate to receive AI-powered lighting, art direction, and technical recommendations.
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="space-y-4">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">Readiness</p>
+                  <h3 className="text-2xl font-semibold text-white">Ready to Plan Your Shoot</h3>
+                  <p className="text-sm text-white/60 max-w-2xl">
+                    Fill in the project brief and click generate to receive AI-powered lighting, art direction, and technical recommendations.
+                  </p>
+                </div>
               ) : (
                 <Tabs defaultValue="lighting" className="w-full">
                   <TabsList className="flex flex-wrap gap-4 bg-transparent p-0">
@@ -223,149 +209,85 @@ export default function AssistantPage() {
                   </TabsList>
 
                   {/* Lighting Tab */}
-                  <TabsContent value="lighting" className="mt-6">
-                    <Card className="bg-card">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-foreground">
-                          Lighting Setup
-                        </CardTitle>
-                        <CardDescription>Recommended lighting configuration for your shoot</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-6">
-                        <div className="p-4 rounded-lg bg-secondary/50">
-                          <h4 className="font-semibold text-foreground mb-2">{recommendations.lighting.primary}</h4>
-                          <div className="space-y-2 text-sm text-foreground">
-                            <p><span className="text-muted-foreground">Key Light:</span> {recommendations.lighting.keyLight}</p>
-                            <p><span className="text-muted-foreground">Fill Light:</span> {recommendations.lighting.fillLight}</p>
-                            <p><span className="text-muted-foreground">Back Light:</span> {recommendations.lighting.backLight}</p>
-                          </div>
-                        </div>
-
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Light Ratio</p>
-                            <p className="text-lg font-semibold text-foreground">{recommendations.lighting.ratio}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Color Temperature</p>
-                            <p className="text-lg font-semibold text-foreground">{recommendations.lighting.colorTemp}</p>
-                          </div>
-                        </div>
-
-                          <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground">Recommended Modifiers</p>
-                          <p className="text-sm text-foreground/80">
-                            {recommendations.lighting.modifiers.join(" · ")}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <TabsContent value="lighting" className="mt-6 space-y-8">
+                    <div className="space-y-2">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Lighting Setup</p>
+                      <h3 className="text-2xl font-semibold text-white">Recommended lighting configuration</h3>
+                    </div>
+                    <div className="space-y-3 text-sm text-white/70">
+                      <p className="text-lg font-semibold text-white">{recommendations.lighting.primary}</p>
+                      <p>Key Light: {recommendations.lighting.keyLight}</p>
+                      <p>Fill Light: {recommendations.lighting.fillLight}</p>
+                      <p>Back Light: {recommendations.lighting.backLight}</p>
+                    </div>
+                    <div className="space-y-3 text-sm text-white/70">
+                      <p>Light Ratio: {recommendations.lighting.ratio}</p>
+                      <p>Color Temperature: {recommendations.lighting.colorTemp}</p>
+                    </div>
+                    <div className="space-y-2 text-sm text-white/70">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Recommended Modifiers</p>
+                      <p>{recommendations.lighting.modifiers.join(" · ")}</p>
+                    </div>
                   </TabsContent>
 
                   {/* Art Direction Tab */}
-                  <TabsContent value="direction" className="mt-6">
-                    <Card className="bg-card">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-foreground">
-                          Art Direction
-                        </CardTitle>
-                        <CardDescription>Visual style and composition guidelines</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-6">
-                        <div className="p-4 rounded-lg bg-secondary/50">
-                          <p className="text-sm text-muted-foreground">Recommended Style</p>
-                          <p className="text-lg font-semibold text-foreground">{recommendations.artDirection.style}</p>
-                        </div>
-
-                        <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground">Color Palette</p>
-                          <p className="text-sm text-foreground/80">
-                            {recommendations.artDirection.colorPalette.join(" · ")}
-                          </p>
-                        </div>
-
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Composition</p>
-                            <p className="text-foreground">{recommendations.artDirection.composition}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Depth of Field</p>
-                            <p className="text-foreground">{recommendations.artDirection.depth}</p>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <p className="text-sm text-muted-foreground">Suggested Props</p>
-                          <p className="text-sm text-foreground/80">
-                            {recommendations.artDirection.props.join(" · ")}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <TabsContent value="direction" className="mt-6 space-y-8">
+                    <div className="space-y-2">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Art Direction</p>
+                      <h3 className="text-2xl font-semibold text-white">Visual style and composition</h3>
+                    </div>
+                    <div className="space-y-3 text-sm text-white/70">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Recommended Style</p>
+                      <p className="text-lg font-semibold text-white">{recommendations.artDirection.style}</p>
+                    </div>
+                    <div className="space-y-2 text-sm text-white/70">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Palette</p>
+                      <p>{recommendations.artDirection.colorPalette.join(" · ")}</p>
+                    </div>
+                    <div className="space-y-3 text-sm text-white/70">
+                      <p>Composition: {recommendations.artDirection.composition}</p>
+                      <p>Depth of Field: {recommendations.artDirection.depth}</p>
+                    </div>
+                    <div className="space-y-2 text-sm text-white/70">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Suggested Props</p>
+                      <p>{recommendations.artDirection.props.join(" · ")}</p>
+                    </div>
                   </TabsContent>
 
                   {/* Moodboard Tab */}
-                  <TabsContent value="moodboard" className="mt-6">
-                    <Card className="bg-card">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-foreground">
-                          Moodboard
-                        </CardTitle>
-                        <CardDescription>Visual references for your shoot</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          {recommendations.moodboard.map((item, index) => (
-                            <div key={index} className="overflow-hidden rounded-lg bg-secondary/30">
-                              <div className="aspect-video bg-secondary/50 flex items-center justify-center">
-                                <span className="text-xs text-muted-foreground">Preview</span>
-                              </div>
-                              <div className="p-4">
-                                <h4 className="font-semibold text-foreground">{item.title}</h4>
-                                <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-                              </div>
-                            </div>
-                          ))}
+                  <TabsContent value="moodboard" className="mt-6 space-y-8">
+                    <div className="space-y-2">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Moodboard</p>
+                      <h3 className="text-2xl font-semibold text-white">Visual references</h3>
+                    </div>
+                    <div className="space-y-8">
+                      {recommendations.moodboard.map((item, index) => (
+                        <div key={index} className="space-y-3">
+                          <div className="aspect-video bg-black/40 flex items-center justify-center">
+                            <span className="text-xs text-white/40">Preview</span>
+                          </div>
+                          <div className="space-y-1">
+                            <p className="text-lg font-semibold text-white">{item.title}</p>
+                            <p className="text-sm text-white/60">{item.description}</p>
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      ))}
+                    </div>
                   </TabsContent>
 
                   {/* Technical Tab */}
-                  <TabsContent value="technical" className="mt-6">
-                    <Card className="bg-card">
-                      <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-foreground">
-                          Technical Recommendations
-                        </CardTitle>
-                        <CardDescription>Camera settings and equipment suggestions</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Camera</p>
-                            <p className="font-semibold text-foreground">{recommendations.technical.camera}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Lens</p>
-                            <p className="font-semibold text-foreground">{recommendations.technical.lens}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">ISO</p>
-                            <p className="font-semibold text-foreground">{recommendations.technical.iso}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50">
-                            <p className="text-sm text-muted-foreground">Aperture</p>
-                            <p className="font-semibold text-foreground">{recommendations.technical.aperture}</p>
-                          </div>
-                          <div className="p-4 rounded-lg bg-secondary/50 sm:col-span-2">
-                            <p className="text-sm text-muted-foreground">Shutter Speed</p>
-                            <p className="font-semibold text-foreground">{recommendations.technical.shutter}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <TabsContent value="technical" className="mt-6 space-y-8">
+                    <div className="space-y-2">
+                      <p className="text-xs uppercase tracking-[0.3em] text-white/50">Technical Recommendations</p>
+                      <h3 className="text-2xl font-semibold text-white">Camera settings and equipment</h3>
+                    </div>
+                    <div className="space-y-3 text-sm text-white/70">
+                      <p>Camera: {recommendations.technical.camera}</p>
+                      <p>Lens: {recommendations.technical.lens}</p>
+                      <p>ISO: {recommendations.technical.iso}</p>
+                      <p>Aperture: {recommendations.technical.aperture}</p>
+                      <p>Shutter Speed: {recommendations.technical.shutter}</p>
+                    </div>
                   </TabsContent>
                 </Tabs>
               )}
