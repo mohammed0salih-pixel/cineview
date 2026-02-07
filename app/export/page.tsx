@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -347,14 +346,14 @@ export default function ExportPage() {
       )}
      </div>
 
-     <div className="mb-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-      <div className="p-8">
+     <div className="mb-12 space-y-8">
+      <div className="space-y-4">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">PDF Output</p>
        <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-white">{deckProjectName}</h2>
        <p className="mt-2 text-sm text-white/60">
         A cinematic, editorial director&#39;s deck that captures the creative direction, key risks, and decision signals.
        </p>
-       <div className="mt-6 grid gap-6 sm:grid-cols-2 text-sm text-white/70">
+       <div className="mt-6 space-y-6 text-sm text-white/70">
         <div>
          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Confidence</p>
          <p className="mt-3 text-2xl font-semibold text-white">
@@ -375,7 +374,7 @@ export default function ExportPage() {
         </div>
        </div>
       </div>
-      <div className="p-6">
+      <div className="space-y-3">
        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Preview</p>
        <div className="mt-4 overflow-hidden rounded-2xl bg-black/40">
         {latest ? (
@@ -425,226 +424,168 @@ export default function ExportPage() {
 
       {/* Editing Software Tab */}
       <TabsContent value="software" className="space-y-6">
-       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+       <div className="space-y-6">
         {editingSoftware.map((software) => (
-         <Card
-          key={software.id}
-          className="transition-all cinematic-card"
-         >
-          <CardContent className="p-4">
-           <div className="flex items-start gap-4">
-            <div className="flex-1 min-w-0">
-             <div className="flex items-center justify-between gap-4 mb-1">
-              <h3 className="font-semibold text-white">{software.name}</h3>
-              {software.connected && (
-               <span className="text-xs uppercase tracking-[0.3em] text-white/50">Connected</span>
-              )}
-             </div>
-             <p className="text-sm text-white/60">{software.description}</p>
-             <p className="mt-2 text-xs text-white/50">{software.formats.join(" · ")}</p>
-            </div>
-           </div>
-           <div className="mt-4 pt-4 flex gap-2">
-            {software.connected ? (
-             <>
-              <Button className="flex-1 bg-transparent text-white/60 hover:text-white">
-               Configure
-              </Button>
-              <Button className="flex-1 bg-white text-black hover:bg-white/80">
-               Export
-              </Button>
-             </>
-            ) : (
-             <Button className="w-full bg-white text-black hover:bg-white/80">
-              Connect
+         <div key={software.id} className="space-y-3">
+          <div className="flex items-center justify-between gap-4">
+           <h3 className="font-semibold text-white">{software.name}</h3>
+           {software.connected && (
+            <span className="text-xs uppercase tracking-[0.3em] text-white/50">Connected</span>
+           )}
+          </div>
+          <p className="text-sm text-white/60">{software.description}</p>
+          <p className="text-xs text-white/50">{software.formats.join(" · ")}</p>
+          <div className="flex gap-2 pt-2">
+           {software.connected ? (
+            <>
+             <Button className="flex-1 bg-transparent text-white/60 hover:text-white">
+              Configure
              </Button>
-            )}
-           </div>
-          </CardContent>
-         </Card>
+             <Button className="flex-1 bg-white text-black hover:bg-white/80">
+              Export
+             </Button>
+            </>
+           ) : (
+            <Button className="w-full bg-white text-black hover:bg-white/80">
+             Connect
+            </Button>
+           )}
+          </div>
+         </div>
         ))}
        </div>
       </TabsContent>
 
       {/* Cloud Storage Tab */}
       <TabsContent value="cloud" className="space-y-6">
-       <Card className="cinematic-card">
-        <CardHeader className="">
-         <div className="flex items-center justify-between">
-         <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-          Cloud Storage Sync
-         </CardTitle>
-          <div className="flex items-center gap-3">
-           <Label htmlFor="auto-sync" className="text-sm text-white/60">Auto-sync</Label>
-           <Switch id="auto-sync" checked={autoSync} onCheckedChange={setAutoSync} />
-          </div>
+       <section className="space-y-4">
+        <div className="flex items-center justify-between">
+         <p className="text-xs uppercase tracking-[0.3em] text-white/50">Cloud Storage Sync</p>
+         <div className="flex items-center gap-3">
+          <Label htmlFor="auto-sync" className="text-sm text-white/60">Auto-sync</Label>
+          <Switch id="auto-sync" checked={autoSync} onCheckedChange={setAutoSync} />
          </div>
-        </CardHeader>
-        <CardContent className="p-6">
-         <div className="grid gap-4 sm:grid-cols-2">
-          {cloudServices.map((service) => {
-           return (
-            <div
-             key={service.id}
-             className="p-4 transition-all"
-            >
-             <div className="flex items-center gap-3 mb-3">
-              <div className="flex-1">
-               <div className="flex items-center gap-2">
-                <span className="font-medium text-white">{service.name}</span>
-                {service.connected && (
-                 <span className="text-xs text-white/40 uppercase tracking-[0.2em]">Connected</span>
-                )}
-               </div>
-               {service.connected && service.lastSync && (
-                <p className="text-xs text-white/50">
-                 Last sync: {service.lastSync}
-                </p>
-               )}
-              </div>
-              {service.connected ? (
-               <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
-                Refresh
-               </Button>
-              ) : (
-               <Button size="sm" className="bg-white text-black hover:bg-white/80">
-                Connect
-               </Button>
-              )}
-             </div>
-
+        </div>
+        <div className="space-y-4">
+         {cloudServices.map((service) => (
+          <div key={service.id} className="space-y-2">
+           <div className="flex items-center justify-between gap-4">
+            <div>
+             <span className="font-medium text-white">{service.name}</span>
              {service.connected && (
-              <div className="text-xs text-white/50">
-               {service.storage.used} GB used · {service.storage.total} GB total
-              </div>
+              <span className="ml-2 text-xs text-white/40 uppercase tracking-[0.2em]">Connected</span>
+             )}
+             {service.connected && service.lastSync && (
+              <p className="text-xs text-white/50">Last sync: {service.lastSync}</p>
              )}
             </div>
-           );
-          })}
-         </div>
-        </CardContent>
-       </Card>
-
-       {/* Sync Settings */}
-       <Card className="cinematic-card">
-        <CardHeader className="">
-         <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-          Sync Settings
-         </CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
-         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-           <div>
-            <p className="font-medium text-white">Sync Projects</p>
-            <p className="text-sm text-white/50">Automatically backup project files</p>
-           </div>
-           <Switch defaultChecked />
-          </div>
-          <div className="flex items-center justify-between">
-           <div>
-            <p className="font-medium text-white">Sync Presets & LUTs</p>
-            <p className="text-sm text-white/50">Keep presets synchronized across devices</p>
-           </div>
-           <Switch defaultChecked />
-          </div>
-          <div className="flex items-center justify-between">
-           <div>
-            <p className="font-medium text-white">Sync Analysis Results</p>
-            <p className="text-sm text-white/50">Backup AI analysis data</p>
-           </div>
-           <Switch />
-          </div>
-          <div className="flex items-center justify-between">
-           <div>
-            <p className="font-medium text-white">Sync Original Files</p>
-            <p className="text-sm text-white/50">Upload original images and videos</p>
-           </div>
-           <Switch />
-          </div>
-         </div>
-        </CardContent>
-       </Card>
-      </TabsContent>
-
-      {/* Social Publishing Tab */}
-      <TabsContent value="social" className="space-y-6">
-       <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="cinematic-card">
-         <CardHeader className="">
-         <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-          Connected Accounts
-         </CardTitle>
-         </CardHeader>
-         <CardContent className="p-6 space-y-4">
-          {socialPlatforms.map((platform) => (
-           <div
-            key={platform.id}
-            className="flex items-center gap-4 p-3 transition-all"
-           >
-            <div className="flex-1">
-             <p className="font-medium text-white">{platform.name}</p>
-             {platform.connected ? (
-              <p className="text-sm text-white/60">{platform.username}</p>
-             ) : (
-              <p className="text-sm text-white/60">Not connected</p>
-             )}
-            </div>
-            {platform.connected ? (
-             <div className="flex gap-2">
-              <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
-               Manage
-              </Button>
-              <Button size="sm" className="bg-transparent text-white/60 hover:text-white">
-               Disconnect
-              </Button>
-             </div>
+            {service.connected ? (
+             <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
+              Refresh
+             </Button>
             ) : (
              <Button size="sm" className="bg-white text-black hover:bg-white/80">
               Connect
              </Button>
             )}
            </div>
-          ))}
-         </CardContent>
-        </Card>
-
-        <Card className="cinematic-card">
-         <CardHeader className="">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-           Quick Publish
-          </CardTitle>
-         </CardHeader>
-         <CardContent className="p-6">
-          <div className="text-center py-8">
-           <div className="w-16 h-16 rounded-full bg-white/10 mx-auto mb-4" />
-           <h3 className="font-semibold mb-2 text-white">Ready to Publish</h3>
-           <p className="text-sm text-white/60 mb-4">
-            Select content from your projects to publish directly to connected platforms
-           </p>
-           <Button className="bg-white text-black hover:bg-white/80">
-            Select Content
-           </Button>
+           {service.connected && (
+            <div className="text-xs text-white/50">
+             {service.storage.used} GB used · {service.storage.total} GB total
+            </div>
+           )}
           </div>
-         </CardContent>
-        </Card>
-       </div>
+         ))}
+        </div>
+       </section>
+
+       <section className="space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Sync Settings</p>
+        <div className="space-y-4">
+         <div className="flex items-center justify-between">
+          <div>
+           <p className="font-medium text-white">Sync Projects</p>
+           <p className="text-sm text-white/50">Automatically backup project files</p>
+          </div>
+          <Switch defaultChecked />
+         </div>
+         <div className="flex items-center justify-between">
+          <div>
+           <p className="font-medium text-white">Sync Presets & LUTs</p>
+           <p className="text-sm text-white/50">Keep presets synchronized across devices</p>
+          </div>
+          <Switch defaultChecked />
+         </div>
+         <div className="flex items-center justify-between">
+          <div>
+           <p className="font-medium text-white">Sync Analysis Results</p>
+           <p className="text-sm text-white/50">Backup AI analysis data</p>
+          </div>
+          <Switch />
+         </div>
+         <div className="flex items-center justify-between">
+          <div>
+           <p className="font-medium text-white">Sync Original Files</p>
+           <p className="text-sm text-white/50">Upload original images and videos</p>
+          </div>
+          <Switch />
+         </div>
+        </div>
+       </section>
+      </TabsContent>
+
+      {/* Social Publishing Tab */}
+      <TabsContent value="social" className="space-y-6">
+       <section className="space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Connected Accounts</p>
+        <div className="space-y-4">
+         {socialPlatforms.map((platform) => (
+          <div key={platform.id} className="flex items-center justify-between gap-4">
+           <div>
+            <p className="font-medium text-white">{platform.name}</p>
+            <p className="text-sm text-white/60">{platform.connected ? platform.username : "Not connected"}</p>
+           </div>
+           {platform.connected ? (
+            <div className="flex gap-2">
+             <Button variant="ghost" size="sm" className="text-white/60 hover:text-white">
+              Manage
+             </Button>
+             <Button size="sm" className="bg-transparent text-white/60 hover:text-white">
+              Disconnect
+             </Button>
+            </div>
+           ) : (
+            <Button size="sm" className="bg-white text-black hover:bg-white/80">
+             Connect
+            </Button>
+           )}
+          </div>
+         ))}
+        </div>
+       </section>
+
+       <section className="space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Quick Publish</p>
+        <div className="space-y-3">
+         <h3 className="font-semibold text-white">Ready to Publish</h3>
+         <p className="text-sm text-white/60">
+          Select content from your projects to publish directly to connected platforms
+         </p>
+         <Button className="bg-white text-black hover:bg-white/80">
+          Select Content
+         </Button>
+        </div>
+       </section>
       </TabsContent>
 
       {/* LUT Export Tab */}
       <TabsContent value="luts" className="space-y-6">
-       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Export Settings */}
-        <Card className="cinematic-card lg:col-span-1">
-         <CardHeader className="">
-         <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-          Export Settings
-         </CardTitle>
-         </CardHeader>
-         <CardContent className="p-6 space-y-6">
-          <div className="space-y-2">
-           <Label className="text-white/60">Export Format</Label>
-           <Select value={selectedFormat} onValueChange={setSelectedFormat}>
+       <div className="space-y-10">
+        <section className="space-y-6">
+         <p className="text-xs uppercase tracking-[0.3em] text-white/50">Export Settings</p>
+         <div className="space-y-2">
+          <Label className="text-white/60">Export Format</Label>
+          <Select value={selectedFormat} onValueChange={setSelectedFormat}>
            <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
              <SelectValue />
            </SelectTrigger>
@@ -698,107 +639,79 @@ export default function ExportPage() {
           <Button className="w-full bg-white text-black hover:bg-white/80">
            Export LUT
           </Button>
-         </CardContent>
-        </Card>
+        </section>
 
-        {/* Preset Library */}
-        <Card className="cinematic-card lg:col-span-2">
-         <CardHeader className="">
-          <div className="flex items-center justify-between">
-           <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-            Your LUT Library
-           </CardTitle>
-           <Button className="bg-transparent text-white/60 hover:text-white">
-            Import LUT
-           </Button>
-          </div>
-         </CardHeader>
-         <CardContent className="p-6">
-          <div className="grid gap-4 sm:grid-cols-2">
-           {lutPresets.map((preset) => (
-            <div
-             key={preset.id}
-             className="group rounded-lg overflow-hidden transition-all"
-            >
-             <div className="relative aspect-video bg-black/40">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-               <Button size="sm" variant="secondary" className="bg-white/10 text-white hover:bg-white/20">
-                Preview
-               </Button>
-               <Button size="sm" className="bg-white text-black hover:bg-white/80">
-                Export
-               </Button>
-              </div>
-              <span className="absolute top-2 left-2 text-xs uppercase tracking-[0.3em] text-white/70">
-               {preset.category}
-              </span>
+        <section className="space-y-4">
+         <div className="flex items-center justify-between">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Your LUT Library</p>
+          <Button className="bg-transparent text-white/60 hover:text-white">
+           Import LUT
+          </Button>
+         </div>
+         <div className="space-y-6">
+          {lutPresets.map((preset) => (
+           <div key={preset.id} className="space-y-3">
+            <div className="relative aspect-video bg-black/40">
+             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
+             <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <Button size="sm" variant="secondary" className="bg-white/10 text-white hover:bg-white/20">
+               Preview
+              </Button>
+              <Button size="sm" className="bg-white text-black hover:bg-white/80">
+               Export
+              </Button>
              </div>
-             <div className="p-3">
-              <div className="flex items-center justify-between mb-1">
-               <h3 className="font-semibold text-sm text-white">{preset.name}</h3>
-               <div className="flex items-center gap-1 text-xs text-white/50">
-                {preset.downloads}
-               </div>
-              </div>
-             </div>
+             <span className="absolute top-2 left-2 text-xs uppercase tracking-[0.3em] text-white/70">
+              {preset.category}
+             </span>
             </div>
-           ))}
-          </div>
-         </CardContent>
-        </Card>
+            <div className="flex items-center justify-between">
+             <h3 className="font-semibold text-sm text-white">{preset.name}</h3>
+             <span className="text-xs text-white/50">{preset.downloads}</span>
+            </div>
+           </div>
+          ))}
+         </div>
+        </section>
        </div>
 
-       {/* LUT Preview Comparison */}
-       <Card className="cinematic-card">
-        <CardHeader className="">
-         <CardTitle className="text-lg font-semibold flex items-center gap-2 text-white">
-          LUT Preview
-         </CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
-         <div className="grid gap-4 sm:grid-cols-3">
+       <section className="space-y-4">
+        <p className="text-xs uppercase tracking-[0.3em] text-white/50">LUT Preview</p>
+        <div className="space-y-6">
+         <div className="flex flex-wrap gap-6">
           <div className="space-y-2">
-          <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
+           <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
             <span className="text-sm text-white/50">Original</span>
-          </div>
+           </div>
            <p className="text-center text-sm font-medium text-white">Before</p>
           </div>
           <div className="space-y-2">
-          <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
+           <div className="aspect-video rounded-lg bg-black/40 flex items-center justify-center">
             <span className="text-sm text-white/70">With LUT Applied</span>
            </div>
            <p className="text-center text-sm font-medium text-white/70">Preview</p>
           </div>
-          <div className="space-y-4">
-           <div className="flex items-center justify-between text-sm text-white/70">
-            <span className="flex items-center gap-2">
-             Exposure
-            </span>
-            <span>+0.3</span>
-           </div>
-           <div className="flex items-center justify-between text-sm text-white/70">
-            <span className="flex items-center gap-2">
-             Contrast
-            </span>
-            <span>+15</span>
-           </div>
-           <div className="flex items-center justify-between text-sm text-white/70">
-            <span className="flex items-center gap-2">
-             Saturation
-            </span>
-            <span>-5</span>
-           </div>
-           <div className="flex items-center justify-between text-sm text-white/70">
-            <span className="flex items-center gap-2">
-             Shadows
-            </span>
-            <span>+10</span>
-           </div>
+         </div>
+         <div className="space-y-3 text-sm text-white/70">
+          <div className="flex items-center justify-between">
+           <span>Exposure</span>
+           <span>+0.3</span>
+          </div>
+          <div className="flex items-center justify-between">
+           <span>Contrast</span>
+           <span>+15</span>
+          </div>
+          <div className="flex items-center justify-between">
+           <span>Saturation</span>
+           <span>-5</span>
+          </div>
+          <div className="flex items-center justify-between">
+           <span>Shadows</span>
+           <span>+10</span>
           </div>
          </div>
-        </CardContent>
-       </Card>
+        </div>
+       </section>
       </TabsContent>
      </Tabs>
     </div>
