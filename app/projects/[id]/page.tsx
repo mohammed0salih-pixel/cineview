@@ -571,7 +571,7 @@ export default function ProjectDetailPage() {
        )}
       </div>
       <div className="flex flex-wrap gap-2">
-       <Button className="bg-white/5 text-white/80 rounded-full hover:bg-white/10">
+       <Button className="bg-transparent text-white/60 rounded-full hover:text-white">
         Regenerate
        </Button>
        <Button className="bg-white text-black hover:bg-white/80 rounded-full">Export Package</Button>
@@ -599,11 +599,11 @@ export default function ProjectDetailPage() {
           <h2 className="text-2xl font-semibold text-white">Project Context</h2>
           <p className="text-sm text-white/70">{project.summary}</p>
          </div>
-         <div className="rounded-3xl p-4 text-sm text-white/70">
+         <div className="text-sm text-white/70 space-y-2">
           <div className="flex justify-between"><span>Status</span><span className="text-white">{project.status}</span></div>
-          <div className="mt-2 flex justify-between"><span>Client</span><span className="text-white">{project.client}</span></div>
-          <div className="mt-2 flex justify-between"><span>Owner</span><span className="text-white">{project.owner}</span></div>
-          <div className="mt-2 flex justify-between"><span>Last updated</span><span className="text-white">{project.lastUpdated}</span></div>
+          <div className="flex justify-between"><span>Client</span><span className="text-white">{project.client}</span></div>
+          <div className="flex justify-between"><span>Owner</span><span className="text-white">{project.owner}</span></div>
+          <div className="flex justify-between"><span>Last updated</span><span className="text-white">{project.lastUpdated}</span></div>
          </div>
         </div>
        </section>
@@ -611,7 +611,7 @@ export default function ProjectDetailPage() {
        <section className="space-y-4">
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">Asset Intake</p>
         <div className="grid gap-6 lg:grid-cols-2">
-         <div className="rounded-3xl p-6 text-center">
+         <div className="p-6 text-center">
           <p className="text-sm text-white/60">Drag and drop or browse</p>
           <Button className="mt-4 bg-white text-black hover:bg-white/80 rounded-full" size="sm">Select File</Button>
          </div>
@@ -621,7 +621,7 @@ export default function ProjectDetailPage() {
          </div>
         </div>
         <div className="flex flex-wrap gap-2">
-         <Button asChild className="bg-white/5 text-white/80 rounded-full hover:bg-white/10">
+         <Button asChild className="bg-transparent text-white/60 rounded-full hover:text-white">
           <Link href="/upload">Open Upload Flow</Link>
          </Button>
          <Button className="bg-white text-black hover:bg-white/80 rounded-full">Attach to Project</Button>
@@ -700,9 +700,9 @@ export default function ProjectDetailPage() {
           <div className="flex justify-between"><span>Noise</span><span className="text-white">{analysisSummary.technical.noise}%</span></div>
           <div className="flex justify-between"><span>Contrast</span><span className="text-white">{analysisSummary.technical.contrast}%</span></div>
          </div>
-         <div className="rounded-3xl p-4 text-sm text-white/60">
+         <div className="text-sm text-white/60 space-y-2">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">System Notes</p>
-          <p className="mt-3">Technical scoring reflects deterministic analysis of clarity, noise profile, and dynamic range.</p>
+          <p>Technical scoring reflects deterministic analysis of clarity, noise profile, and dynamic range.</p>
          </div>
         </div>
        </section>
@@ -721,14 +721,14 @@ export default function ProjectDetailPage() {
        </section>
 
        <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowVisualData((value) => !value)}
-                >
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowVisualData((value) => !value)}
+        >
          {showVisualData ? "Hide Data" : "Show Data"}
         </Button>
         {showVisualData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Data Snapshot</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
            <div className="flex justify-between"><span>Sharpness</span><span className="text-white">{analysisSummary.technical.sharpness}%</span></div>
@@ -781,23 +781,23 @@ export default function ProjectDetailPage() {
           <div className="flex justify-between"><span>Shot Type</span><span className="text-white">{analysisSummary.cinematic.shotType}</span></div>
           <div className="flex justify-between"><span>Genre</span><span className="text-white">{analysisSummary.cinematic.genre}</span></div>
          </div>
-         <div className="rounded-3xl p-4 text-sm text-white/60">
+         <div className="text-sm text-white/60 space-y-2">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Narrative Potential</p>
-          <p className="mt-3 text-2xl font-semibold text-white">{Math.round(analysisSummary.cinematic.narrativePotential * 100)}%</p>
-          <p className="mt-2 text-sm text-white/60">Calculated from composition and contrast alignment.</p>
+          <p className="text-2xl font-semibold text-white">{Math.round(analysisSummary.cinematic.narrativePotential * 100)}%</p>
+          <p className="text-sm text-white/60">Calculated from composition and contrast alignment.</p>
          </div>
         </div>
        </section>
 
        <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowCinematicData((value) => !value)}
-                >
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowCinematicData((value) => !value)}
+        >
          {showCinematicData ? "Hide Data" : "Show Data"}
         </Button>
         {showCinematicData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Data Snapshot</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
            <div className="flex justify-between"><span>Mood</span><span className="text-white">{analysisSummary.cinematic.mood}</span></div>
@@ -845,14 +845,14 @@ export default function ProjectDetailPage() {
        </section>
 
        <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowStoryboardData((value) => !value)}
-                >
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowStoryboardData((value) => !value)}
+        >
          {showStoryboardData ? "Hide Data" : "Show Data"}
         </Button>
         {showStoryboardData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Shot List</p>
           {displayStoryboard.length ? (
            <div className="mt-4 space-y-2">
@@ -894,14 +894,14 @@ export default function ProjectDetailPage() {
        </section>
 
        <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowMoodData((value) => !value)}
-                >
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowMoodData((value) => !value)}
+        >
          {showMoodData ? "Hide Data" : "Show Data"}
         </Button>
         {showMoodData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Moodboard Notes</p>
           {displayMoodboard.length ? (
            <div className="mt-4 space-y-2">
@@ -932,7 +932,7 @@ export default function ProjectDetailPage() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2 text-sm text-white/70">
-           <div className="rounded-3xl p-4">
+           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.3em] text-white/50">Key Opportunities</p>
             {decisionOutput.recommended_actions?.length ? (
              <ul className="mt-3 space-y-1">
@@ -944,7 +944,7 @@ export default function ProjectDetailPage() {
              <p className="mt-3 text-sm text-white/60">No immediate opportunities noted.</p>
             )}
            </div>
-           <div className="rounded-3xl p-4">
+           <div className="space-y-3">
             <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks &amp; Trade-offs</p>
             {decisionOutput.risk_flags?.length ? (
              <ul className="mt-3 space-y-1">
@@ -958,18 +958,18 @@ export default function ProjectDetailPage() {
            </div>
           </div>
 
-          <div className="rounded-3xl p-4 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white/70">
            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Confidence Meter</p>
-           <p className="mt-3 text-2xl font-semibold text-white">
+           <p className="text-2xl font-semibold text-white">
             {decisionOutput.confidence !== undefined ? Math.round(decisionOutput.confidence * 100) : 0}%
            </p>
-           <div className="mt-3 grid gap-2 sm:grid-cols-2">
+           <div className="grid gap-2 sm:grid-cols-2">
             <div className="flex justify-between"><span>Intent alignment</span><span className="text-white">{decisionOutput.intent_alignment !== undefined ? Math.round(decisionOutput.intent_alignment * 100) : 0}%</span></div>
             <div className="flex justify-between"><span>Composition</span><span className="text-white">{Math.round((decisionOutput.composition_score ?? 0) * 100)}%</span></div>
             <div className="flex justify-between"><span>Color</span><span className="text-white">{Math.round((decisionOutput.color_score ?? 0) * 100)}%</span></div>
             <div className="flex justify-between"><span>Signals</span><span className="text-white">{signalCount}</span></div>
            </div>
-           <p className="mt-3 text-xs text-white/50">Engine: {decisionOutput.engine_version ?? "decision-v1"}{decisionOutput.version ? ` · ${decisionOutput.version}` : ""}</p>
+           <p className="text-xs text-white/50">Engine: {decisionOutput.engine_version ?? "decision-v1"}{decisionOutput.version ? ` · ${decisionOutput.version}` : ""}</p>
           </div>
 
           <p className="text-xs text-white/50">
@@ -988,9 +988,9 @@ export default function ProjectDetailPage() {
          <div>
           <Label className="text-white/60">Select version A</Label>
           <Select value={leftVersion} onValueChange={setLeftVersion}>
-           <SelectTrigger className="bg-white/5 text-white border-0 shadow-none">
-            <SelectValue />
-           </SelectTrigger>
+          <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
+           <SelectValue />
+          </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
             {displayInsightsVersions.map((v) => (
              <SelectItem key={v.version} value={v.version}>{v.version} · {v.createdAt}</SelectItem>
@@ -1001,9 +1001,9 @@ export default function ProjectDetailPage() {
          <div>
           <Label className="text-white/60">Select version B</Label>
           <Select value={rightVersion} onValueChange={setRightVersion}>
-           <SelectTrigger className="bg-white/5 text-white border-0 shadow-none">
-            <SelectValue />
-           </SelectTrigger>
+          <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
+           <SelectValue />
+          </SelectTrigger>
            <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
             {displayInsightsVersions.map((v) => (
              <SelectItem key={v.version} value={v.version}>{v.version} · {v.createdAt}</SelectItem>
@@ -1014,10 +1014,10 @@ export default function ProjectDetailPage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-         <div className="rounded-3xl p-4">
+         <div className="space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Path {left.version}</p>
-          <p className="mt-3 text-sm text-white">{left.decisionSummary}</p>
-          <div className="mt-4 text-sm text-white/70">
+          <p className="text-sm text-white">{left.decisionSummary}</p>
+          <div className="text-sm text-white/70 space-y-2">
            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks</p>
            {left.riskFlags.length ? (
             <ul className="mt-2 space-y-1">
@@ -1030,10 +1030,10 @@ export default function ProjectDetailPage() {
            )}
           </div>
          </div>
-         <div className="rounded-3xl p-4">
+         <div className="space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Path {right.version}</p>
-          <p className="mt-3 text-sm text-white">{right.decisionSummary}</p>
-          <div className="mt-4 text-sm text-white/70">
+          <p className="text-sm text-white">{right.decisionSummary}</p>
+          <div className="text-sm text-white/70 space-y-2">
            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks</p>
            {right.riskFlags.length ? (
             <ul className="mt-2 space-y-1">
@@ -1048,9 +1048,9 @@ export default function ProjectDetailPage() {
          </div>
         </div>
 
-        <div className="rounded-3xl p-4">
+        <div className="space-y-4">
          <p className="text-sm font-medium text-white">Comparison Highlights</p>
-         <div className="mt-4 grid gap-4 sm:grid-cols-2 text-sm text-white/70">
+         <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/70">
           <div>
            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Added Actions</p>
            {diff.added.length ? diff.added.map((item) => (
@@ -1080,14 +1080,14 @@ export default function ProjectDetailPage() {
        </section>
 
        <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowInsightsData((value) => !value)}
-                >
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowInsightsData((value) => !value)}
+        >
          {showInsightsData ? "Hide Data" : "Show Data"}
         </Button>
         {showInsightsData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Decision Metrics</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
            <div className="flex justify-between"><span>Confidence</span><span className="text-white">{decisionOutput?.confidence !== undefined ? Math.round(decisionOutput.confidence * 100) : 0}%</span></div>
@@ -1121,23 +1121,23 @@ export default function ProjectDetailPage() {
            <p className="text-sm font-medium text-white">Production Handoff</p>
            <p className="text-xs text-white/60">Shot list + Settings + Risks</p>
           </div>
-          <Button className="bg-white/5 text-white/80 rounded-full hover:bg-white/10" size="sm">Export ZIP</Button>
+          <Button className="bg-transparent text-white/60 rounded-full hover:text-white" size="sm">Export ZIP</Button>
          </div>
         </div>
-        <Button asChild className="bg-white/5 text-white/80 rounded-full hover:bg-white/10">
+        <Button asChild className="bg-transparent text-white/60 rounded-full hover:text-white">
          <Link href="/export">Go to Export Hub</Link>
         </Button>
-       </section>
+      </section>
 
-       <div className="pt-2">
-                <Button
-                  className="bg-transparent text-white/60 rounded-full hover:text-white"
-                  onClick={() => setShowExportData((value) => !value)}
-                >
+      <div className="pt-2">
+        <Button
+         className="bg-transparent text-white/60 rounded-full hover:text-white"
+         onClick={() => setShowExportData((value) => !value)}
+        >
          {showExportData ? "Hide Data" : "Show Data"}
         </Button>
         {showExportData && (
-         <div className="mt-8 rounded-3xl p-6 text-sm text-white/70">
+         <div className="mt-8 space-y-4 text-sm text-white/70">
           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Export Metadata</p>
           {displayTraceability ? (
            <div className="mt-4 grid gap-3 sm:grid-cols-2">
