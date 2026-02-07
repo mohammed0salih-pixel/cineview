@@ -926,36 +926,75 @@ export default function ProjectDetailPage() {
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">AI Insights</p>
         <h2 className="text-2xl font-semibold text-white">Creative Brief</h2>
         {decisionOutput ? (
-         <div className="space-y-8">
+         <div className="space-y-10">
           <div className="space-y-3">
            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Creative Direction</p>
            <p className="text-lg text-white">{decisionOutput.decision_summary || "Decision summary unavailable."}</p>
+           <p className="text-sm text-white/70">
+            {decisionOutput.recommended_actions?.length
+             ? decisionOutput.recommended_actions.join(". ")
+             : "No immediate opportunities noted."}
+           </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2 text-sm text-white/70">
-           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Key Opportunities</p>
-            {decisionOutput.recommended_actions?.length ? (
-             <ul className="mt-3 space-y-1">
-              {decisionOutput.recommended_actions.map((action) => (
-               <li key={action}>{action}</li>
-              ))}
-             </ul>
-            ) : (
-             <p className="mt-3 text-sm text-white/60">No immediate opportunities noted.</p>
-            )}
+          <div className="space-y-3">
+           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks</p>
+           <p className="text-sm text-white/70">
+            {decisionOutput.risk_flags?.length ? decisionOutput.risk_flags.join(". ") : "No major risks detected."}
+           </p>
+          </div>
+
+          <div className="space-y-4">
+           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Alternative Visual Paths</p>
+           <div className="flex flex-col gap-4 sm:flex-row sm:gap-8">
+            <div className="space-y-2">
+             <Label className="text-white/60">Select version A</Label>
+             <Select value={leftVersion} onValueChange={setLeftVersion}>
+              <SelectTrigger className="bg-transparent text-white border-0 shadow-none px-0">
+               <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+               {displayInsightsVersions.map((v) => (
+                <SelectItem key={v.version} value={v.version}>
+                 {v.version} · {v.createdAt}
+                </SelectItem>
+               ))}
+              </SelectContent>
+             </Select>
+            </div>
+            <div className="space-y-2">
+             <Label className="text-white/60">Select version B</Label>
+             <Select value={rightVersion} onValueChange={setRightVersion}>
+              <SelectTrigger className="bg-transparent text-white border-0 shadow-none px-0">
+               <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+               {displayInsightsVersions.map((v) => (
+                <SelectItem key={v.version} value={v.version}>
+                 {v.version} · {v.createdAt}
+                </SelectItem>
+               ))}
+              </SelectContent>
+             </Select>
+            </div>
            </div>
-           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks &amp; Trade-offs</p>
-            {decisionOutput.risk_flags?.length ? (
-             <ul className="mt-3 space-y-1">
-              {decisionOutput.risk_flags.map((risk) => (
-               <li key={risk}>{risk}</li>
-              ))}
-             </ul>
-            ) : (
-             <p className="mt-3 text-sm text-white/60">No major risks detected.</p>
-            )}
+           <div className="space-y-3 text-sm text-white/70">
+            <p>
+             <span className="text-white">Path {left.version}:</span> {left.decisionSummary}
+            </p>
+            <p>{left.riskFlags.length ? `Risks: ${left.riskFlags.join(". ")}` : "Risks: None listed."}</p>
+           </div>
+           <div className="space-y-3 text-sm text-white/70">
+            <p>
+             <span className="text-white">Path {right.version}:</span> {right.decisionSummary}
+            </p>
+            <p>{right.riskFlags.length ? `Risks: ${right.riskFlags.join(". ")}` : "Risks: None listed."}</p>
+           </div>
+           <div className="space-y-2 text-sm text-white/70">
+            <p>Added actions: {diff.added.length ? diff.added.join(". ") : "No changes."}</p>
+            <p>Removed actions: {diff.removed.length ? diff.removed.join(". ") : "No changes."}</p>
+            <p>New risks: {diff.riskAdded.length ? diff.riskAdded.join(". ") : "No changes."}</p>
+            <p>Resolved risks: {diff.riskRemoved.length ? diff.riskRemoved.join(". ") : "No changes."}</p>
            </div>
           </div>
 
@@ -964,120 +1003,18 @@ export default function ProjectDetailPage() {
            <p className="text-2xl font-semibold text-white">
             {decisionOutput.confidence !== undefined ? Math.round(decisionOutput.confidence * 100) : 0}%
            </p>
-           <div className="grid gap-2 sm:grid-cols-2">
-            <div className="flex justify-between"><span>Intent alignment</span><span className="text-white">{decisionOutput.intent_alignment !== undefined ? Math.round(decisionOutput.intent_alignment * 100) : 0}%</span></div>
-            <div className="flex justify-between"><span>Composition</span><span className="text-white">{Math.round((decisionOutput.composition_score ?? 0) * 100)}%</span></div>
-            <div className="flex justify-between"><span>Color</span><span className="text-white">{Math.round((decisionOutput.color_score ?? 0) * 100)}%</span></div>
-            <div className="flex justify-between"><span>Signals</span><span className="text-white">{signalCount}</span></div>
-           </div>
+           <p>Intent alignment: {decisionOutput.intent_alignment !== undefined ? Math.round(decisionOutput.intent_alignment * 100) : 0}%.</p>
+           <p>Composition: {Math.round((decisionOutput.composition_score ?? 0) * 100)}% · Color: {Math.round((decisionOutput.color_score ?? 0) * 100)}% · Signals: {signalCount}.</p>
            <p className="text-xs text-white/50">Engine: {decisionOutput.engine_version ?? "decision-v1"}{decisionOutput.version ? ` · ${decisionOutput.version}` : ""}</p>
           </div>
 
           <p className="text-xs text-white/50">
-           This decision is generated based on visual signals derived from composition, color, motion, and cinematic patterns.
+           This decision is generated based on visual signals detected in the source material.
           </p>
          </div>
         ) : (
          <p className="text-sm text-white/60">No decision output generated yet.</p>
         )}
-       </section>
-
-       <section className="space-y-6">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Alternative Visual Paths</p>
-        <h3 className="text-xl font-semibold text-white">Version Comparison</h3>
-        <div className="grid gap-4 sm:grid-cols-2">
-         <div>
-          <Label className="text-white/60">Select version A</Label>
-          <Select value={leftVersion} onValueChange={setLeftVersion}>
-          <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
-           <SelectValue />
-          </SelectTrigger>
-           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-            {displayInsightsVersions.map((v) => (
-             <SelectItem key={v.version} value={v.version}>{v.version} · {v.createdAt}</SelectItem>
-            ))}
-           </SelectContent>
-          </Select>
-         </div>
-         <div>
-          <Label className="text-white/60">Select version B</Label>
-          <Select value={rightVersion} onValueChange={setRightVersion}>
-          <SelectTrigger className="bg-transparent text-white border-0 shadow-none">
-           <SelectValue />
-          </SelectTrigger>
-           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-            {displayInsightsVersions.map((v) => (
-             <SelectItem key={v.version} value={v.version}>{v.version} · {v.createdAt}</SelectItem>
-            ))}
-           </SelectContent>
-          </Select>
-         </div>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Path {left.version}</p>
-          <p className="text-sm text-white">{left.decisionSummary}</p>
-          <div className="text-sm text-white/70 space-y-2">
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks</p>
-           {left.riskFlags.length ? (
-            <ul className="mt-2 space-y-1">
-             {left.riskFlags.map((risk) => (
-              <li key={risk}>{risk}</li>
-             ))}
-            </ul>
-           ) : (
-            <p className="mt-2 text-white/60">No risks listed.</p>
-           )}
-          </div>
-         </div>
-         <div className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Path {right.version}</p>
-          <p className="text-sm text-white">{right.decisionSummary}</p>
-          <div className="text-sm text-white/70 space-y-2">
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Risks</p>
-           {right.riskFlags.length ? (
-            <ul className="mt-2 space-y-1">
-             {right.riskFlags.map((risk) => (
-              <li key={risk}>{risk}</li>
-             ))}
-            </ul>
-           ) : (
-            <p className="mt-2 text-white/60">No risks listed.</p>
-           )}
-          </div>
-         </div>
-        </div>
-
-        <div className="space-y-4">
-         <p className="text-sm font-medium text-white">Comparison Highlights</p>
-         <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/70">
-          <div>
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Added Actions</p>
-           {diff.added.length ? diff.added.map((item) => (
-            <div key={item}>{item}</div>
-           )) : <p className="text-white/50">No changes</p>}
-          </div>
-          <div>
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Removed Actions</p>
-           {diff.removed.length ? diff.removed.map((item) => (
-            <div key={item}>{item}</div>
-           )) : <p className="text-white/50">No changes</p>}
-          </div>
-          <div>
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">New Risks</p>
-           {diff.riskAdded.length ? diff.riskAdded.map((item) => (
-            <div key={item}>{item}</div>
-           )) : <p className="text-white/50">No changes</p>}
-          </div>
-          <div>
-           <p className="text-xs uppercase tracking-[0.3em] text-white/50">Resolved Risks</p>
-           {diff.riskRemoved.length ? diff.riskRemoved.map((item) => (
-            <div key={item}>{item}</div>
-           )) : <p className="text-white/50">No changes</p>}
-          </div>
-         </div>
-        </div>
        </section>
 
        <div className="pt-2">
