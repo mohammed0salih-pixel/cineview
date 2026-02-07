@@ -242,6 +242,11 @@
   .fade-soft {
     animation: fade-soft 700ms ease-out both;
   }
+
+  :where(div, section, header, footer, nav, main, article, aside, ul, ol, li, span, p, a, button, input, textarea, select)[class*="border"]:not(.keep-border) {
+    border-width: 0 !important;
+    border-style: none !important;
+  }
   @keyframes fade-soft {
     from {
       opacity: 0;
