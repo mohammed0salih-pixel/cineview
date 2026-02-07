@@ -694,15 +694,12 @@ export default function ProjectDetailPage() {
        <section className="space-y-4">
         <p className="text-xs uppercase tracking-[0.4em] text-white/50">Visual Intelligence</p>
         <h2 className="text-2xl font-semibold text-white">Technical Summary</h2>
-        <div className="grid gap-6 lg:grid-cols-2">
-         <div className="space-y-3 text-sm text-white/70">
-          <div className="flex justify-between"><span>Sharpness</span><span className="text-white">{analysisSummary.technical.sharpness}%</span></div>
-          <div className="flex justify-between"><span>Noise</span><span className="text-white">{analysisSummary.technical.noise}%</span></div>
-          <div className="flex justify-between"><span>Contrast</span><span className="text-white">{analysisSummary.technical.contrast}%</span></div>
-         </div>
-         <div className="text-sm text-white/60 space-y-2">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/50">System Notes</p>
-          <p>Technical scoring reflects deterministic analysis of clarity, noise profile, and dynamic range.</p>
+        <div className="max-w-2xl space-y-4 text-sm text-white/70">
+         <p>Technical scoring reflects deterministic analysis of clarity, noise profile, and dynamic range.</p>
+         <p className="text-white/60">Quantitative scores are available under “Show Data.”</p>
+         <div className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Focus Areas</p>
+          <p>Sharpness, noise profile, contrast stability.</p>
          </div>
         </div>
        </section>
@@ -771,23 +768,18 @@ export default function ProjectDetailPage() {
       </TabsContent>
 
             <TabsContent value="cinematic" className="space-y-12">
-       <section className="space-y-4">
-        <p className="text-xs uppercase tracking-[0.4em] text-white/50">Cinematic Reading</p>
-        <h2 className="text-2xl font-semibold text-white">Narrative Signals</h2>
-        <div className="grid gap-6 lg:grid-cols-2">
-         <div className="space-y-3 text-sm text-white/70">
-          <div className="flex justify-between"><span>Mood</span><span className="text-white">{analysisSummary.cinematic.mood}</span></div>
-          <div className="flex justify-between"><span>Energy</span><span className="text-white">{analysisSummary.cinematic.energy}</span></div>
-          <div className="flex justify-between"><span>Shot Type</span><span className="text-white">{analysisSummary.cinematic.shotType}</span></div>
-          <div className="flex justify-between"><span>Genre</span><span className="text-white">{analysisSummary.cinematic.genre}</span></div>
-         </div>
-         <div className="text-sm text-white/60 space-y-2">
-          <p className="text-xs uppercase tracking-[0.3em] text-white/50">Narrative Potential</p>
-          <p className="text-2xl font-semibold text-white">{Math.round(analysisSummary.cinematic.narrativePotential * 100)}%</p>
-          <p className="text-sm text-white/60">Calculated from composition and contrast alignment.</p>
-         </div>
+      <section className="space-y-4">
+       <p className="text-xs uppercase tracking-[0.4em] text-white/50">Cinematic Reading</p>
+       <h2 className="text-2xl font-semibold text-white">Narrative Signals</h2>
+       <div className="max-w-2xl space-y-4 text-sm text-white/70">
+        <p>The cinematic reading synthesizes mood, energy, shot type, and genre cues into a single narrative profile.</p>
+        <p className="text-white/60">Narrative potential is computed from composition and contrast alignment. View the quantified profile under “Show Data.”</p>
+        <div className="space-y-2">
+         <p className="text-xs uppercase tracking-[0.3em] text-white/50">Signal Families</p>
+         <p>Mood, energy, shot type, genre, narrative potential.</p>
         </div>
-       </section>
+       </div>
+      </section>
 
        <div className="pt-2">
         <Button
