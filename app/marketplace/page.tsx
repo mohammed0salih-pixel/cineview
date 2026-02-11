@@ -3,6 +3,8 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { 
   Select, 
@@ -12,6 +14,18 @@ import {
   SelectValue 
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { 
+  Search, 
+  Filter,
+  ShoppingCart,
+  ImageIcon,
+  Video,
+  Heart,
+  Download,
+  Upload,
+  Star,
+  User
+} from "lucide-react"
 import { useState } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -184,19 +198,21 @@ export default function MarketplacePage() {
           {/* Page Header */}
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl font-display">
+              <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                 Stock Marketplace
               </h1>
-              <p className="mt-2 text-white/60">
+              <p className="mt-2 text-muted-foreground">
                 Buy and sell professional photos and videos
               </p>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" className="bg-transparent text-white/70 rounded-full">
+              <Button variant="outline" className="border-border text-foreground hover:bg-secondary bg-transparent">
+                <ShoppingCart className="mr-2 h-4 w-4" />
                 Cart ({cart.length})
               </Button>
-              <Button asChild className="bg-white text-black hover:bg-white/80 rounded-full">
+              <Button asChild className="bg-primary text-background hover:bg-primary-dark">
                 <Link href="/marketplace/sell">
+                  <Upload className="mr-2 h-4 w-4" />
                   Sell Content
                 </Link>
               </Button>
@@ -205,14 +221,16 @@ export default function MarketplacePage() {
 
           {/* Tabs */}
           <Tabs value={contentType} onValueChange={setContentType} className="mb-8">
-            <TabsList className="inline-flex flex-wrap gap-4 bg-transparent p-0">
-              <TabsTrigger value="all" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+            <TabsList className="bg-secondary">
+              <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-background">
                 All
               </TabsTrigger>
-              <TabsTrigger value="photo" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+              <TabsTrigger value="photo" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                <ImageIcon className="mr-2 h-4 w-4" />
                 Photos
               </TabsTrigger>
-              <TabsTrigger value="video" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+              <TabsTrigger value="video" className="data-[state=active]:bg-primary data-[state=active]:text-background">
+                <Video className="mr-2 h-4 w-4" />
                 Videos
               </TabsTrigger>
             </TabsList>
@@ -222,28 +240,30 @@ export default function MarketplacePage() {
           <div className="mb-8 space-y-4">
             <div className="flex gap-4">
               <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="text"
                   placeholder="Search stock content..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-0 bg-transparent border-0 text-white/80 placeholder:text-white/40"
+                  className="pl-10 border-border bg-secondary/50 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-white/50">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Filter className="h-4 w-4" />
                 <span>Filters:</span>
               </div>
 
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-[160px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[160px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {categories.map((cat) => (
-                    <SelectItem key={cat.value} value={cat.value} className="text-white/80">
+                    <SelectItem key={cat.value} value={cat.value} className="text-foreground hover:bg-secondary">
                       {cat.label}
                     </SelectItem>
                   ))}
@@ -251,12 +271,12 @@ export default function MarketplacePage() {
               </Select>
 
               <Select value={license} onValueChange={setLicense}>
-                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[140px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {licenses.map((lic) => (
-                    <SelectItem key={lic.value} value={lic.value} className="text-white/80">
+                    <SelectItem key={lic.value} value={lic.value} className="text-foreground hover:bg-secondary">
                       {lic.label}
                     </SelectItem>
                   ))}
@@ -264,12 +284,12 @@ export default function MarketplacePage() {
               </Select>
 
               <Select value={sort} onValueChange={setSort}>
-                <SelectTrigger className="w-[160px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[160px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {sortOptions.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value} className="text-white/80">
+                    <SelectItem key={opt.value} value={opt.value} className="text-foreground hover:bg-secondary">
                       {opt.label}
                     </SelectItem>
                   ))}
@@ -280,62 +300,110 @@ export default function MarketplacePage() {
 
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-sm text-white/50">
-              Showing <span className="text-white font-medium">{sortedItems.length}</span> results
+            <p className="text-sm text-muted-foreground">
+              Showing <span className="text-primary font-medium">{sortedItems.length}</span> results
             </p>
           </div>
 
           {/* Stock Grid */}
-          <div className="space-y-8">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {sortedItems.map((item) => (
-              <div key={item.id} className="space-y-3">
-                <div className="aspect-[4/3] rounded-3xl bg-gradient-to-br from-white/10 via-black/30 to-black/70" />
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-white/50">
-                    <span>{item.type}{item.featured ? " · Featured" : ""}</span>
-                    <button
-                      type="button"
-                      onClick={() => toggleFavorite(item.id)}
-                      className="text-white/50 hover:text-white"
-                    >
-                      {favorites.includes(item.id) ? "Saved" : "Save"}
-                    </button>
+              <Card key={item.id} className="group border-border bg-card overflow-hidden transition-all hover:border-primary/50">
+                {/* Preview */}
+                <div className="relative aspect-[4/3] bg-secondary/50">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {item.type === "photo" ? (
+                      <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+                    ) : (
+                      <Video className="h-12 w-12 text-muted-foreground/30" />
+                    )}
                   </div>
-                  <h3 className="font-semibold text-white line-clamp-1">{item.title}</h3>
-                  <p className="text-sm text-white/60">{item.author}</p>
-                  <p className="text-xs text-white/50">
-                    {item.category} · {item.license} · {item.downloads.toLocaleString()} downloads · {item.rating}
-                  </p>
+
+                  {/* Badges */}
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <Badge className="bg-background/80 text-foreground">
+                      {item.type === "photo" ? <ImageIcon className="mr-1 h-3 w-3" /> : <Video className="mr-1 h-3 w-3" />}
+                      {item.type}
+                    </Badge>
+                    {item.featured && (
+                      <Badge className="bg-primary text-background">Featured</Badge>
+                    )}
+                  </div>
+
+                  {/* Favorite Button */}
+                  <button
+                    type="button"
+                    onClick={() => toggleFavorite(item.id)}
+                    className={`absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+                      favorites.includes(item.id)
+                        ? "bg-primary text-background"
+                        : "bg-background/80 text-foreground hover:bg-primary hover:text-background"
+                    }`}
+                  >
+                    <Heart className={`h-4 w-4 ${favorites.includes(item.id) ? "fill-current" : ""}`} />
+                  </button>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="text-2xl font-bold text-white">${item.price}</div>
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-foreground line-clamp-1">{item.title}</h3>
+                  
+                  <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                    <User className="h-3 w-3" />
+                    <span>{item.author}</span>
+                  </div>
+
+                  <div className="mt-2 flex items-center justify-between">
+                    <Badge variant="outline" className="border-border text-xs text-muted-foreground">
+                      {item.category}
+                    </Badge>
+                    <div className="flex items-center gap-1 text-sm">
+                      <Star className="h-3 w-3 fill-gold text-primary" />
+                      <span className="text-foreground">{item.rating}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Download className="h-3 w-3" />
+                    <span>{item.downloads.toLocaleString()} downloads</span>
+                    <span className="text-border">|</span>
+                    <span>{item.license}</span>
+                  </div>
+                </CardContent>
+
+                <CardFooter className="p-4 pt-0 flex items-center justify-between">
+                  <div className="text-2xl font-bold text-primary">${item.price}</div>
                   <Button
                     size="sm"
                     onClick={() => toggleCart(item.id)}
-                    className={cart.includes(item.id)
-                      ? "bg-transparent text-white/70 hover:text-white"
-                      : "bg-white text-black hover:bg-white/80"
+                    className={cart.includes(item.id) 
+                      ? "bg-secondary text-foreground hover:bg-secondary/80" 
+                      : "bg-primary text-background hover:bg-primary-dark"
                     }
                   >
-                    {cart.includes(item.id) ? "In Cart" : "Add"}
+                    {cart.includes(item.id) ? (
+                      <>In Cart</>
+                    ) : (
+                      <>
+                        <ShoppingCart className="mr-1 h-3 w-3" />
+                        Add
+                      </>
+                    )}
                   </Button>
-                </div>
-              </div>
+                </CardFooter>
+              </Card>
             ))}
           </div>
 
           {sortedItems.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-white/50">No results found. Try adjusting your filters.</p>
+              <p className="text-muted-foreground">No results found. Try adjusting your filters.</p>
             </div>
           )}
 
           {/* Load More */}
           {sortedItems.length > 0 && (
             <div className="mt-12 text-center">
-              <Button variant="outline" className="bg-transparent text-white/70 rounded-full">
+              <Button variant="outline" className="border-border text-foreground hover:bg-secondary hover:text-primary bg-transparent">
                 Load More
               </Button>
             </div>

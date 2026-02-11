@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   DropdownMenu,
@@ -20,6 +24,40 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Users,
+  MessageSquare,
+  FileText,
+  CheckSquare,
+  Plus,
+  Search,
+  Send,
+  Paperclip,
+  ImageIcon,
+  Video,
+  MoreVertical,
+  Bell,
+  Settings,
+  UserPlus,
+  Crown,
+  Shield,
+  Eye,
+  Edit3,
+  Trash2,
+  Download,
+  ExternalLink,
+  Clock,
+  Check,
+  X,
+  Sparkles,
+  FolderOpen,
+  LinkIcon,
+  AtSign,
+  Smile,
+  ThumbsUp,
+  Heart,
+  Reply,
+} from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
@@ -141,44 +179,48 @@ export default function TeamPage() {
           {/* Page Header */}
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-xs font-medium text-white/50 uppercase tracking-wider mb-4">
-                Team Hub
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 mb-4">
+                <Users className="h-3.5 w-3.5 text-primary" />
+                <span className="text-xs font-medium text-primary uppercase tracking-wider">Team Hub</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white font-display">
-                Team <span className="text-white">Collaboration</span>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+                Team <span className="text-gradient-gold">Collaboration</span>
               </h1>
-              <p className="mt-2 text-white/60">
+              <p className="mt-2 text-muted-foreground">
                 Communicate, share files, and manage approvals with your team
               </p>
             </div>
             <div className="flex gap-2">
-              <Button variant="outline" className="bg-transparent text-white/70">
-                Notifications <span className="ml-2 text-xs uppercase tracking-[0.3em]">3</span>
+              <Button variant="outline" className="border-border/50 bg-transparent">
+                <Bell className="mr-2 h-4 w-4" />
+                Notifications
+                <Badge className="ml-2 bg-primary text-primary-foreground">3</Badge>
               </Button>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button className="bg-white text-black hover:bg-white/80">
+                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold">
+                    <UserPlus className="mr-2 h-4 w-4" />
                     Invite Member
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="bg-[#0b0b0c] border-0 shadow-none">
+                <DialogContent className="bg-card border-border/50">
                   <DialogHeader>
                     <DialogTitle>Invite Team Member</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 pt-4">
                     <div>
-                      <label className="text-sm font-medium text-white/70">Email Address</label>
-                      <Input placeholder="colleague@email.com" className="mt-1 bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40" />
+                      <label className="text-sm font-medium">Email Address</label>
+                      <Input placeholder="colleague@email.com" className="mt-1 bg-secondary/30 border-border/50" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-white/70">Role</label>
-                      <Input placeholder="e.g., Editor, Cinematographer" className="mt-1 bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40" />
+                      <label className="text-sm font-medium">Role</label>
+                      <Input placeholder="e.g., Editor, Cinematographer" className="mt-1 bg-secondary/30 border-border/50" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-white/70">Personal Message (Optional)</label>
-                      <Textarea placeholder="Add a welcome message..." className="mt-1 bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40" />
+                      <label className="text-sm font-medium">Personal Message (Optional)</label>
+                      <Textarea placeholder="Add a welcome message..." className="mt-1 bg-secondary/30 border-border/50" />
                     </div>
-                    <Button className="w-full bg-white text-black hover:bg-white/80">
+                    <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                       Send Invitation
                     </Button>
                   </div>
@@ -187,238 +229,380 @@ export default function TeamPage() {
             </div>
           </div>
 
-          <div className="space-y-12">
-            <section className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/50">
-                Team Members · {teamMembers.length}
-              </p>
-              <div className="space-y-3 text-sm text-white/70">
-                {teamMembers.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white">{member.name}</p>
-                      <p className="text-xs text-white/50">{member.role}</p>
-                    </div>
-                    <span className="text-xs uppercase tracking-[0.3em] text-white/40">{member.status}</span>
+          <div className="grid gap-6 lg:grid-cols-4">
+            {/* Sidebar - Team Members */}
+            <div className="space-y-6">
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border/50 pb-3">
+                  <CardTitle className="text-sm font-semibold flex items-center justify-between">
+                    Team Members
+                    <Badge variant="secondary" className="bg-secondary/50">{teamMembers.length}</Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-2">
+                  <div className="space-y-1">
+                    {teamMembers.map((member) => (
+                      <div
+                        key={member.id}
+                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-secondary/30 transition-colors cursor-pointer"
+                      >
+                        <div className="relative">
+                          <Avatar className="h-9 w-9">
+                            <AvatarImage src={member.avatar || "/placeholder.svg"} />
+                            <AvatarFallback>{member.name[0]}</AvatarFallback>
+                          </Avatar>
+                          <span
+                            className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-card ${
+                              member.status === "online"
+                                ? "bg-green-500"
+                                : member.status === "away"
+                                ? "bg-yellow-500"
+                                : "bg-gray-500"
+                            }`}
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{member.name}</p>
+                          <p className="text-xs text-muted-foreground truncate">{member.role}</p>
+                        </div>
+                        {member.id === 1 && <Crown className="h-4 w-4 text-primary" />}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
+                </CardContent>
+              </Card>
 
-            <section className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Client Portal</p>
-              <div className="space-y-2 text-sm text-white/70">
-                <p className="text-white">{clientPortal.client.name}</p>
-                <p className="text-white/50">{clientPortal.project}</p>
-                <div className="flex items-center justify-between">
-                  <span>Shared Items</span>
-                  <span className="text-white">{clientPortal.sharedItems}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Pending Feedback</span>
-                  <span className="text-white">{clientPortal.pendingFeedback}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Last Activity</span>
-                  <span className="text-white">{clientPortal.lastActivity}</span>
-                </div>
-              </div>
-              <Button variant="outline" className="bg-transparent text-white/70">
-                Open Client Portal
-              </Button>
-            </section>
+              {/* Client Portal Card */}
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border/50 pb-3">
+                  <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                    <ExternalLink className="h-4 w-4 text-primary" />
+                    Client Portal
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Avatar className="h-12 w-12 rounded-lg">
+                      <AvatarImage src={clientPortal.client.logo || "/placeholder.svg"} />
+                      <AvatarFallback className="rounded-lg">MT</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium text-sm">{clientPortal.client.name}</p>
+                      <p className="text-xs text-muted-foreground">{clientPortal.project}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Shared Items</span>
+                      <span>{clientPortal.sharedItems}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Pending Feedback</span>
+                      <Badge variant="secondary" className="bg-orange-500/20 text-orange-400">{clientPortal.pendingFeedback}</Badge>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Last Activity</span>
+                      <span>{clientPortal.lastActivity}</span>
+                    </div>
+                  </div>
+                  <Button variant="outline" className="w-full mt-4 border-border/50 bg-transparent">
+                    Open Client Portal
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
 
-            <section className="space-y-6">
+            {/* Main Content */}
+            <div className="lg:col-span-3">
               <Tabs defaultValue="chat" className="space-y-6">
-                <TabsList className="bg-transparent p-0">
-                  <TabsTrigger value="chat" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                <TabsList className="bg-secondary/30 border border-border/50">
+                  <TabsTrigger value="chat" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                    <MessageSquare className="mr-2 h-4 w-4" />
                     Chat
                   </TabsTrigger>
-                  <TabsTrigger value="files" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                  <TabsTrigger value="files" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                    <FileText className="mr-2 h-4 w-4" />
                     Files
                   </TabsTrigger>
-                  <TabsTrigger value="approvals" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
-                    Approvals <span className="ml-2 text-xs uppercase tracking-[0.3em]">2</span>
+                  <TabsTrigger value="approvals" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                    <CheckSquare className="mr-2 h-4 w-4" />
+                    Approvals
+                    <Badge className="ml-2 bg-orange-500/20 text-orange-400">2</Badge>
                   </TabsTrigger>
                 </TabsList>
 
                 {/* Chat Tab */}
-                <TabsContent value="chat" className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-semibold text-white"># general</span>
-                      <span className="text-xs uppercase tracking-[0.3em] text-white/50">{teamMembers.length} members</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" className="text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                        Search
-                      </Button>
-                      <Button variant="ghost" size="sm" className="text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                        Settings
-                      </Button>
-                    </div>
-                  </div>
-
-                  <ScrollArea className="h-[400px]">
-                    <div className="space-y-6">
-                      {messages.map((message) => (
-                        <div key={message.id} className="group flex gap-3">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-semibold text-sm text-white">{message.user.name}</span>
-                              <span className="text-xs text-white/50">{message.timestamp}</span>
-                            </div>
-                            <p className="text-sm text-white/80 leading-relaxed">{message.content}</p>
-
-                            {message.attachments.length > 0 && (
-                              <div className="mt-2 space-y-2">
-                                {message.attachments.map((attachment, i) => (
-                                  <div key={i} className="inline-flex items-center gap-3 text-sm text-white/60">
-                                    <span>{attachment.name}</span>
-                                    <span className="text-xs text-white/40">{attachment.size}</span>
-                                    <Button variant="ghost" size="sm" className="text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                                      Download
-                                    </Button>
-                                  </div>
-                                ))}
+                <TabsContent value="chat" className="space-y-0">
+                  <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                    <CardHeader className="border-b border-border/50 py-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg font-semibold"># general</span>
+                          <Badge variant="secondary" className="bg-secondary/50">{teamMembers.length} members</Badge>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Search className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Settings className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <ScrollArea className="h-[400px]">
+                      <div className="p-4 space-y-6">
+                        {messages.map((message) => (
+                          <div key={message.id} className="group flex gap-3">
+                            <Avatar className="h-9 w-9 shrink-0">
+                              <AvatarImage src={message.user.avatar || "/placeholder.svg"} />
+                              <AvatarFallback>{message.user.name[0]}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold text-sm">{message.user.name}</span>
+                                <span className="text-xs text-muted-foreground">{message.timestamp}</span>
                               </div>
-                            )}
+                              <p className="text-sm text-foreground/90 leading-relaxed">{message.content}</p>
+                              
+                              {message.attachments.length > 0 && (
+                                <div className="mt-2 space-y-2">
+                                  {message.attachments.map((attachment, i) => (
+                                    <div
+                                      key={i}
+                                      className="inline-flex items-center gap-2 p-2 rounded-lg bg-secondary/30 border border-border/50"
+                                    >
+                                      {attachment.type === "image" ? (
+                                        <ImageIcon className="h-4 w-4 text-blue-400" />
+                                      ) : (
+                                        <Video className="h-4 w-4 text-purple-400" />
+                                      )}
+                                      <span className="text-sm">{attachment.name}</span>
+                                      <span className="text-xs text-muted-foreground">{attachment.size}</span>
+                                      <Button variant="ghost" size="icon" className="h-6 w-6">
+                                        <Download className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
 
-                            {message.reactions.length > 0 && (
-                              <div className="flex gap-2 mt-2 text-xs text-white/60">
-                                {message.reactions.map((reaction, i) => (
-                                  <span key={i}>
-                                    {reaction.emoji} {reaction.count}
-                                  </span>
-                                ))}
+                              {message.reactions.length > 0 && (
+                                <div className="flex gap-1 mt-2">
+                                  {message.reactions.map((reaction, i) => (
+                                    <button
+                                      key={i}
+                                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary/50 text-xs hover:bg-secondary transition-colors"
+                                    >
+                                      {reaction.emoji} {reaction.count}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div className="flex gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Button variant="ghost" size="icon" className="h-7 w-7">
+                                  <Smile className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7">
+                                  <Reply className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="h-7 w-7">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
                               </div>
-                            )}
-
-                            <div className="flex gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Button variant="ghost" size="sm" className="text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                                React
-                              </Button>
-                              <Button variant="ghost" size="sm" className="text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                                Reply
-                              </Button>
-                              <Button variant="ghost" size="icon" className="h-7 w-7 text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                                More
-                              </Button>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  </ScrollArea>
-
-                  <div className="flex gap-2">
-                    <Button variant="ghost" size="icon" className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                      Add
-                    </Button>
-                    <div className="flex-1 relative">
-                      <Input
-                        placeholder="Type a message..."
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        className="pr-20 bg-transparent border-0 text-white/80 placeholder:text-white/40"
-                      />
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
-                        <Button variant="ghost" size="icon" className="h-7 w-7 text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                          @
+                        ))}
+                      </div>
+                    </ScrollArea>
+                    <div className="p-4 border-t border-border/50">
+                      <div className="flex gap-2">
+                        <Button variant="ghost" size="icon" className="shrink-0">
+                          <Plus className="h-5 w-5" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-7 w-7 text-[9px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                          Attach
+                        <div className="flex-1 relative">
+                          <Input
+                            placeholder="Type a message..."
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            className="pr-20 bg-secondary/30 border-border/50"
+                          />
+                          <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-1">
+                            <Button variant="ghost" size="icon" className="h-7 w-7">
+                              <AtSign className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="icon" className="h-7 w-7">
+                              <Paperclip className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        <Button className="bg-primary text-primary-foreground hover:bg-primary/90 shrink-0">
+                          <Send className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
-                    <Button className="bg-white text-black hover:bg-white/80 shrink-0">
-                      Send
-                    </Button>
-                  </div>
+                  </Card>
                 </TabsContent>
 
                 {/* Files Tab */}
                 <TabsContent value="files" className="space-y-6">
-                  <div className="flex flex-wrap items-center justify-between gap-4">
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/50">Shared Files</p>
-                    <div className="flex gap-2">
-                      <Input placeholder="Search files..." className="pl-0 w-48 bg-transparent border-0 text-white/80 placeholder:text-white/40" />
-                      <Button className="bg-white text-black hover:bg-white/80">
-                        Upload
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    {sharedFiles.map((file) => (
-                      <div key={file.id} className="flex flex-wrap items-center justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-white truncate">{file.name}</p>
-                          <p className="text-xs text-white/50">
-                            {file.size} • Uploaded by {file.uploadedBy.name}
-                          </p>
+                  <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                    <CardHeader className="border-b border-border/50">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                          <FolderOpen className="h-5 w-5 text-primary" />
+                          Shared Files
+                        </CardTitle>
+                        <div className="flex gap-2">
+                          <div className="relative">
+                            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input placeholder="Search files..." className="pl-9 w-48 bg-secondary/30 border-border/50" />
+                          </div>
+                          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                            <Plus className="mr-2 h-4 w-4" />
+                            Upload
+                          </Button>
                         </div>
-                        <div className="text-right text-xs text-white/50">
-                          <p>{file.uploadedAt}</p>
-                          <p>{file.downloads} downloads</p>
-                        </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8 text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white">
-                              More
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-[#0b0b0c] border-0 text-white">
-                            <DropdownMenuItem>Download</DropdownMenuItem>
-                            <DropdownMenuItem>Copy Link</DropdownMenuItem>
-                            <DropdownMenuItem>Preview</DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
                       </div>
-                    ))}
-                  </div>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <div className="divide-y divide-border/50">
+                        {sharedFiles.map((file) => (
+                          <div
+                            key={file.id}
+                            className="flex items-center gap-4 p-4 hover:bg-secondary/20 transition-colors"
+                          >
+                            <div className={`p-2 rounded-lg ${
+                              file.type === "pdf" ? "bg-red-500/10" :
+                              file.type === "image" ? "bg-blue-500/10" :
+                              file.type === "video" ? "bg-purple-500/10" :
+                              file.type === "audio" ? "bg-green-500/10" :
+                              "bg-primary/10"
+                            }`}>
+                              <ImageIcon className={`h-5 w-5 ${
+                                file.type === "pdf" ? "text-red-400" :
+                                file.type === "image" ? "text-blue-400" :
+                                file.type === "video" ? "text-purple-400" :
+                                file.type === "audio" ? "text-green-400" :
+                                "text-primary"
+                              }`} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm truncate">{file.name}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {file.size} • Uploaded by {file.uploadedBy.name}
+                              </p>
+                            </div>
+                            <div className="text-right text-sm text-muted-foreground hidden sm:block">
+                              <p>{file.uploadedAt}</p>
+                              <p className="text-xs">{file.downloads} downloads</p>
+                            </div>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="bg-popover border-border/50">
+                                <DropdownMenuItem><Download className="mr-2 h-4 w-4" /> Download</DropdownMenuItem>
+                                <DropdownMenuItem><LinkIcon className="mr-2 h-4 w-4" /> Copy Link</DropdownMenuItem>
+                                <DropdownMenuItem><Eye className="mr-2 h-4 w-4" /> Preview</DropdownMenuItem>
+                                <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 h-4 w-4" /> Delete</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 </TabsContent>
 
                 {/* Approvals Tab */}
                 <TabsContent value="approvals" className="space-y-6">
-                  <div className="space-y-6">
+                  <div className="grid gap-4">
                     {approvalRequests.map((request) => (
-                      <div key={request.id} className="space-y-3">
-                        <div className="flex flex-wrap items-start justify-between gap-4">
-                          <div>
-                            <h3 className="font-semibold text-white">{request.title}</h3>
-                            <p className="text-sm text-white/50">
-                              Submitted by {request.requester.name} • {request.submitted}
-                            </p>
-                          </div>
-                          <span className="text-xs uppercase tracking-[0.3em] text-white/50">
-                            {request.status}
-                          </span>
-                        </div>
+                      <Card key={request.id} className="border-border/50 bg-card/50 backdrop-blur-sm">
+                        <CardContent className="p-4">
+                          <div className="flex gap-4">
+                            <div className="relative w-40 h-24 rounded-lg bg-secondary/30 overflow-hidden shrink-0">
+                              <Image
+                                src={request.thumbnail || "/placeholder.svg"}
+                                alt=""
+                                fill
+                                sizes="160px"
+                                className="object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between mb-2">
+                                <div>
+                                  <h3 className="font-semibold">{request.title}</h3>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <Avatar className="h-5 w-5">
+                                      <AvatarImage src={request.requester.avatar || "/placeholder.svg"} />
+                                      <AvatarFallback>{request.requester.name[0]}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="text-sm text-muted-foreground">
+                                      Submitted by {request.requester.name} • {request.submitted}
+                                    </span>
+                                  </div>
+                                </div>
+                                <Badge className={
+                                  request.status === "approved" ? "bg-green-500/20 text-green-400" :
+                                  request.status === "rejected" ? "bg-red-500/20 text-red-400" :
+                                  "bg-orange-500/20 text-orange-400"
+                                }>
+                                  {request.status}
+                                </Badge>
+                              </div>
 
-                        <div className="text-sm text-white/50">
-                          Approvers: {request.approvers.map((approver) => approver.user.name).join(" · ")}
-                        </div>
+                              <div className="flex items-center gap-4 mb-3">
+                                <span className="text-sm text-muted-foreground">Approvers:</span>
+                                <div className="flex items-center gap-2">
+                                  {request.approvers.map((approver, i) => (
+                                    <div key={i} className="flex items-center gap-1">
+                                      <Avatar className="h-6 w-6">
+                                        <AvatarImage src={approver.user.avatar || "/placeholder.svg"} />
+                                        <AvatarFallback>{approver.user.name[0]}</AvatarFallback>
+                                      </Avatar>
+                                      {approver.status === "approved" ? (
+                                        <Check className="h-4 w-4 text-green-500" />
+                                      ) : approver.status === "rejected" ? (
+                                        <X className="h-4 w-4 text-red-500" />
+                                      ) : (
+                                        <Clock className="h-4 w-4 text-orange-500" />
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
 
-                        {request.status === "pending" && (
-                          <div className="flex flex-wrap gap-2">
-                            <Button variant="outline" className="bg-transparent text-white/70">
-                              Review
-                            </Button>
-                            <Button variant="outline" className="bg-transparent text-white/70">
-                              Approve
-                            </Button>
-                            <Button variant="outline" className="bg-transparent text-white/70">
-                              Request Changes
-                            </Button>
+                              {request.status === "pending" && (
+                                <div className="flex gap-2">
+                                  <Button variant="outline" className="border-border/50 bg-transparent">
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    Review
+                                  </Button>
+                                  <Button variant="outline" className="border-green-500/50 text-green-400 hover:bg-green-500/10 bg-transparent">
+                                    <Check className="mr-2 h-4 w-4" />
+                                    Approve
+                                  </Button>
+                                  <Button variant="outline" className="border-red-500/50 text-red-400 hover:bg-red-500/10 bg-transparent">
+                                    <X className="mr-2 h-4 w-4" />
+                                    Request Changes
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
-                      </div>
+                        </CardContent>
+                      </Card>
                     ))}
                   </div>
                 </TabsContent>
               </Tabs>
-            </section>
+            </div>
           </div>
         </div>
       </main>

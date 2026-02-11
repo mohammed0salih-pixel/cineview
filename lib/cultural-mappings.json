@@ -1,0 +1,341 @@
+{
+  "version": "1.0.0",
+  "cultures": {
+    "arabic": {
+      "code": "ar",
+      "name": "العربية",
+      "moodMappings": {
+        "Noir Tension": {
+          "label": "توتر نوار",
+          "culturalContext": "الإضاءة الدرامية والظلال القوية تستخدم في السينما العربية للتعبير عن الصراع الداخلي"
+        },
+        "Uplifting Joy": {
+          "label": "فرح مبهج",
+          "culturalContext": "الألوان الزاهية والإضاءة الساطعة تعكس الاحتفالات والمناسبات السعيدة"
+        },
+        "Clinical Suspense": {
+          "label": "ترقب سريري",
+          "culturalContext": "الأجواء الباردة والمحايدة تخلق شعوراً بالتوتر والانتظار"
+        },
+        "Warm Narrative": {
+          "label": "سرد دافئ",
+          "culturalContext": "الألوان الدافئة تعكس الحميمية والقصص العائلية في الثقافة العربية"
+        },
+        "Melancholic Nostalgia": {
+          "label": "حنين حزين",
+          "culturalContext": "الألوان الباهتة تستحضر ذكريات الماضي والشوق للأيام الخوالي"
+        },
+        "Euphoric Energy": {
+          "label": "طاقة نشوة",
+          "culturalContext": "السطوع الشديد والألوان المشبعة تعكس لحظات الانتصار والفرح الغامر"
+        },
+        "Eerie Dread": {
+          "label": "رهبة مخيفة",
+          "culturalContext": "الظلام والبرودة تخلق جواً من الخوف والترقب المرعب"
+        },
+        "Serene Calm": {
+          "label": "هدوء سكينة",
+          "culturalContext": "التوازن والنعومة تعكس السلام الداخلي والتأمل"
+        },
+        "Dramatic Intensity": {
+          "label": "كثافة درامية",
+          "culturalContext": "التباين القوي والألوان الغنية تعبر عن المشاعر القوية والصراعات"
+        },
+        "Soft Documentary": {
+          "label": "وثائقي ناعم",
+          "culturalContext": "الأسلوب الطبيعي والمراقب يوثق الواقع دون تدخل"
+        },
+        "Gritty Realism": {
+          "label": "واقعية خشنة",
+          "culturalContext": "الحبيبات والألوان القاسية تعكس صعوبة الحياة اليومية"
+        },
+        "Ethereal Dream": {
+          "label": "حلم أثيري",
+          "culturalContext": "النعومة والضوء المنتشر يخلق جواً سماوياً ووهمياً"
+        },
+        "Urban Grit": {
+          "label": "خشونة حضرية",
+          "culturalContext": "البرودة والتباين يعكسان قسوة الحياة في المدن الكبرى"
+        },
+        "Golden Hour Magic": {
+          "label": "سحر الساعة الذهبية",
+          "culturalContext": "الضوء الذهبي يخلق جمالاً طبيعياً يحتفي به في التصوير العربي"
+        },
+        "Corporate Clean": {
+          "label": "احترافية نظيفة",
+          "culturalContext": "الوضوح والحدة يعكسان المهنية والجدية في بيئة العمل"
+        },
+        "Moody Ambiance": {
+          "label": "أجواء مزاجية",
+          "culturalContext": "الظلال والألوان المعتدلة تخلق جواً حميمياً ومتأملاً"
+        },
+        "Vibrant Pop": {
+          "label": "بوب نابض",
+          "culturalContext": "الألوان الصارخة والحيوية تعكس الطاقة الشبابية والعصرية"
+        },
+        "Somber Reflection": {
+          "label": "تأمل كئيب",
+          "culturalContext": "الظلام والكتم يدعوان للتفكير العميق والحزن"
+        },
+        "Natural Wonder": {
+          "label": "روعة طبيعية",
+          "culturalContext": "الألوان الطبيعية والتكوين القوي يحتفيان بجمال الخلق"
+        },
+        "Cinematic Drama": {
+          "label": "دراما سينمائية",
+          "culturalContext": "الأسلوب السينمائي الكلاسيكي مع تباين ملحوظ"
+        }
+      },
+      "genreMappings": {
+        "Film Noir": {
+          "label": "نوار",
+          "culturalContext": "الأسلوب القاتم عالي التباين"
+        },
+        "Commercial": {
+          "label": "إعلاني",
+          "culturalContext": "إنتاج تجاري مصقول وجذاب"
+        },
+        "Romantic Drama": {
+          "label": "دراما رومانسية",
+          "culturalContext": "قصص الحب والعلاقات العاطفية"
+        },
+        "Sci-Fi": {
+          "label": "خيال علمي",
+          "culturalContext": "عوالم مستقبلية وتقنية متقدمة"
+        },
+        "Travel Documentary": {
+          "label": "وثائقي سفر",
+          "culturalContext": "استكشاف الأماكن والثقافات"
+        },
+        "Horror": {
+          "label": "رعب",
+          "culturalContext": "أجواء مخيفة ومرعبة"
+        },
+        "Action": {
+          "label": "أكشن",
+          "culturalContext": "طاقة عالية وحركة ديناميكية"
+        },
+        "Thriller": {
+          "label": "إثارة",
+          "culturalContext": "تشويق وترقب متصاعد"
+        },
+        "Comedy": {
+          "label": "كوميديا",
+          "culturalContext": "مرح وفكاهة خفيفة"
+        },
+        "Western": {
+          "label": "ويسترن",
+          "culturalContext": "أجواء الغرب الأمريكي القديم"
+        },
+        "Fantasy": {
+          "label": "خيال",
+          "culturalContext": "عوالم سحرية وخيالية"
+        },
+        "Historical Drama": {
+          "label": "دراما تاريخية",
+          "culturalContext": "أحداث وشخصيات من التاريخ"
+        },
+        "Musical": {
+          "label": "موسيقي",
+          "culturalContext": "غناء ورقص مسرحي"
+        },
+        "Sports": {
+          "label": "رياضي",
+          "culturalContext": "منافسات وإنجازات رياضية"
+        },
+        "Nature Documentary": {
+          "label": "وثائقي طبيعة",
+          "culturalContext": "الحياة البرية والطبيعة"
+        },
+        "Corporate": {
+          "label": "مؤسسي",
+          "culturalContext": "محتوى مهني لقطاع الأعمال"
+        },
+        "Fashion": {
+          "label": "أزياء",
+          "culturalContext": "عرض الموضة والأناقة"
+        },
+        "Food": {
+          "label": "طعام",
+          "culturalContext": "عرض الأطباق والطهي"
+        },
+        "Tech Review": {
+          "label": "مراجعة تقنية",
+          "culturalContext": "تحليل المنتجات التقنية"
+        },
+        "Music Video": {
+          "label": "فيديو موسيقي",
+          "culturalContext": "إنتاج موسيقي فني"
+        },
+        "Vlog": {
+          "label": "مدونة مرئية",
+          "culturalContext": "محتوى شخصي يومي"
+        },
+        "Animation": {
+          "label": "رسوم متحركة",
+          "culturalContext": "محتوى متحرك ملون"
+        },
+        "Art House": {
+          "label": "فن راقي",
+          "culturalContext": "سينما تجريبية فنية"
+        },
+        "Indie Film": {
+          "label": "إنتاج مستقل",
+          "culturalContext": "أسلوب مستقل أصيل"
+        },
+        "News": {
+          "label": "أخبار",
+          "culturalContext": "تغطية إخبارية واقعية"
+        },
+        "Reality TV": {
+          "label": "تلفزيون واقع",
+          "culturalContext": "برامج واقعية ترفيهية"
+        },
+        "Experimental": {
+          "label": "تجريبي",
+          "culturalContext": "أسلوب غير تقليدي مبتكر"
+        },
+        "Noir Mystery": {
+          "label": "غموض نوار",
+          "culturalContext": "ألغاز وتحقيقات قاتمة"
+        },
+        "Biopic": {
+          "label": "سيرة ذاتية",
+          "culturalContext": "قصة حياة شخصية حقيقية"
+        },
+        "Editorial": {
+          "label": "تحريري",
+          "culturalContext": "محتوى إعلامي متوازن"
+        }
+      },
+      "shotTypeMappings": {
+        "Extreme Wide Shot": {
+          "label": "لقطة واسعة جداً",
+          "culturalContext": "تظهر المشهد الكامل والسياق"
+        },
+        "Wide Establishing": {
+          "label": "لقطة تأسيسية واسعة",
+          "culturalContext": "تعرف بالمكان والبيئة"
+        },
+        "Full Shot": {
+          "label": "لقطة كاملة",
+          "culturalContext": "تظهر الشخص من الرأس للقدم"
+        },
+        "Medium Shot": {
+          "label": "لقطة متوسطة",
+          "culturalContext": "من الخصر للأعلى"
+        },
+        "Medium Close-up": {
+          "label": "لقطة قريبة متوسطة",
+          "culturalContext": "من الصدر للأعلى"
+        },
+        "Close-up Detail": {
+          "label": "لقطة مقربة",
+          "culturalContext": "تركيز على تفصيل محدد"
+        },
+        "Intimate Close-up": {
+          "label": "لقطة مقربة حميمة",
+          "culturalContext": "قريبة جداً للتعبير العاطفي"
+        },
+        "Extreme Close-up": {
+          "label": "لقطة مقربة جداً",
+          "culturalContext": "تفصيل دقيق جداً"
+        },
+        "Over-the-Shoulder": {
+          "label": "من فوق الكتف",
+          "culturalContext": "تظهر منظور شخصية"
+        },
+        "Two-Shot": {
+          "label": "لقطة ثنائية",
+          "culturalContext": "شخصان في الإطار"
+        },
+        "Dutch Angle": {
+          "label": "زاوية مائلة",
+          "culturalContext": "إطار مائل يخلق قلقاً"
+        },
+        "Aerial Shot": {
+          "label": "لقطة جوية",
+          "culturalContext": "منظر من الأعلى"
+        },
+        "Point-of-View": {
+          "label": "وجهة نظر",
+          "culturalContext": "ما تراه الشخصية"
+        },
+        "Tracking Shot": {
+          "label": "لقطة متتبعة",
+          "culturalContext": "الكاميرا تتبع الحركة"
+        },
+        "Static Frame": {
+          "label": "إطار ثابت",
+          "culturalContext": "كاميرا ثابتة مستقرة"
+        }
+      },
+      "energyMappings": {
+        "Very Low": {
+          "label": "منخفضة جداً",
+          "description": "طاقة هادئة جداً وبطيئة"
+        },
+        "Low": {
+          "label": "منخفضة",
+          "description": "طاقة هادئة ومتأنية"
+        },
+        "Medium-Low": {
+          "label": "منخفضة-متوسطة",
+          "description": "طاقة معتدلة تميل للهدوء"
+        },
+        "Medium": {
+          "label": "متوسطة",
+          "description": "طاقة متوازنة ومستقرة"
+        },
+        "Medium-High": {
+          "label": "متوسطة-عالية",
+          "description": "طاقة نشطة ومتحركة"
+        },
+        "High": {
+          "label": "عالية",
+          "description": "طاقة قوية وديناميكية"
+        },
+        "Very High": {
+          "label": "عالية جداً",
+          "description": "طاقة مكثفة ومتفجرة"
+        }
+      },
+      "regionalAdjustments": {
+        "moodWeights": {
+          "Warm Narrative": 1.15,
+          "Golden Hour Magic": 1.2,
+          "Natural Wonder": 1.1,
+          "Dramatic Intensity": 1.15,
+          "Uplifting Joy": 1.1
+        },
+        "description": "التعديلات الإقليمية للثقافة العربية تفضل الأجواء الدافئة والدرامية والطبيعية"
+      }
+    },
+    "western": {
+      "code": "en",
+      "name": "English",
+      "regionalAdjustments": {
+        "moodWeights": {
+          "Clinical Suspense": 1.1,
+          "Corporate Clean": 1.15,
+          "Gritty Realism": 1.1,
+          "Urban Grit": 1.1
+        },
+        "description": "Western culture baseline with emphasis on clinical and urban aesthetics"
+      }
+    },
+    "eastern": {
+      "code": "ja",
+      "name": "日本語",
+      "regionalAdjustments": {
+        "moodWeights": {
+          "Serene Calm": 1.2,
+          "Ethereal Dream": 1.15,
+          "Natural Wonder": 1.15,
+          "Melancholic Nostalgia": 1.1
+        },
+        "description": "Eastern aesthetics favor serenity, nature, and contemplation"
+      }
+    }
+  }
+}

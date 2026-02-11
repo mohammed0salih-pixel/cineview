@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      AI_ENGINE_URL: http://ai-engine:8080
+      SUPABASE_SERVICE_ROLE_KEY_FILE: /run/secrets/supabase_service_role_key
+    secrets:
+      - supabase_service_role_key
+    depends_on:
+      - ai-engine
+
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    env_file:
+      - .env.ai
+    environment:
+      AI_ENGINE_API_KEY_FILE: /run/secrets/ai_engine_api_key
+      OPENAI_API_KEY_FILE: /run/secrets/openai_api_key
+    secrets:
+      - ai_engine_api_key
+      - openai_api_key
+
+secrets:
+  supabase_service_role_key:
+    file: ./secrets/supabase_service_role_key
+  ai_engine_api_key:
+    file: ./secrets/ai_engine_api_key
+  openai_api_key:
+    file: ./secrets/openai_api_key

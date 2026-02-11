@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  app:
+    image: 956651462373.dkr.ecr.us-east-1.amazonaws.com/cineview-app:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # Supabase
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      
+      # AI Engine
+      AI_ENGINE_URL: http://localhost:8080
+      AI_ENGINE_API_KEY: ${AI_ENGINE_API_KEY}
+      
+      # Gemini
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      
+      # Sentry
+      NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-}
+      
+      # AWS
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+    depends_on:
+      - ai-engine
+    networks:
+      - app-network
+
+  ai-engine:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./ai-engine:/app
+    ports:
+      - "8080:8080"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      AI_ENGINE_API_KEY: ${AI_ENGINE_API_KEY}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    command: sh -c "npm install && node index.js"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

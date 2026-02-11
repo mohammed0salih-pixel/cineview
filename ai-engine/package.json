@@ -1,0 +1,14 @@
+{
+  "name": "ai-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "@google/generative-ai": "^0.21.0",
+    "@sentry/node": "^8.0.0"
+  }
+}

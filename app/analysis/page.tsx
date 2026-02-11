@@ -1,424 +1,379 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress"
+import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { 
+  Sun, 
+  Thermometer, 
+  Palette, 
+  Contrast, 
+  Download, 
+  Share2, 
+  ArrowRight,
+  ArrowUpRight,
+  ArrowDownRight,
+  ArrowLeft,
+  Lightbulb,
+  Droplets,
+  Sparkles
+} from "lucide-react"
 import Link from "next/link"
-import { defaultVisualAnalysis } from "@/lib/visual-analysis"
 
-const defaultAnalysisData = defaultVisualAnalysis
+// Mock analysis data
+const analysisData = {
+  lighting: {
+    type: "Soft",
+    direction: "Top-Left",
+    intensity: 72,
+    quality: "Natural",
+    source: "Window Light",
+  },
+  color: {
+    temperature: "Warm",
+    temperatureKelvin: 5200,
+    dominantColors: [
+      { name: "Deep Blue", hex: "#1a365d", percentage: 35 },
+      { name: "Gold", hex: "#d4a574", percentage: 25 },
+      { name: "Charcoal", hex: "#2d3748", percentage: 20 },
+      { name: "Cream", hex: "#f7f3e9", percentage: 15 },
+      { name: "Bronze", hex: "#8b6914", percentage: 5 },
+    ],
+  },
+  technical: {
+    contrast: 68,
+    saturation: 54,
+    brightness: 62,
+    sharpness: 78,
+    noise: 12,
+  },
+  mood: "Cinematic Drama",
+  style: "Film Noir with Modern Elements",
+}
+
+const lightingDirectionIcons: Record<string, React.ReactNode> = {
+  "Top-Left": <ArrowUpRight className="h-5 w-5 rotate-[-135deg]" />,
+  "Top-Right": <ArrowUpRight className="h-5 w-5" />,
+  "Bottom-Left": <ArrowDownRight className="h-5 w-5 rotate-180" />,
+  "Bottom-Right": <ArrowDownRight className="h-5 w-5" />,
+  "Left": <ArrowLeft className="h-5 w-5" />,
+  "Right": <ArrowRight className="h-5 w-5" />,
+}
 
 export default function AnalysisPage() {
-  const [uploadedMedia, setUploadedMedia] = useState<{
-    url: string
-    type: "image" | "video"
-    name?: string
-    mode?: "data" | "object"
-    analyzedAt?: string
-    analysisStatus?: "loading" | "analyzing" | "completed"
-    analysis?: typeof defaultAnalysisData
-  } | null>(null)
-  const [analysis, setAnalysis] = useState(defaultAnalysisData)
-  const [status, setStatus] = useState<"loading" | "analyzing" | "completed">("loading")
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved" | "error">("idle")
-  const [showData, setShowData] = useState(false)
-
-  useEffect(() => {
-    try {
-      const raw = sessionStorage.getItem("cineview_latest_upload")
-      if (!raw) return
-      const parsed = JSON.parse(raw) as {
-        url?: string
-        type?: "image" | "video"
-        name?: string
-        mode?: "data" | "object"
-        analyzedAt?: string
-        analysisStatus?: "loading" | "analyzing" | "completed"
-        analysis?: typeof defaultAnalysisData
-        analysisSaving?: boolean
-        analysisSaved?: boolean
-        analysisSaveError?: string
-      }
-      if (parsed?.url && parsed?.type) {
-        setUploadedMedia({
-          url: parsed.url,
-          type: parsed.type,
-          name: parsed.name,
-          mode: parsed.mode,
-          analyzedAt: parsed.analyzedAt,
-          analysisStatus: parsed.analysisStatus,
-          analysis: parsed.analysis,
-        })
-        if (parsed.analysis) {
-          setAnalysis(parsed.analysis)
-        }
-        if (parsed.analysisStatus) {
-          setStatus(parsed.analysisStatus)
-        }
-        if (parsed.analysisSaving) {
-          setSaveState("saving")
-        } else if (parsed.analysisSaved) {
-          setSaveState("saved")
-        } else if (parsed.analysisSaveError) {
-          setSaveState("error")
-        }
-      }
-    } catch {
-      // ignore storage failures
-    }
-  }, [])
-
-  useEffect(() => {
-    if (uploadedMedia?.analysisStatus) return
-    if (status === "completed") return
-    const t1 = setTimeout(() => setStatus("analyzing"), 400)
-    const t2 = setTimeout(() => setStatus("completed"), 1400)
-    return () => {
-      clearTimeout(t1)
-      clearTimeout(t2)
-    }
-  }, [status, uploadedMedia?.analysisStatus])
-
-  useEffect(() => {
-    if (status === "completed") return
-    const interval = window.setInterval(() => {
-      try {
-        const raw = sessionStorage.getItem("cineview_latest_upload")
-        if (!raw) return
-        const parsed = JSON.parse(raw) as {
-          analysisStatus?: "loading" | "analyzing" | "completed"
-          analysis?: typeof defaultAnalysisData
-          analysisSaving?: boolean
-          analysisSaved?: boolean
-          analysisSaveError?: string
-        }
-        if (parsed.analysis && !uploadedMedia?.analysis) {
-          setAnalysis(parsed.analysis)
-        }
-        if (parsed.analysisStatus && parsed.analysisStatus !== status) {
-          setStatus(parsed.analysisStatus)
-        }
-        if (parsed.analysisSaving) {
-          setSaveState("saving")
-        } else if (parsed.analysisSaved) {
-          setSaveState("saved")
-        } else if (parsed.analysisSaveError) {
-          setSaveState("error")
-        }
-      } catch {
-        // ignore storage failures
-      }
-    }, 600)
-    return () => window.clearInterval(interval)
-  }, [status, uploadedMedia?.analysis])
-
-  const statusConfig = {
-    loading: {
-      label: "Loading",
-      className: "text-white/70",
-    },
-    analyzing: {
-      label: "Analyzing",
-      className: "text-white/70",
-    },
-    completed: {
-      label: "Completed",
-      className: "text-white/70",
-    },
-  } as const
-
-  const saveConfig = {
-    saving: {
-      label: "Saving to Projects",
-      className: "text-white/70",
-    },
-    saved: {
-      label: "Saved to Projects",
-      className: "text-white/70",
-    },
-    error: {
-      label: "Save failed",
-      className: "text-white/70",
-    },
-  } as const
-
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-background">
       <Header />
       
-      <section className="pt-24 pb-16 legacy-ui">
-        <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8 motion-fade">
+      <section className="pt-24 pb-16">
+        <div className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+          {/* Page Header */}
           <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="mb-4 flex flex-wrap items-center gap-2">
-                <div
-                  className={`inline-flex items-center gap-2 px-2 ${statusConfig[status].className}`}
-                >
-                  <span className="text-xs font-medium uppercase tracking-wider">{statusConfig[status].label}</span>
-                </div>
-                {saveState !== "idle" && (
-                  <div
-                    className={`inline-flex items-center gap-2 px-2 text-xs font-medium uppercase tracking-wider ${saveConfig[saveState].className}`}
-                  >
-                    {saveConfig[saveState].label}
-                  </div>
-                )}
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 mb-4">
+                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                <span className="text-xs font-medium text-primary uppercase tracking-wider">Analysis Complete</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">
-                Visual Analysis <span className="text-white">Results</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+                Visual Analysis <span className="text-gradient-gold">Results</span>
               </h1>
-              <p className="mt-3 text-lg text-white/60">
+              <p className="mt-3 text-lg text-muted-foreground">
                 AI-powered breakdown of your visual content
               </p>
             </div>
             <div className="flex gap-3">
-              <Button className="bg-transparent text-white/60 hover:text-white">
+              <Button variant="outline" className="border-border/50 text-foreground hover:bg-secondary bg-transparent">
+                <Share2 className="mr-2 h-4 w-4" />
                 Share
               </Button>
-              <Link href="/export">
-                <Button className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]">
-                  Export Options
-                </Button>
-              </Link>
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-gold">
+                <Download className="mr-2 h-4 w-4" />
+                Export PDF
+              </Button>
             </div>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <section className="panel-card p-6 space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Latest Upload</p>
-              <div className="aspect-video panel-inset flex items-center justify-center">
-                {uploadedMedia ? (
-                  <div className="relative w-full h-full">
-                    {uploadedMedia.type === "image" ? (
-                      <img
-                        src={uploadedMedia.url}
-                        alt="Uploaded preview"
-                        className="absolute inset-0 h-full w-full object-contain bg-black/60"
-                      />
-                    ) : (
-                      <video
-                        src={uploadedMedia.url}
-                        controls
-                        className="absolute inset-0 h-full w-full object-contain bg-black/60"
-                      />
-                    )}
-                    <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-3 py-1 text-xs text-white/70">
-                      Latest upload{uploadedMedia.name ? ` • ${uploadedMedia.name}` : ""}
-                    </div>
-                  </div>
-                ) : (
+          <div className="grid gap-8 lg:grid-cols-3">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Preview Card */}
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm overflow-hidden">
+                <div className="aspect-video bg-secondary/50 flex items-center justify-center">
                   <div className="text-center">
-                    <p className="text-sm text-white/60">No recent upload found</p>
-                    <Link href="/upload" className="mt-3 inline-flex items-center text-sm font-medium text-white/70 hover:text-white">
-                      Upload content to analyze
-                    </Link>
+                    <div className="mx-auto mb-4 h-24 w-24 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Lightbulb className="h-12 w-12 text-primary" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">Your uploaded image preview</p>
                   </div>
-                )}
-              </div>
-              {uploadedMedia && (
-                <div className="flex items-center justify-between gap-4 px-4 py-3 text-xs text-white/50">
-                  <span className="truncate">
-                    {uploadedMedia.name || "Untitled file"}
-                  </span>
-                  <span className="whitespace-nowrap">
-                    {uploadedMedia.analyzedAt
-                      ? `Analyzed ${new Date(uploadedMedia.analyzedAt).toLocaleString()}`
-                      : "Analysis timestamp unavailable"}
-                  </span>
                 </div>
-              )}
-            </section>
+              </Card>
 
-            <section className="panel-card p-6 space-y-6">
+              {/* Analysis Tabs */}
               <Tabs defaultValue="lighting" className="w-full">
-                <TabsList className="flex flex-wrap gap-4 bg-transparent p-0">
-                  <TabsTrigger value="lighting" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                <TabsList className="grid w-full grid-cols-3 bg-secondary">
+                  <TabsTrigger value="lighting" className="data-[state=active]:bg-primary data-[state=active]:text-background">
                     Lighting
                   </TabsTrigger>
-                  <TabsTrigger value="color" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                  <TabsTrigger value="color" className="data-[state=active]:bg-primary data-[state=active]:text-background">
                     Color
                   </TabsTrigger>
-                  <TabsTrigger value="technical" className="px-0 text-[11px] font-semibold uppercase tracking-[0.3em] text-white/50 data-[state=active]:text-white">
+                  <TabsTrigger value="technical" className="data-[state=active]:bg-primary data-[state=active]:text-background">
                     Technical
                   </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="lighting" className="mt-6 space-y-6">
-                  <div className="space-y-3 text-sm text-white/70">
-                    <p>Lighting reads as {analysis.lighting.type} with {analysis.lighting.quality} quality from {analysis.lighting.source}.</p>
-                    <p className="text-white/60">Direction signals align with a {analysis.lighting.direction} source. Quantitative intensity is available under “Show Data.”</p>
-                  </div>
-                  <Button
-                    className="bg-transparent text-white/60 rounded-full hover:text-white"
-                    onClick={() => setShowData((value) => !value)}
-                  >
-                    {showData ? "Hide Data" : "Show Data"}
-                  </Button>
-                  {showData && (
-                    <div className="space-y-6 text-sm text-white/70">
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Lighting Type</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.lighting.type}</p>
-                        <p className="text-sm text-white/60">
-                          {analysis.lighting.quality} quality from {analysis.lighting.source}
+                {/* Lighting Tab */}
+                <TabsContent value="lighting" className="mt-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Sun className="h-4 w-4 text-primary" />
+                          Lighting Type
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-primary">{analysisData.lighting.type}</div>
+                        <p className="text-sm text-muted-foreground">
+                          {analysisData.lighting.quality} quality from {analysisData.lighting.source}
                         </p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Light Direction</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.lighting.direction}</p>
-                        <p className="text-sm text-white/60">Primary light source</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Light Intensity</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.lighting.intensity}%</p>
-                        <p className="text-sm text-white/60">Intensity score</p>
-                      </div>
-                    </div>
-                  )}
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <ArrowUpRight className="h-4 w-4 text-primary" />
+                          Light Direction
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary">
+                            {lightingDirectionIcons[analysisData.lighting.direction]}
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-primary">{analysisData.lighting.direction}</div>
+                            <p className="text-sm text-muted-foreground">Primary light source</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm sm:col-span-2">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Lightbulb className="h-4 w-4 text-primary" />
+                          Light Intensity
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-4">
+                          <Progress value={analysisData.lighting.intensity} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                          <span className="text-lg font-semibold text-primary">{analysisData.lighting.intensity}%</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </TabsContent>
 
-                <TabsContent value="color" className="mt-6 space-y-6">
-                  <div className="space-y-3 text-sm text-white/70">
-                    <p>Color temperature reads as {analysis.color.temperature}, anchoring the tonal direction.</p>
-                    <p className="text-white/60">Palette distribution and percentages are available under “Show Data.”</p>
-                    <p className="text-xs uppercase tracking-[0.3em] text-white/50">Dominant Palette</p>
-                    <p>{analysis.color.dominantColors.map((color) => color.name).join(" · ")}</p>
-                  </div>
-                  <Button
-                    className="bg-transparent text-white/60 rounded-full hover:text-white"
-                    onClick={() => setShowData((value) => !value)}
-                  >
-                    {showData ? "Hide Data" : "Show Data"}
-                  </Button>
-                  {showData && (
-                    <div className="space-y-6 text-sm text-white/70">
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Temperature</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.color.temperature}</p>
-                        <p className="text-sm text-white/60">~{analysis.color.temperatureKelvin}K</p>
-                      </div>
-                      <div className="space-y-3">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Palette</p>
-                        <div className="space-y-2">
-                          {analysis.color.dominantColors.map((color) => (
-                            <div key={color.hex} className="flex items-center justify-between text-sm text-white/70">
-                              <span className="text-white">{color.name}</span>
-                              <span className="text-white/50">{color.percentage}% · {color.hex}</span>
+                {/* Color Tab */}
+                <TabsContent value="color" className="mt-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Thermometer className="h-4 w-4 text-primary" />
+                          Color Temperature
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-2xl font-bold text-primary">{analysisData.color.temperature}</div>
+                        <p className="text-sm text-muted-foreground">
+                          ~{analysisData.color.temperatureKelvin}K
+                        </p>
+                        <div className="mt-4 h-2 rounded-full bg-gradient-to-r from-blue-500 via-white to-orange-500">
+                          <div 
+                            className="relative h-4 w-4 -translate-y-1 rounded-full border-2 border-background bg-primary"
+                            style={{ marginLeft: `${((analysisData.color.temperatureKelvin - 2000) / 8000) * 100}%` }}
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Palette className="h-4 w-4 text-primary" />
+                          Color Palette
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex gap-2 mb-4">
+                          {analysisData.color.dominantColors.map((color) => (
+                            <div
+                              key={color.hex}
+                              className="h-10 flex-1 rounded-md border border-border"
+                              style={{ backgroundColor: color.hex }}
+                              title={`${color.name}: ${color.percentage}%`}
+                            />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm sm:col-span-2">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base text-foreground">Color Distribution</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          {analysisData.color.dominantColors.map((color) => (
+                            <div key={color.hex} className="flex items-center gap-3">
+                              <div
+                                className="h-4 w-4 rounded border border-border"
+                                style={{ backgroundColor: color.hex }}
+                              />
+                              <span className="w-24 text-sm text-foreground">{color.name}</span>
+                              <Progress value={color.percentage} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                              <span className="w-12 text-right text-sm text-muted-foreground">{color.percentage}%</span>
                             </div>
                           ))}
                         </div>
-                      </div>
-                      <div className="space-y-3">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Color Distribution</p>
-                        <div className="space-y-2">
-                          {analysis.color.dominantColors.map((color) => (
-                            <div key={color.hex} className="flex items-center justify-between text-sm text-white/70">
-                              <span className="text-white">{color.name}</span>
-                              <span className="text-white/50">{color.percentage}% · {color.hex}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                      </CardContent>
+                    </Card>
+                  </div>
                 </TabsContent>
 
-                <TabsContent value="technical" className="mt-6 space-y-6">
-                  <div className="space-y-3 text-sm text-white/70">
-                    <p>Contrast and saturation define the dramatic range of the frame.</p>
-                    <p className="text-white/60">Brightness and sharpness metrics are available under “Show Data.”</p>
-                    <div className="space-y-1 text-sm text-white/60">
-                      <p>High contrast for dramatic effect.</p>
-                      <p>Balanced saturation levels.</p>
-                    </div>
+                {/* Technical Tab */}
+                <TabsContent value="technical" className="mt-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Contrast className="h-4 w-4 text-primary" />
+                          Contrast
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-4">
+                          <Progress value={analysisData.technical.contrast} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                          <span className="text-lg font-semibold text-primary">{analysisData.technical.contrast}%</span>
+                        </div>
+                        <p className="mt-2 text-sm text-muted-foreground">High contrast for dramatic effect</p>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="flex items-center gap-2 text-base text-foreground">
+                          <Droplets className="h-4 w-4 text-primary" />
+                          Saturation
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-4">
+                          <Progress value={analysisData.technical.saturation} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                          <span className="text-lg font-semibold text-primary">{analysisData.technical.saturation}%</span>
+                        </div>
+                        <p className="mt-2 text-sm text-muted-foreground">Balanced saturation levels</p>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base text-foreground">Brightness</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-4">
+                          <Progress value={analysisData.technical.brightness} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                          <span className="text-lg font-semibold text-primary">{analysisData.technical.brightness}%</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-base text-foreground">Sharpness</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-4">
+                          <Progress value={analysisData.technical.sharpness} className="flex-1 bg-secondary [&>div]:bg-primary" />
+                          <span className="text-lg font-semibold text-primary">{analysisData.technical.sharpness}%</span>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                  <Button
-                    className="bg-transparent text-white/60 rounded-full hover:text-white"
-                    onClick={() => setShowData((value) => !value)}
-                  >
-                    {showData ? "Hide Data" : "Show Data"}
-                  </Button>
-                  {showData && (
-                    <div className="space-y-6 text-sm text-white/70">
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Contrast</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.technical.contrast}%</p>
-                        <p className="text-sm text-white/60">High contrast for dramatic effect</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Saturation</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.technical.saturation}%</p>
-                        <p className="text-sm text-white/60">Balanced saturation levels</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Brightness</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.technical.brightness}%</p>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Sharpness</p>
-                        <p className="text-2xl font-semibold text-white">{analysis.technical.sharpness}%</p>
-                      </div>
-                    </div>
-                  )}
                 </TabsContent>
               </Tabs>
-            </section>
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6">
+              {/* Overall Assessment */}
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Overall Assessment</CardTitle>
+                  <CardDescription>AI-detected style and mood</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Detected Mood</p>
+                    <Badge className="bg-primary/20 text-primary hover:bg-primary/30">{analysisData.mood}</Badge>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Visual Style</p>
+                    <p className="text-foreground font-medium">{analysisData.style}</p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Quick Actions */}
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Next Steps</CardTitle>
+                  <CardDescription>Continue with your content</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button asChild className="w-full bg-primary text-background hover:bg-primary-dark">
+                    <Link href="/presets">
+                      Get Preset Suggestions
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="w-full border-border text-foreground hover:bg-secondary bg-transparent">
+                    <Link href="/assistant">
+                      Plan Pre-Production
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="w-full border-border text-foreground hover:bg-secondary bg-transparent">
+                    <Link href="/upload">
+                      Analyze Another
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Save to Project */}
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-foreground">Save Analysis</CardTitle>
+                  <CardDescription>Add to your project library</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button variant="outline" className="w-full border-border text-foreground hover:bg-secondary hover:text-primary bg-transparent">
+                    Save to Project
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-
-          <div className="grid gap-6 lg:grid-cols-2 mt-8">
-            <section className="panel-card p-6 space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Overall Assessment</p>
-              <h3 className="text-xl font-semibold text-white">AI-detected style and mood</h3>
-              <div className="space-y-4 text-sm text-white/70">
-                <div>
-                  <p className="text-white/50">Detected Mood</p>
-                  <p className="text-white">{analysis.mood}</p>
-                </div>
-                <div>
-                  <p className="text-white/50">Visual Style</p>
-                  <p className="text-white">{analysis.style}</p>
-                </div>
-              </div>
-            </section>
-
-            <section className="panel-card p-6 space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-white/50">Next Steps</p>
-              <h3 className="text-xl font-semibold text-white">Continue with your content</h3>
-              <div className="space-y-3">
-                <Button asChild className="bg-[var(--cv-accent)] text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] w-full justify-center">
-                  <Link href="/export">
-                    Export Results
-                  </Link>
-                </Button>
-                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                  <Link href="/presets">
-                    Get Preset Suggestions
-                  </Link>
-                </Button>
-                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                  <Link href="/assistant">
-                    Plan Pre-Production
-                  </Link>
-                </Button>
-                <Button asChild className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-                  <Link href="/upload">
-                    Analyze Another
-                  </Link>
-                </Button>
-              </div>
-            </section>
-          </div>
-
-          <section className="panel-card p-6 space-y-4 mt-8">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/50">Save Analysis</p>
-            <h3 className="text-xl font-semibold text-white">Add to your project library</h3>
-            <Button className="bg-transparent text-white/60 hover:text-white justify-start px-0">
-              Save to Project
-            </Button>
-          </section>
         </div>
       </section>
 

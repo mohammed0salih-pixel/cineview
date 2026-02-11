@@ -1,0 +1,23 @@
+#!/bin/bash
+# Alternative: Deploy using AWS EC2 or simpler method
+
+echo "🚀 AWS AppRunner requires subscription for this account."
+echo ""
+echo "Your Docker image is successfully pushed to ECR:"
+echo "📦 956651462373.dkr.ecr.us-east-1.amazonaws.com/cineview-app:latest"
+echo ""
+echo "✅ Next steps to get your public URL:"
+echo ""
+echo "Option 1: Use AWS Console (Recommended for first-time)"
+echo "1. Go to: https://console.aws.amazon.com/ecs/"
+echo "2. Create Fargate task definition from the image above"
+echo "3. Create Fargate service with load balancer"
+echo "4. Your public URL will be the load balancer DNS"
+echo ""
+echo "Option 2: Use Docker locally for testing"
+echo "docker run -p 3000:3000 956651462373.dkr.ecr.us-east-1.amazonaws.com/cineview-app:latest"
+echo ""
+echo "Option 3: Deploy to Vercel (fastest)"
+echo "vercel deploy --prod"
+echo ""
+echo "Your image is ready - choose any deployment platform!"

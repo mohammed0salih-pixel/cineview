@@ -1,0 +1,663 @@
+{
+  "version": "ci-v2",
+  "lastUpdated": "2026-02-11",
+  "moods": {
+    "Noir Tension": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 70},
+        {"metric": "brightness", "op": "<=", "value": 45}
+      ],
+      "weight": 1.0,
+      "confidenceBase": 85,
+      "description": "Dark, high-contrast scenes with dramatic shadows"
+    },
+    "Uplifting Joy": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 70},
+        {"metric": "saturation", "op": ">=", "value": 55}
+      ],
+      "weight": 1.0,
+      "confidenceBase": 88,
+      "description": "Bright, saturated colors creating positive energy"
+    },
+    "Clinical Suspense": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Cool"},
+        {"metric": "contrast", "op": ">=", "value": 60}
+      ],
+      "weight": 1.0,
+      "confidenceBase": 82,
+      "description": "Cool tones with sharp contrast, sterile feel"
+    },
+    "Warm Narrative": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "saturation", "op": ">=", "value": 45}
+      ],
+      "weight": 0.9,
+      "confidenceBase": 78,
+      "description": "Warm colors with moderate saturation, storytelling feel"
+    },
+    "Melancholic Nostalgia": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 30},
+        {"metric": "contrast", "op": "<=", "value": 50},
+        {"metric": "brightness", "op": ">=", "value": 35},
+        {"metric": "brightness", "op": "<=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 20},
+        {"metric": "saturation", "op": "<=", "value": 40}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 76,
+      "description": "Desaturated, medium contrast, evokes memories"
+    },
+    "Euphoric Energy": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 75},
+        {"metric": "saturation", "op": ">=", "value": 65},
+        {"metric": "sharpness", "op": ">=", "value": 70}
+      ],
+      "weight": 0.95,
+      "confidenceBase": 90,
+      "description": "Extremely bright, saturated, sharp - high energy"
+    },
+    "Eerie Dread": {
+      "conditions": [
+        {"metric": "brightness", "op": "<=", "value": 35},
+        {"metric": "saturation", "op": "<=", "value": 30},
+        {"metric": "temperature", "op": "==", "value": "Cool"}
+      ],
+      "weight": 0.92,
+      "confidenceBase": 86,
+      "description": "Dark, desaturated, cool - horror atmosphere"
+    },
+    "Serene Calm": {
+      "conditions": [
+        {"metric": "contrast", "op": "<=", "value": 40},
+        {"metric": "brightness", "op": ">=", "value": 50},
+        {"metric": "brightness", "op": "<=", "value": 70},
+        {"metric": "saturation", "op": ">=", "value": 30},
+        {"metric": "saturation", "op": "<=", "value": 55}
+      ],
+      "weight": 0.88,
+      "confidenceBase": 80,
+      "description": "Soft contrast, balanced colors, peaceful"
+    },
+    "Dramatic Intensity": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 75},
+        {"metric": "saturation", "op": ">=", "value": 50}
+      ],
+      "weight": 0.93,
+      "confidenceBase": 87,
+      "description": "High contrast with rich colors, powerful emotions"
+    },
+    "Soft Documentary": {
+      "conditions": [
+        {"metric": "contrast", "op": "<=", "value": 60},
+        {"metric": "brightness", "op": ">=", "value": 45},
+        {"metric": "sharpness", "op": ">=", "value": 60}
+      ],
+      "weight": 0.8,
+      "confidenceBase": 74,
+      "description": "Natural lighting, balanced exposure, observational"
+    },
+    "Gritty Realism": {
+      "conditions": [
+        {"metric": "noise", "op": ">=", "value": 25},
+        {"metric": "contrast", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": "<=", "value": 45}
+      ],
+      "weight": 0.87,
+      "confidenceBase": 81,
+      "description": "Grainy, desaturated, authentic street feel"
+    },
+    "Ethereal Dream": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 65},
+        {"metric": "contrast", "op": "<=", "value": 45},
+        {"metric": "saturation", "op": ">=", "value": 40},
+        {"metric": "saturation", "op": "<=", "value": 60}
+      ],
+      "weight": 0.84,
+      "confidenceBase": 77,
+      "description": "Soft, glowing, dreamlike quality with haze"
+    },
+    "Urban Grit": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 60},
+        {"metric": "temperature", "op": "==", "value": "Cool"},
+        {"metric": "saturation", "op": "<=", "value": 50}
+      ],
+      "weight": 0.89,
+      "confidenceBase": 83,
+      "description": "Cool, contrasty, desaturated city atmosphere"
+    },
+    "Golden Hour Magic": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "brightness", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 50},
+        {"metric": "contrast", "op": ">=", "value": 50},
+        {"metric": "contrast", "op": "<=", "value": 70}
+      ],
+      "weight": 0.91,
+      "confidenceBase": 85,
+      "description": "Warm golden tones, balanced contrast, magic hour"
+    },
+    "Corporate Clean": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 60},
+        {"metric": "saturation", "op": ">=", "value": 35},
+        {"metric": "saturation", "op": "<=", "value": 55},
+        {"metric": "sharpness", "op": ">=", "value": 70},
+        {"metric": "noise", "op": "<=", "value": 15}
+      ],
+      "weight": 0.82,
+      "confidenceBase": 79,
+      "description": "Clean, sharp, professional look"
+    },
+    "Moody Ambiance": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 30},
+        {"metric": "brightness", "op": "<=", "value": 50},
+        {"metric": "contrast", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 40}
+      ],
+      "weight": 0.86,
+      "confidenceBase": 80,
+      "description": "Moody mid-tones with atmospheric depth"
+    },
+    "Vibrant Pop": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 70},
+        {"metric": "contrast", "op": ">=", "value": 60},
+        {"metric": "brightness", "op": ">=", "value": 50}
+      ],
+      "weight": 0.94,
+      "confidenceBase": 89,
+      "description": "Highly saturated, punchy colors, commercial style"
+    },
+    "Somber Reflection": {
+      "conditions": [
+        {"metric": "brightness", "op": "<=", "value": 45},
+        {"metric": "saturation", "op": "<=", "value": 35},
+        {"metric": "contrast", "op": "<=", "value": 50}
+      ],
+      "weight": 0.83,
+      "confidenceBase": 78,
+      "description": "Dark, muted, low contrast, contemplative"
+    },
+    "Natural Wonder": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 45},
+        {"metric": "composition", "op": ">=", "value": 65}
+      ],
+      "weight": 0.87,
+      "confidenceBase": 82,
+      "description": "Natural colors, good composition, outdoor beauty"
+    },
+    "Cinematic Drama": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 60}
+      ],
+      "weight": 0.7,
+      "confidenceBase": 70,
+      "description": "Default dramatic look with contrast"
+    }
+  },
+  "shotTypes": {
+    "Extreme Wide Shot": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 75},
+        {"metric": "brightness", "op": ">=", "value": 50}
+      ],
+      "weight": 0.9,
+      "confidenceBase": 82,
+      "description": "Vast landscape, subject small in frame"
+    },
+    "Wide Establishing": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 70},
+        {"metric": "brightness", "op": ">=", "value": 55}
+      ],
+      "weight": 0.95,
+      "confidenceBase": 85,
+      "description": "Shows full scene context, environmental storytelling"
+    },
+    "Full Shot": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 60},
+        {"metric": "composition", "op": "<=", "value": 75},
+        {"metric": "brightness", "op": ">=", "value": 45}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 78,
+      "description": "Subject head to toe, balanced framing"
+    },
+    "Medium Shot": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 50},
+        {"metric": "composition", "op": "<=", "value": 70}
+      ],
+      "weight": 0.8,
+      "confidenceBase": 75,
+      "description": "Waist up, conversational framing"
+    },
+    "Medium Close-up": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 70},
+        {"metric": "composition", "op": ">=", "value": 45},
+        {"metric": "composition", "op": "<=", "value": 60}
+      ],
+      "weight": 0.88,
+      "confidenceBase": 80,
+      "description": "Chest up, personal connection"
+    },
+    "Close-up Detail": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 75},
+        {"metric": "noise", "op": "<=", "value": 20}
+      ],
+      "weight": 0.92,
+      "confidenceBase": 86,
+      "description": "Sharp focus on specific detail or face"
+    },
+    "Intimate Close-up": {
+      "conditions": [
+        {"metric": "composition", "op": "<=", "value": 45},
+        {"metric": "sharpness", "op": ">=", "value": 65}
+      ],
+      "weight": 0.9,
+      "confidenceBase": 83,
+      "description": "Very tight framing, emotional intensity"
+    },
+    "Extreme Close-up": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 80},
+        {"metric": "composition", "op": "<=", "value": 35}
+      ],
+      "weight": 0.93,
+      "confidenceBase": 87,
+      "description": "Macro detail, specific feature only"
+    },
+    "Over-the-Shoulder": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 55},
+        {"metric": "composition", "op": "<=", "value": 70},
+        {"metric": "brightness", "op": ">=", "value": 45}
+      ],
+      "weight": 0.82,
+      "confidenceBase": 76,
+      "description": "Shows perspective, conversational context"
+    },
+    "Two-Shot": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 60},
+        {"metric": "brightness", "op": ">=", "value": 50}
+      ],
+      "weight": 0.78,
+      "confidenceBase": 72,
+      "description": "Two subjects in frame, relationship"
+    },
+    "Dutch Angle": {
+      "conditions": [
+        {"metric": "composition", "op": "<=", "value": 50},
+        {"metric": "contrast", "op": ">=", "value": 65}
+      ],
+      "weight": 0.75,
+      "confidenceBase": 70,
+      "description": "Tilted frame, creates unease or dynamism"
+    },
+    "Aerial Shot": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 70},
+        {"metric": "brightness", "op": ">=", "value": 60}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 79,
+      "description": "Bird's eye view, geographic context"
+    },
+    "Point-of-View": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 50},
+        {"metric": "sharpness", "op": ">=", "value": 65}
+      ],
+      "weight": 0.77,
+      "confidenceBase": 71,
+      "description": "Subject's perspective, immersive"
+    },
+    "Tracking Shot": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 60},
+        {"metric": "noise", "op": "<=", "value": 25}
+      ],
+      "weight": 0.8,
+      "confidenceBase": 74,
+      "description": "Camera follows subject, dynamic movement"
+    },
+    "Static Frame": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 70},
+        {"metric": "noise", "op": "<=", "value": 18}
+      ],
+      "weight": 0.76,
+      "confidenceBase": 70,
+      "description": "Fixed camera, composed frame"
+    }
+  },
+  "genres": {
+    "Film Noir": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 75},
+        {"metric": "saturation", "op": "<=", "value": 40}
+      ],
+      "weight": 0.95,
+      "confidenceBase": 88,
+      "description": "Classic high contrast black and white aesthetic"
+    },
+    "Commercial": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 70},
+        {"metric": "saturation", "op": ">=", "value": 60}
+      ],
+      "weight": 0.92,
+      "confidenceBase": 86,
+      "description": "Bright, saturated, polished advertising look"
+    },
+    "Romantic Drama": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "contrast", "op": "<=", "value": 55}
+      ],
+      "weight": 0.88,
+      "confidenceBase": 82,
+      "description": "Soft warm tones, gentle contrast"
+    },
+    "Sci-Fi": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Cool"},
+        {"metric": "saturation", "op": "<=", "value": 50}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 80,
+      "description": "Cool clinical tones, futuristic feel"
+    },
+    "Travel Documentary": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 65},
+        {"metric": "brightness", "op": ">=", "value": 45},
+        {"metric": "brightness", "op": "<=", "value": 65}
+      ],
+      "weight": 0.82,
+      "confidenceBase": 78,
+      "description": "Natural colors, strong composition, exploration"
+    },
+    "Horror": {
+      "conditions": [
+        {"metric": "brightness", "op": "<=", "value": 35},
+        {"metric": "contrast", "op": ">=", "value": 65},
+        {"metric": "saturation", "op": "<=", "value": 40}
+      ],
+      "weight": 0.93,
+      "confidenceBase": 87,
+      "description": "Dark, high contrast, desaturated, menacing"
+    },
+    "Action": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 70},
+        {"metric": "saturation", "op": ">=", "value": 55},
+        {"metric": "sharpness", "op": ">=", "value": 70}
+      ],
+      "weight": 0.9,
+      "confidenceBase": 85,
+      "description": "High energy, sharp, contrasty, dynamic"
+    },
+    "Thriller": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 68},
+        {"metric": "brightness", "op": "<=", "value": 50},
+        {"metric": "temperature", "op": "==", "value": "Cool"}
+      ],
+      "weight": 0.89,
+      "confidenceBase": 84,
+      "description": "Dark, tense, cool tones, suspenseful"
+    },
+    "Comedy": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 65},
+        {"metric": "saturation", "op": ">=", "value": 50}
+      ],
+      "weight": 0.84,
+      "confidenceBase": 79,
+      "description": "Bright, colorful, light-hearted look"
+    },
+    "Western": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "saturation", "op": ">=", "value": 40},
+        {"metric": "saturation", "op": "<=", "value": 60},
+        {"metric": "contrast", "op": ">=", "value": 55}
+      ],
+      "weight": 0.86,
+      "confidenceBase": 81,
+      "description": "Warm dusty tones, frontier aesthetic"
+    },
+    "Fantasy": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 60},
+        {"metric": "brightness", "op": ">=", "value": 55}
+      ],
+      "weight": 0.83,
+      "confidenceBase": 78,
+      "description": "Rich saturated colors, magical feel"
+    },
+    "Historical Drama": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "contrast", "op": ">=", "value": 50},
+        {"metric": "contrast", "op": "<=", "value": 65},
+        {"metric": "saturation", "op": ">=", "value": 35},
+        {"metric": "saturation", "op": "<=", "value": 55}
+      ],
+      "weight": 0.8,
+      "confidenceBase": 76,
+      "description": "Period-appropriate, muted warm tones"
+    },
+    "Musical": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 65},
+        {"metric": "brightness", "op": ">=", "value": 60},
+        {"metric": "contrast", "op": ">=", "value": 55}
+      ],
+      "weight": 0.87,
+      "confidenceBase": 82,
+      "description": "Vibrant, theatrical, high production value"
+    },
+    "Sports": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 75},
+        {"metric": "contrast", "op": ">=", "value": 60},
+        {"metric": "brightness", "op": ">=", "value": 55}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 80,
+      "description": "Sharp, bright, high contrast action"
+    },
+    "Nature Documentary": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 50},
+        {"metric": "brightness", "op": ">=", "value": 50},
+        {"metric": "composition", "op": ">=", "value": 70}
+      ],
+      "weight": 0.88,
+      "confidenceBase": 83,
+      "description": "Natural colors, strong composition, wildlife"
+    },
+    "Corporate": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 65},
+        {"metric": "sharpness", "op": ">=", "value": 72},
+        {"metric": "noise", "op": "<=", "value": 15},
+        {"metric": "saturation", "op": ">=", "value": 40},
+        {"metric": "saturation", "op": "<=", "value": 60}
+      ],
+      "weight": 0.81,
+      "confidenceBase": 77,
+      "description": "Professional, clean, polished business look"
+    },
+    "Fashion": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 55},
+        {"metric": "sharpness", "op": ">=", "value": 75},
+        {"metric": "contrast", "op": ">=", "value": 60}
+      ],
+      "weight": 0.89,
+      "confidenceBase": 84,
+      "description": "Stylized, sharp, bold aesthetic"
+    },
+    "Food": {
+      "conditions": [
+        {"metric": "temperature", "op": "==", "value": "Warm"},
+        {"metric": "saturation", "op": ">=", "value": 60},
+        {"metric": "sharpness", "op": ">=", "value": 70}
+      ],
+      "weight": 0.86,
+      "confidenceBase": 81,
+      "description": "Appetizing warm tones, sharp detail"
+    },
+    "Tech Review": {
+      "conditions": [
+        {"metric": "sharpness", "op": ">=", "value": 78},
+        {"metric": "brightness", "op": ">=", "value": 60},
+        {"metric": "noise", "op": "<=", "value": 12}
+      ],
+      "weight": 0.84,
+      "confidenceBase": 79,
+      "description": "Ultra sharp, clean, technical precision"
+    },
+    "Music Video": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 60},
+        {"metric": "contrast", "op": ">=", "value": 65}
+      ],
+      "weight": 0.85,
+      "confidenceBase": 80,
+      "description": "Stylized, bold colors, artistic"
+    },
+    "Vlog": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 45}
+      ],
+      "weight": 0.75,
+      "confidenceBase": 70,
+      "description": "Personal, natural, casual feel"
+    },
+    "Animation": {
+      "conditions": [
+        {"metric": "saturation", "op": ">=", "value": 70},
+        {"metric": "brightness", "op": ">=", "value": 60}
+      ],
+      "weight": 0.82,
+      "confidenceBase": 77,
+      "description": "Bright, highly saturated, stylized"
+    },
+    "Art House": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 70},
+        {"metric": "contrast", "op": ">=", "value": 55}
+      ],
+      "weight": 0.79,
+      "confidenceBase": 74,
+      "description": "Experimental, compositionally driven"
+    },
+    "Indie Film": {
+      "conditions": [
+        {"metric": "noise", "op": ">=", "value": 18},
+        {"metric": "saturation", "op": ">=", "value": 35},
+        {"metric": "saturation", "op": "<=", "value": 55}
+      ],
+      "weight": 0.78,
+      "confidenceBase": 73,
+      "description": "Grainy, natural, authentic aesthetic"
+    },
+    "News": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 60},
+        {"metric": "sharpness", "op": ">=", "value": 65},
+        {"metric": "noise", "op": "<=", "value": 20}
+      ],
+      "weight": 0.77,
+      "confidenceBase": 72,
+      "description": "Clear, bright, informational"
+    },
+    "Reality TV": {
+      "conditions": [
+        {"metric": "brightness", "op": ">=", "value": 55},
+        {"metric": "saturation", "op": ">=", "value": 50}
+      ],
+      "weight": 0.76,
+      "confidenceBase": 71,
+      "description": "Bright, accessible, dramatic moments"
+    },
+    "Experimental": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 60}
+      ],
+      "weight": 0.7,
+      "confidenceBase": 68,
+      "description": "Avant-garde, unconventional"
+    },
+    "Noir Mystery": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 72},
+        {"metric": "brightness", "op": "<=", "value": 45},
+        {"metric": "saturation", "op": "<=", "value": 45}
+      ],
+      "weight": 0.91,
+      "confidenceBase": 85,
+      "description": "Dark, mysterious, detective aesthetic"
+    },
+    "Biopic": {
+      "conditions": [
+        {"metric": "contrast", "op": ">=", "value": 50},
+        {"metric": "contrast", "op": "<=", "value": 65},
+        {"metric": "brightness", "op": ">=", "value": 45},
+        {"metric": "brightness", "op": "<=", "value": 65}
+      ],
+      "weight": 0.79,
+      "confidenceBase": 74,
+      "description": "Realistic, balanced, life story"
+    },
+    "Editorial": {
+      "conditions": [
+        {"metric": "composition", "op": ">=", "value": 60}
+      ],
+      "weight": 0.72,
+      "confidenceBase": 68,
+      "description": "Default editorial style"
+    }
+  },
+  "energy": {
+    "thresholds": [
+      {"level": "Very Low", "min": 0, "max": 30},
+      {"level": "Low", "min": 30, "max": 45},
+      {"level": "Medium-Low", "min": 45, "max": 60},
+      {"level": "Medium", "min": 60, "max": 70},
+      {"level": "Medium-High", "min": 70, "max": 80},
+      {"level": "High", "min": 80, "max": 90},
+      {"level": "Very High", "min": 90, "max": 100}
+    ],
+    "formula": {
+      "weights": {
+        "contrast": 0.3,
+        "saturation": 0.25,
+        "sharpness": 0.25,
+        "composition": 0.2,
+        "noise": -0.15
+      }
+    }
+  }
+}

@@ -1,539 +1,293 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
-import Link from "next/link"
+import React from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { analyzeImageFromUrl, analyzeVideoFromUrl } from "@/lib/visual-analysis"
-import { supabaseBrowser } from "@/lib/supabase-browser"
+import { Upload, ImageIcon, Video, ArrowRight, X, FileImage, FileVideo, Sparkles } from "lucide-react"
+import { useState, useCallback } from "react"
+import Link from "next/link"
+import Image from "next/image"
 
 const projectTypes = [
- { value: "advertising", label: "Advertising" },
- { value: "real-estate", label: "Real Estate" },
- { value: "fashion", label: "Fashion" },
- { value: "cinema", label: "Cinema" },
- { value: "product", label: "Product" },
- { value: "portrait", label: "Portrait" },
+  { value: "advertising", label: "Advertising" },
+  { value: "real-estate", label: "Real Estate" },
+  { value: "fashion", label: "Fashion" },
+  { value: "cinema", label: "Cinema" },
+  { value: "product", label: "Product" },
+  { value: "portrait", label: "Portrait" },
 ]
 
 const platforms = [
- { value: "social", label: "Social Media" },
- { value: "advertising", label: "Advertising Campaign" },
- { value: "cinema", label: "Cinema / Film" },
- { value: "web", label: "Web / Digital" },
- { value: "print", label: "Print Media" },
+  { value: "social", label: "Social Media" },
+  { value: "advertising", label: "Advertising Campaign" },
+  { value: "cinema", label: "Cinema / Film" },
+  { value: "web", label: "Web / Digital" },
+  { value: "print", label: "Print Media" },
 ]
 
 export default function UploadPage() {
- const [contentType, setContentType] = useState<"image" | "video">("image")
- const [file, setFile] = useState<File | null>(null)
- const [preview, setPreview] = useState<string | null>(null)
- const [projectType, setProjectType] = useState("")
- const [platform, setPlatform] = useState("")
- const [objective, setObjective] = useState("")
- const [isDragging, setIsDragging] = useState(false)
- const storageKey = "cineview_latest_upload"
+  const [contentType, setContentType] = useState<"image" | "video">("image")
+  const [file, setFile] = useState<File | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [projectType, setProjectType] = useState("")
+  const [platform, setPlatform] = useState("")
+  const [objective, setObjective] = useState("")
+  const [isDragging, setIsDragging] = useState(false)
 
- const saveAnalysisIfReady = useCallback(async () => {
-  let payload: {
-   analysis?: Record<string, unknown>
-   analysisStatus?: "loading" | "analyzing" | "completed"
-   analysisStartedAt?: string
-   analyzedAt?: string
-   analysisSaved?: boolean
-   analysisSaving?: boolean
-   url?: string
-   mode?: "object" | "data"
-   type?: "image" | "video"
-   name?: string
-   sizeBytes?: number
-   mimeType?: string
-   projectType?: string
-   platform?: string
-  } = {}
-
-  try {
-   const raw = sessionStorage.getItem(storageKey)
-   if (!raw) return
-   payload = JSON.parse(raw)
-  } catch {
-   return
-  }
-
-  if (!payload.analysis || payload.analysisSaved || payload.analysisSaving) return
-
-  const resolvedProjectType = projectType || payload.projectType
-  const resolvedPlatform = platform || payload.platform
-  if (!resolvedProjectType || !resolvedPlatform) return
-
-  const mediaType = payload.type ?? contentType
-  const mediaName = payload.name ?? file?.name
-  if (!mediaType || !mediaName) return
-
-  const previewUrl =
-   payload.mode === "data" && typeof payload.url === "string" && payload.url.startsWith("data:") && payload.url.length <= 1_000_000
-    ? payload.url
-    : null
-
-  let accessToken: string | null = null
-  try {
-   const { data } = await supabaseBrowser.auth.getSession()
-   accessToken = data?.session?.access_token ?? null
-  } catch {
-   accessToken = null
-  }
-
-  if (!accessToken) return
-
-  try {
-   sessionStorage.setItem(
-    storageKey,
-    JSON.stringify({
-     ...payload,
-     analysisSaving: true,
-     projectType: resolvedProjectType,
-     platform: resolvedPlatform,
-    })
-   )
-  } catch {
-   // ignore storage failures
-  }
-
-  const response = await fetch("/api/analysis", {
-   method: "POST",
-   headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`,
-   },
-   body: JSON.stringify({
-    project_type: resolvedProjectType,
-    platform: resolvedPlatform,
-    media: {
-     name: mediaName,
-     type: mediaType,
-     size_bytes: payload.sizeBytes ?? file?.size ?? null,
-     preview_url: previewUrl,
-     metadata: {
-      objective: objective || null,
-      mime_type: payload.mimeType ?? file?.type ?? null,
-     },
-    },
-    analysis: payload.analysis,
-    analysis_status: payload.analysisStatus ?? "completed",
-    analysis_started_at: payload.analysisStartedAt ?? payload.analyzedAt,
-    analysis_completed_at: payload.analyzedAt,
-   }),
-  })
-
-  let data: {
-   project_id?: string
-   media_id?: string
-   analysis_run_id?: string
-   insight_id?: string
-   trace_id?: string
-   error?: string
-  } | null = null
-
-  try {
-   data = await response.json()
-  } catch {
-   data = null
-  }
-
-  if (!response.ok) {
-   try {
-    const raw = sessionStorage.getItem(storageKey)
-    const nextPayload = raw ? JSON.parse(raw) : payload
-    sessionStorage.setItem(
-     storageKey,
-     JSON.stringify({
-      ...nextPayload,
-      analysisSaving: false,
-      analysisSaveError: data?.error || "save_failed",
-     })
-    )
-   } catch {
-    // ignore storage failures
-   }
-   return
-  }
-
-  try {
-   const raw = sessionStorage.getItem(storageKey)
-   const nextPayload = raw ? JSON.parse(raw) : payload
-   sessionStorage.setItem(
-    storageKey,
-    JSON.stringify({
-     ...nextPayload,
-     analysisSaving: false,
-     analysisSaved: true,
-     project_id: data?.project_id ?? nextPayload.project_id,
-     media_id: data?.media_id ?? nextPayload.media_id,
-     analysis_run_id: data?.analysis_run_id ?? nextPayload.analysis_run_id,
-     insight_id: data?.insight_id ?? nextPayload.insight_id,
-     trace_id: data?.trace_id ?? nextPayload.trace_id,
-    })
-   )
-  } catch {
-   // ignore storage failures
-  }
- }, [contentType, file, objective, platform, projectType])
-
- const handleFileChange = useCallback((selectedFile: File | null) => {
-  if (selectedFile) {
-   if (preview && preview.startsWith("blob:")) {
-    URL.revokeObjectURL(preview)
-   }
-   setFile(selectedFile)
-   const isVideo = selectedFile.type.startsWith("video/")
-   if (isVideo) {
-    const objectUrl = URL.createObjectURL(selectedFile)
-    setPreview(objectUrl)
-    try {
-       sessionStorage.setItem(
-        storageKey,
-        JSON.stringify({
-         url: objectUrl,
-         mode: "object",
-         type: "video",
-         name: selectedFile.name,
-         sizeBytes: selectedFile.size,
-         mimeType: selectedFile.type,
-         analysisStartedAt: new Date().toISOString(),
-         analysisStatus: "analyzing",
-        })
-       )
-      } catch {
-     // ignore storage failures
+  const handleFileChange = useCallback((selectedFile: File | null) => {
+    if (selectedFile) {
+      setFile(selectedFile)
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setPreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(selectedFile)
     }
-    analyzeVideoFromUrl(objectUrl)
-     .then((analysis) => {
-      try {
-       const raw = sessionStorage.getItem(storageKey)
-       const payload = raw ? JSON.parse(raw) : {}
-       sessionStorage.setItem(
-        storageKey,
-        JSON.stringify({
-         ...payload,
-         analysis,
-         analyzedAt: new Date().toISOString(),
-         analysisStatus: "completed",
-        })
-       )
-       void saveAnalysisIfReady()
-      } catch {
-       // ignore storage failures
-      }
-     })
-     .catch(() => {
-      try {
-       const raw = sessionStorage.getItem(storageKey)
-       const payload = raw ? JSON.parse(raw) : {}
-       sessionStorage.setItem(
-        storageKey,
-        JSON.stringify({
-         ...payload,
-         analysisStatus: "completed",
-        })
-       )
-       void saveAnalysisIfReady()
-      } catch {
-       // ignore storage failures
-      }
-     })
-   } else {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-     const result = e.target?.result as string
-     setPreview(result)
-     try {
-       sessionStorage.setItem(
-        storageKey,
-        JSON.stringify({
-         url: result,
-         mode: "data",
-         type: "image",
-         name: selectedFile.name,
-         sizeBytes: selectedFile.size,
-         mimeType: selectedFile.type,
-         analysisStartedAt: new Date().toISOString(),
-         analysisStatus: "analyzing",
-        })
-       )
-      } catch {
-      // ignore storage failures
-     }
-     analyzeImageFromUrl(result)
-      .then((analysis) => {
-       try {
-        const raw = sessionStorage.getItem(storageKey)
-        const payload = raw ? JSON.parse(raw) : {}
-        sessionStorage.setItem(
-         storageKey,
-         JSON.stringify({
-         ...payload,
-         analysis,
-         analyzedAt: new Date().toISOString(),
-         analysisStatus: "completed",
-        })
-       )
-       void saveAnalysisIfReady()
-      } catch {
-       // ignore storage failures
-      }
-     })
-     .catch(() => {
-       try {
-        const raw = sessionStorage.getItem(storageKey)
-        const payload = raw ? JSON.parse(raw) : {}
-        sessionStorage.setItem(
-         storageKey,
-        JSON.stringify({
-         ...payload,
-         analysisStatus: "completed",
-        })
-       )
-       void saveAnalysisIfReady()
-      } catch {
-       // ignore storage failures
-      }
-     })
+  }, [])
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+    const droppedFile = e.dataTransfer.files[0]
+    if (droppedFile) {
+      handleFileChange(droppedFile)
     }
-    reader.readAsDataURL(selectedFile)
-   }
+  }, [handleFileChange])
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }, [])
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragging(false)
+  }, [])
+
+  const clearFile = () => {
+    setFile(null)
+    setPreview(null)
   }
- }, [preview, saveAnalysisIfReady])
 
- const handleDrop = useCallback(
-  (e: React.DragEvent) => {
-   e.preventDefault()
-   setIsDragging(false)
-   const droppedFile = e.dataTransfer.files[0]
-   if (droppedFile) handleFileChange(droppedFile)
-  },
-  [handleFileChange]
- )
+  const isFormValid = file && projectType && platform
 
- const handleDragOver = useCallback((e: React.DragEvent) => {
-  e.preventDefault()
-  setIsDragging(true)
- }, [])
+  return (
+    <main className="min-h-screen bg-background">
+      <Header />
+      
+      <section className="pt-24 pb-16">
+        <div className="mx-auto max-w-4xl px-4 py-12 lg:px-8">
+          {/* Page Header */}
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 mb-6">
+              <Sparkles className="h-3.5 w-3.5 text-foreground" />
+              <span className="text-xs font-medium text-foreground uppercase tracking-wider">AI Analysis</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+              Upload Your <span className="text-gradient-gold">Content</span>
+            </h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">
+              Upload a photograph or video for AI-powered cinematic analysis
+            </p>
+          </div>
 
- const handleDragLeave = useCallback((e: React.DragEvent) => {
-  e.preventDefault()
-  setIsDragging(false)
- }, [])
+          {/* Content Type Selection */}
+          <Card className="mb-6 border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-foreground">Content Type</CardTitle>
+              <CardDescription>Select what you want to analyze</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup
+                value={contentType}
+                onValueChange={(value) => setContentType(value as "image" | "video")}
+                className="grid grid-cols-2 gap-4"
+              >
+                <div>
+                  <RadioGroupItem value="image" id="image" className="peer sr-only" />
+                  <Label
+                    htmlFor="image"
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-border/50 bg-secondary/30 p-6 transition-all hover:border-primary/50 hover:bg-secondary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10"
+                  >
+                    <ImageIcon className="mb-3 h-8 w-8 text-foreground" />
+                    <span className="text-sm font-semibold text-foreground">Photograph</span>
+                    <span className="mt-1 text-xs text-muted-foreground">JPG, PNG, WebP</span>
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem value="video" id="video" className="peer sr-only" />
+                  <Label
+                    htmlFor="video"
+                    className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-border/50 bg-secondary/30 p-6 transition-all hover:border-primary/50 hover:bg-secondary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/10"
+                  >
+                    <Video className="mb-3 h-8 w-8 text-foreground" />
+                    <span className="text-sm font-semibold text-foreground">Video</span>
+                    <span className="mt-1 text-xs text-muted-foreground">MP4, MOV, WebM</span>
+                  </Label>
+                </div>
+              </RadioGroup>
+            </CardContent>
+          </Card>
 
- const clearFile = () => {
-  if (preview && preview.startsWith("blob:")) {
-   URL.revokeObjectURL(preview)
-  }
-  setFile(null)
-  setPreview(null)
-  try {
-   sessionStorage.removeItem(storageKey)
-  } catch {
-   // ignore storage failures
-  }
- }
+          {/* File Upload */}
+          <Card className="mb-6 border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-foreground">Upload File</CardTitle>
+              <CardDescription>Drag and drop or click to select</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {!preview ? (
+                <div
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  className={`relative flex min-h-[240px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed transition-all ${
+                    isDragging
+                      ? "border-primary bg-primary/10"
+                      : "border-border/50 bg-secondary/20 hover:border-primary/50 hover:bg-secondary/30"
+                  }`}
+                >
+                  <input
+                    type="file"
+                    accept={contentType === "image" ? "image/*" : "video/*"}
+                    onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+                    className="absolute inset-0 cursor-pointer opacity-0"
+                  />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 mb-4">
+                    <Upload className="h-8 w-8 text-foreground" />
+                  </div>
+                  <p className="text-base font-semibold text-foreground">
+                    Drop your {contentType === "image" ? "image" : "video"} here
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    or click to browse files
+                  </p>
+                </div>
+              ) : (
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={clearFile}
+                    className="absolute -right-2 -top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-destructive text-destructive-foreground transition-colors hover:bg-destructive/80"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  <div className="overflow-hidden rounded-xl border border-border/50">
+                    {contentType === "image" ? (
+                      <Image
+                        src={preview || "/placeholder.svg"}
+                        alt="Preview"
+                        width={1200}
+                        height={800}
+                        className="h-auto max-h-[400px] w-full object-contain bg-secondary/20"
+                      />
+                    ) : (
+                      <video
+                        src={preview}
+                        controls
+                        className="h-auto max-h-[400px] w-full bg-secondary/20"
+                      />
+                    )}
+                  </div>
+                  <div className="mt-4 flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border/50">
+                    {contentType === "image" ? (
+                      <FileImage className="h-5 w-5 text-foreground" />
+                    ) : (
+                      <FileVideo className="h-5 w-5 text-foreground" />
+                    )}
+                    <span className="text-sm text-foreground font-medium truncate">{file?.name}</span>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
- const isFormValid = file && projectType && platform
+          {/* Project Details */}
+          <Card className="mb-8 border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="text-foreground">Project Details</CardTitle>
+              <CardDescription>Help us understand your content better</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Project Type */}
+              <div className="space-y-2">
+                <Label htmlFor="project-type" className="text-foreground font-medium">Project Type</Label>
+                <Select value={projectType} onValueChange={setProjectType}>
+                  <SelectTrigger id="project-type" className="border-border/50 bg-secondary/30 text-foreground h-12">
+                    <SelectValue placeholder="Select project type" />
+                  </SelectTrigger>
+                  <SelectContent className="border-border bg-card">
+                    {projectTypes.map((type) => (
+                      <SelectItem key={type.value} value={type.value} className="text-foreground">
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
- const markAnalysisStart = () => {
-  try {
-   const raw = sessionStorage.getItem(storageKey)
-   const payload = raw ? JSON.parse(raw) : {}
-   sessionStorage.setItem(
-    storageKey,
-    JSON.stringify({
-     ...payload,
-     analyzedAt: payload.analyzedAt ?? new Date().toISOString(),
-     analysisStatus: payload.analysisStatus ?? "loading",
-     analysisStartedAt: payload.analysisStartedAt ?? new Date().toISOString(),
-     projectType,
-     platform,
-    })
-   )
-  } catch {
-   // ignore storage failures
-  }
-  void saveAnalysisIfReady()
- }
+              {/* Platform */}
+              <div className="space-y-2">
+                <Label htmlFor="platform" className="text-foreground font-medium">Target Platform</Label>
+                <Select value={platform} onValueChange={setPlatform}>
+                  <SelectTrigger id="platform" className="border-border/50 bg-secondary/30 text-foreground h-12">
+                    <SelectValue placeholder="Select platform" />
+                  </SelectTrigger>
+                  <SelectContent className="border-border bg-card">
+                    {platforms.map((p) => (
+                      <SelectItem key={p.value} value={p.value} className="text-foreground">
+                        {p.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
- return (
-  <main className="min-h-screen bg-background text-foreground">
-   <Header />
+              {/* Objective */}
+              <div className="space-y-2">
+                <Label htmlFor="objective" className="text-foreground font-medium">Shot Objective <span className="text-muted-foreground font-normal">(Optional)</span></Label>
+                <Textarea
+                  id="objective"
+                  value={objective}
+                  onChange={(e) => setObjective(e.target.value)}
+                  placeholder="Describe what you want to achieve with this shot..."
+                  className="min-h-[120px] border-border/50 bg-secondary/30 text-foreground placeholder:text-muted-foreground resize-none"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-   <section className="pt-24 pb-20 legacy-ui">
-    <div className="mx-auto max-w-7xl px-4 lg:px-8 motion-fade">
-     <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-      <div>
-       <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.3em]">AI Analysis</div>
-       <h1 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white font-display">
-        Upload Your Content
-       </h1>
-       <p className="mt-3 text-base sm:text-lg text-white/60">
-        Upload a photograph or video for AI-powered cinematic analysis
-       </p>
-      </div>
-      <Button
-       asChild={isFormValid ? true : false}
-       size="lg"
-       disabled={!isFormValid}
-       className="h-12 bg-[var(--cv-accent)] px-8 text-white hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)] disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-       {isFormValid ? (
-        <Link href="/analysis" onClick={markAnalysisStart}>
-         Analyze Content
-        </Link>
-       ) : (
-        <>Analyze Content</>
-       )}
-      </Button>
-     </div>
-
-     <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr]">
-      <section className="panel-card p-6 space-y-4">
-       <p className="text-xs uppercase tracking-[0.3em] text-white/50">Upload File</p>
-       <p className="text-sm text-white/60">Drag and drop or click to select</p>
-       {!preview ? (
-        <div
-         onDrop={handleDrop}
-         onDragOver={handleDragOver}
-         onDragLeave={handleDragLeave}
-         className={`relative flex min-h-[320px] flex-col items-center justify-center rounded-2xl bg-black/50 transition-all ${
-          isDragging ? "bg-black/60" : "hover:bg-black/60"
-         }`}
-        >
-         <input
-          type="file"
-          accept={contentType === "image" ? "image/*" : "video/*"}
-          onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
-          className="absolute inset-0 cursor-pointer opacity-0"
-         />
-         <p className="mt-4 text-sm font-semibold text-white">
-          Drop your {contentType === "image" ? "image" : "video"} here
-         </p>
-         <p className="mt-1 text-xs text-white/50">or click to browse files</p>
+          {/* Submit Button */}
+          <div className="flex justify-center text-card">
+            <Button
+              asChild={isFormValid ? true : false}
+              size="lg"
+              disabled={!isFormValid}
+              className="bg-primary text-foreground-foreground hover:bg-primary/90  font-semibold h-14 px-10 text-base disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isFormValid ? (
+                <Link href="/analysis">
+                  Analyze Content
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              ) : (
+                <>
+                  Analyze Content
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </>
+              )}
+            </Button>
+          </div>
         </div>
-       ) : (
-        <div className="relative">
-         <button
-          type="button"
-          onClick={clearFile}
-          className="absolute -right-2 -top-2 z-10 rounded-full bg-[var(--cv-accent)] px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-[color-mix(in_srgb,var(--cv-accent)_80%,#000)]"
-         >
-          Remove
-         </button>
-         <div className="overflow-hidden rounded-2xl bg-black/50">
-          {contentType === "image" ? (
-           <img
-            src={preview || "/placeholder.svg"}
-            alt="Preview"
-            className="h-auto max-h-[420px] w-full object-contain bg-black/60"
-           />
-          ) : (
-           <video src={preview} controls className="h-auto max-h-[420px] w-full bg-black/60" />
-          )}
-         </div>
-         <div className="mt-3 text-sm text-white/60 truncate">{file?.name}</div>
-        </div>
-       )}
       </section>
 
-      <div className="space-y-6">
-       <section className="panel-card p-6 space-y-4">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Content Type</p>
-        <p className="text-sm text-white/60">Select what you want to analyze</p>
-        <RadioGroup
-         value={contentType}
-         onValueChange={(value) => setContentType(value as "image" | "video")}
-         className="space-y-4"
-        >
-         <div>
-          <RadioGroupItem value="image" id="image" className="peer sr-only" />
-          <Label
-           htmlFor="image"
-           className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
-          >
-           <span className="text-lg font-semibold">Photograph</span>
-           <span className="text-xs text-white/50">JPG, PNG, WebP</span>
-          </Label>
-         </div>
-         <div>
-          <RadioGroupItem value="video" id="video" className="peer sr-only" />
-          <Label
-           htmlFor="video"
-           className="flex cursor-pointer flex-col gap-2 text-white/50 transition-colors hover:text-white peer-data-[state=checked]:text-white"
-          >
-           <span className="text-lg font-semibold">Video</span>
-           <span className="text-xs text-white/50">MP4, MOV, WebM</span>
-          </Label>
-         </div>
-        </RadioGroup>
-       </section>
-
-       <section className="panel-card p-6 space-y-4">
-        <p className="text-xs uppercase tracking-[0.3em] text-white/50">Project Details</p>
-        <p className="text-sm text-white/60">Help us understand your content better</p>
-        <div className="space-y-6">
-         <div className="space-y-2">
-          <Label htmlFor="project-type" className="text-white/70">Project Type</Label>
-          <Select value={projectType} onValueChange={setProjectType}>
-           <SelectTrigger id="project-type" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
-            <SelectValue placeholder="Select project type" />
-           </SelectTrigger>
-           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-            {projectTypes.map((type) => (
-             <SelectItem key={type.value} value={type.value} className="text-white">
-              {type.label}
-             </SelectItem>
-            ))}
-           </SelectContent>
-          </Select>
-         </div>
-
-         <div className="space-y-2">
-          <Label htmlFor="platform" className="text-white/70">Target Platform</Label>
-          <Select value={platform} onValueChange={setPlatform}>
-           <SelectTrigger id="platform" className="h-12 bg-transparent text-white border-0 shadow-none px-0">
-            <SelectValue placeholder="Select platform" />
-           </SelectTrigger>
-           <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
-            {platforms.map((p) => (
-             <SelectItem key={p.value} value={p.value} className="text-white">
-              {p.label}
-             </SelectItem>
-            ))}
-           </SelectContent>
-          </Select>
-         </div>
-
-         <div className="space-y-2">
-          <Label htmlFor="objective" className="text-white/70">
-           Shot Objective <span className="text-white/40 font-normal">(Optional)</span>
-          </Label>
-          <Textarea
-           id="objective"
-           value={objective}
-           onChange={(e) => setObjective(e.target.value)}
-           placeholder="Describe what you want to achieve with this shot..."
-           className="min-h-[120px] resize-none bg-transparent border-0 px-0 text-white/80 placeholder:text-white/40"
-          />
-         </div>
-        </div>
-       </section>
-      </div>
-     </div>
-    </div>
-   </section>
-
-   <Footer />
-  </main>
- )
+      <Footer />
+    </main>
+  )
 }

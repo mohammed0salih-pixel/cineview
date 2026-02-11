@@ -1,466 +1,682 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Plus,
+  FolderOpen,
+  ListChecks,
+  Layout,
+  Palette,
+  Calendar,
+  Users,
+  MoreVertical,
+  Search,
+  Filter,
+  Grid3X3,
+  List,
+  Clock,
+  ImageIcon,
+  Play,
+  Trash2,
+  Edit3,
+  Copy,
+  Share2,
+  Download,
+  ArrowRight,
+} from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { supabaseBrowser } from "@/lib/supabase-browser";
 
-const projects: Array<{
-  id: string;
-  name: string;
-  status: string | null;
-  description: string | null;
-  created_at: string | null;
-}> = [];
+const projects = [
+  {
+    id: 1,
+    name: "Saudi Tourism Campaign",
+    client: "Ministry of Tourism",
+    status: "in-progress",
+    progress: 65,
+    dueDate: "2026-02-15",
+    team: [
+      { name: "Ahmed", avatar: "/placeholder.svg?height=32&width=32" },
+      { name: "Sara", avatar: "/placeholder.svg?height=32&width=32" },
+      { name: "Omar", avatar: "/placeholder.svg?height=32&width=32" },
+    ],
+    shotCount: 24,
+    completedShots: 16,
+    thumbnail: "/placeholder.svg?height=200&width=300",
+  },
+  {
+    id: 2,
+    name: "AlUla Documentary",
+    client: "Royal Commission for AlUla",
+    status: "planning",
+    progress: 25,
+    dueDate: "2026-03-20",
+    team: [
+      { name: "Fatima", avatar: "/placeholder.svg?height=32&width=32" },
+      { name: "Khalid", avatar: "/placeholder.svg?height=32&width=32" },
+    ],
+    shotCount: 48,
+    completedShots: 12,
+    thumbnail: "/placeholder.svg?height=200&width=300",
+  },
+  {
+    id: 3,
+    name: "Coffee Brand Launch",
+    client: "Qahwa Co.",
+    status: "completed",
+    progress: 100,
+    dueDate: "2026-01-10",
+    team: [
+      { name: "Noura", avatar: "/placeholder.svg?height=32&width=32" },
+    ],
+    shotCount: 12,
+    completedShots: 12,
+    thumbnail: "/placeholder.svg?height=200&width=300",
+  },
+];
 
-const shotList: Array<{
-  id: number;
-  scene: string;
-  shot: string;
-  description: string;
-  duration: string;
-  status: string;
-  location: string;
-  timeOfDay: string;
-  gear: string;
-}> = [];
+const shotList = [
+  {
+    id: 1,
+    scene: "Opening",
+    shot: "Wide Establishing",
+    description: "Aerial shot of Riyadh skyline at golden hour",
+    duration: "8s",
+    status: "completed",
+    equipment: ["DJI Inspire 3", "ND Filters"],
+    location: "Kingdom Tower Area",
+    timeOfDay: "golden",
+  },
+  {
+    id: 2,
+    scene: "Opening",
+    shot: "Close-up",
+    description: "Traditional coffee being poured",
+    duration: "4s",
+    status: "completed",
+    equipment: ["Sony A7S III", "90mm Macro"],
+    location: "Studio",
+    timeOfDay: "any",
+  },
+  {
+    id: 3,
+    scene: "Act 1",
+    shot: "Medium",
+    description: "Artisan at work in traditional souq",
+    duration: "6s",
+    status: "in-progress",
+    equipment: ["Sony FX6", "35mm f/1.4"],
+    location: "Souq Al-Zal",
+    timeOfDay: "morning",
+  },
+  {
+    id: 4,
+    scene: "Act 1",
+    shot: "Tracking",
+    description: "Follow subject through narrow alley",
+    duration: "10s",
+    status: "pending",
+    equipment: ["Gimbal", "Sony A7S III", "24mm f/1.4"],
+    location: "Old Diriyah",
+    timeOfDay: "afternoon",
+  },
+  {
+    id: 5,
+    scene: "Act 2",
+    shot: "Time-lapse",
+    description: "Day to night transition over desert",
+    duration: "12s",
+    status: "pending",
+    equipment: ["Sony A1", "16-35mm", "Intervalometer"],
+    location: "Empty Quarter",
+    timeOfDay: "sunset",
+  },
+];
 
-const moodboardItems: Array<{
-  id: number;
-  type: "image" | "color";
-  label: string;
-  bg: string;
-  span: string;
-  src?: string;
-  color?: string;
-}> = [];
+const moodboardItems = [
+  { id: 1, type: "image", src: "/placeholder.svg?height=300&width=400", label: "Color Reference" },
+  { id: 2, type: "image", src: "/placeholder.svg?height=200&width=300", label: "Lighting Style" },
+  { id: 3, type: "color", color: "#d4af37", label: "Primary Gold" },
+  { id: 4, type: "color", color: "#1a1a2e", label: "Deep Navy" },
+  { id: 5, type: "image", src: "/placeholder.svg?height=250&width=350", label: "Composition" },
+  { id: 6, type: "image", src: "/placeholder.svg?height=300&width=200", label: "Texture" },
+  { id: 7, type: "color", color: "#e8d5b7", label: "Sand Tone" },
+  { id: 8, type: "image", src: "/placeholder.svg?height=200&width=400", label: "Mood Reference" },
+];
 
-const storyboardFrames: Array<{ id: number; label: string }> = [];
+const storyboardFrames = [
+  { id: 1, frame: 1, image: "/placeholder.svg?height=180&width=320", notes: "Fade in from black", audio: "Ambient desert wind" },
+  { id: 2, frame: 2, image: "/placeholder.svg?height=180&width=320", notes: "Pan left to reveal city", audio: "Traditional oud begins" },
+  { id: 3, frame: 3, image: "/placeholder.svg?height=180&width=320", notes: "Cut to close-up", audio: "Music builds" },
+  { id: 4, frame: 4, image: "/placeholder.svg?height=180&width=320", notes: "Tracking shot follows subject", audio: "Voiceover begins" },
+  { id: 5, frame: 5, image: "/placeholder.svg?height=180&width=320", notes: "Wide shot of landscape", audio: "Music crescendo" },
+  { id: 6, frame: 6, image: "/placeholder.svg?height=180&width=320", notes: "Fade to logo", audio: "Tag line" },
+];
+
+const getStatusIcon = (status: string) => {
+  switch (status) {
+    case "completed":
+      return <ImageIcon className="h-4 w-4 text-green-500" />;
+    case "in-progress":
+      return <ImageIcon className="h-4 w-4 text-foreground" />;
+    default:
+      return <ImageIcon className="h-4 w-4 text-muted-foreground" />;
+  }
+};
+
+const getTimeIcon = (time: string) => {
+  switch (time) {
+    case "morning":
+      return <ImageIcon className="h-4 w-4 text-yellow-500" />;
+    case "afternoon":
+      return <ImageIcon className="h-4 w-4 text-orange-400" />;
+    case "golden":
+    case "sunset":
+      return <ImageIcon className="h-4 w-4 text-orange-500" />;
+    case "night":
+      return <ImageIcon className="h-4 w-4 text-blue-400" />;
+    default:
+      return <ImageIcon className="h-4 w-4 text-muted-foreground" />;
+  }
+};
 
 export default function ProjectsPage() {
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [activeTab, setActiveTab] = useState("overview");
-  const [liveProjects, setLiveProjects] = useState<
-    { id: string; name: string; status: string | null; description: string | null; created_at: string | null }[]
-  >([]);
-  const [liveStatus, setLiveStatus] = useState<"loading" | "authed" | "anon" | "error">("loading");
-  const [liveError, setLiveError] = useState<string | null>(null);
-  const [liveStoryboardFrames, setLiveStoryboardFrames] = useState(storyboardFrames);
-  const [liveMoodboardItems, setLiveMoodboardItems] = useState(moodboardItems);
-  const [liveShotList, setLiveShotList] = useState(shotList);
-
-  useEffect(() => {
-    let isMounted = true;
-    supabaseBrowser.auth
-      .getSession()
-      .then(async ({ data }) => {
-        if (!isMounted) return;
-        if (!data.session) {
-          setLiveStatus("anon");
-          return;
-        }
-        setLiveStatus("authed");
-        const { data: rows, error } = await supabaseBrowser
-          .from("projects")
-          .select("id,name,status,description,created_at")
-          .order("created_at", { ascending: false });
-        if (!isMounted) return;
-        if (error) {
-          setLiveError(error.message);
-          setLiveStatus("error");
-          return;
-        }
-        setLiveProjects(rows ?? []);
-      })
-      .catch((err: Error) => {
-        if (!isMounted) return;
-        setLiveError(err.message);
-        setLiveStatus("error");
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (liveStatus !== "authed" || !liveProjects.length) {
-      setLiveStoryboardFrames(storyboardFrames);
-      setLiveMoodboardItems(moodboardItems);
-      setLiveShotList(shotList);
-      return () => {
-        isMounted = false;
-      };
-    }
-
-    const projectId = liveProjects[0]?.id;
-    if (!projectId) return;
-
-    const fetchBoards = async () => {
-      const { data: storyboardRows } = await supabaseBrowser
-        .from("storyboards")
-        .select("frames,created_at")
-        .eq("project_id", projectId)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      if (!isMounted) return;
-      const frames = storyboardRows?.[0]?.frames as Array<Record<string, unknown>> | undefined;
-      if (frames?.length) {
-        const mappedFrames = frames.map((frame, idx) => ({
-          id: (frame.id as number) ?? idx + 1,
-          label: (frame.label as string) || `Frame ${idx + 1}`,
-        }));
-        setLiveStoryboardFrames(mappedFrames);
-        setLiveShotList(
-          frames.map((frame, idx) => ({
-            id: (frame.id as number) ?? idx + 1,
-            scene: `Scene ${idx + 1}`,
-            shot: (frame.shot as string) || (frame.label as string) || "Shot",
-            description: (frame.notes as string) || "Storyboard frame",
-            duration: "—",
-            status: "pending",
-            location: "—",
-            timeOfDay: "—",
-            gear: "—",
-          }))
-        );
-      } else {
-        setLiveStoryboardFrames(storyboardFrames);
-        setLiveShotList(shotList);
-      }
-
-      const { data: moodboardRows } = await supabaseBrowser
-        .from("moodboards")
-        .select("items,created_at")
-        .eq("project_id", projectId)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      if (!isMounted) return;
-      const items = moodboardRows?.[0]?.items as Array<Record<string, unknown>> | undefined;
-      if (items?.length) {
-        setLiveMoodboardItems(
-          items.map((item, idx) => ({
-            id: (item.id as number) ?? idx + 1,
-            type: (item.type as "image" | "color") || "image",
-            label: (item.label as string) || "",
-            bg: item.type === "color" ? "" : "bg-white/10",
-            span: "col-span-1 row-span-1",
-            src: (item.src as string) || (item.image as string),
-            color: (item.color as string),
-          }))
-        );
-      } else {
-        setLiveMoodboardItems(moodboardItems);
-      }
-    };
-
-    void fetchBoards();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [liveProjects, liveStatus]);
-
-  const displayProjects = liveStatus === "authed" ? liveProjects : projects;
-  const displayStoryboardFrames = liveStatus === "authed" ? liveStoryboardFrames : storyboardFrames;
-  const displayMoodboardItems = liveStatus === "authed" ? liveMoodboardItems : moodboardItems;
-  const displayShotList = liveStatus === "authed" ? liveShotList : shotList;
-
-  const resolveProjectType = (project: { description: string | null }) => {
-    const description = (project.description ?? "").toLowerCase();
-    if (description.includes("campaign")) return "Campaign";
-    if (description.includes("brand")) return "Brand";
-    return "Film";
-  };
-
-  const resolveProjectStatus = (status: string | null) => {
-    const normalized = (status ?? "").toLowerCase();
-    if (normalized.includes("export")) return "Exported";
-    if (normalized.includes("insight")) return "Insights";
-    return "Analysis";
-  };
+  const [selectedProject, setSelectedProject] = useState(projects[0]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-24">
-        <div className="mx-auto max-w-7xl px-4 pb-20 lg:px-8 motion-fade">
-          <div className="mb-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+      <main className="pt-20">
+        <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
+          {/* Page Header */}
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="text-xs font-semibold text-white/60 uppercase tracking-[0.4em]">Project Hub</div>
-              <h1 className="mt-4 text-3xl sm:text-4xl font-semibold text-white font-display tracking-tight">Project Slate</h1>
-              <p className="mt-2 text-white/60">Organize shoots, create shot lists, and collaborate with your team</p>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-foreground/5 px-4 py-1.5 mb-4">
+                <FolderOpen className="h-3.5 w-3.5 text-foreground" />
+                <span className="text-xs font-medium text-foreground uppercase tracking-wider">Project Hub</span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+                Project <span className="text-foreground">Management</span>
+              </h1>
+              <p className="mt-2 text-muted-foreground">
+                Organize shoots, create shot lists, and collaborate with your team
+              </p>
             </div>
-
-            <div className="flex items-center gap-3">
-              <Button className="bg-white/5 text-white hover:bg-white/10">New Project</Button>
-            </div>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-foreground text-foreground-foreground hover:bg-foreground/90 ">
+                  <Plus className="mr-2 h-4 w-4" />
+                  New Project
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-card border-border/50">
+                <DialogHeader>
+                  <DialogTitle>Create New Project</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 pt-4">
+                  <div>
+                    <label className="text-sm font-medium">Project Name</label>
+                    <Input placeholder="Enter project name" className="mt-1 bg-secondary/30 border-border/50" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">Client</label>
+                    <Input placeholder="Client name" className="mt-1 bg-secondary/30 border-border/50" />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium">Description</label>
+                    <Textarea placeholder="Project description" className="mt-1 bg-secondary/30 border-border/50" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium">Start Date</label>
+                      <Input type="date" className="mt-1 bg-secondary/30 border-border/50" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">Due Date</label>
+                      <Input type="date" className="mt-1 bg-secondary/30 border-border/50" />
+                    </div>
+                  </div>
+                  <Button className="w-full bg-foreground text-foreground-foreground hover:bg-foreground/90">
+                    Create Project
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
-          <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="relative w-full lg:max-w-md">
-              <Input
-                className="h-11 rounded-none border-transparent bg-transparent px-0 text-white placeholder:text-white/40"
-                placeholder="Search projects..."
-              />
+          {/* Search and Filters */}
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative flex-1 max-w-md">
+              <ImageIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input placeholder="Search projects..." className="pl-9 bg-secondary/30 border-border/50" />
             </div>
-            <div className="flex items-center gap-2">
-              <Button className="h-10 bg-transparent text-white/60 hover:text-white">
+            <div className="flex gap-2">
+              <Button variant="outline" className="border-border/50 bg-transparent">
+                <Filter className="mr-2 h-4 w-4" />
                 Filter
               </Button>
+              <div className="flex rounded-lg border border-border/50 overflow-hidden">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="icon"
+                  className={viewMode === "grid" ? "bg-foreground" : ""}
+                  onClick={() => setViewMode("grid")}
+                >
+                  <Grid3X3 className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="icon"
+                  className={viewMode === "list" ? "bg-foreground" : ""}
+                  onClick={() => setViewMode("list")}
+                >
+                  <List className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </div>
 
-          <div className="mb-6 inline-flex flex-wrap gap-3 text-sm">
-            {[
-              { key: "overview", label: "Projects Overview" },
-              { key: "shot", label: "Shot List" },
-              { key: "storyboard", label: "Storyboard" },
-              { key: "mood", label: "Mood Board" },
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-2 py-1 text-xs font-semibold uppercase tracking-[0.2em] transition ${
-                  activeTab === tab.key ? "text-white" : "text-white/50 hover:text-white"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="bg-secondary/30 border border-border/50">
+              <TabsTrigger value="overview" className="data-[state=active]:bg-foreground data-[state=active]:text-foreground-foreground text-card">
+                Projects Overview
+              </TabsTrigger>
+              <TabsTrigger value="shotlist" className="data-[state=active]:bg-foreground data-[state=active]:text-foreground-foreground">
+                Shot List
+              </TabsTrigger>
+              <TabsTrigger value="storyboard" className="data-[state=active]:bg-foreground data-[state=active]:text-foreground-foreground text-white">
+                Storyboard
+              </TabsTrigger>
+              <TabsTrigger value="moodboard" className="data-[state=active]:bg-foreground data-[state=active]:text-foreground-foreground">
+                Mood Board
+              </TabsTrigger>
+            </TabsList>
 
-          <div className="mb-12">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">Saved Projects</h2>
-              {liveStatus === "authed" && (
-                <Link href="/upload" className="text-sm font-medium text-white/70 hover:text-white">
-                  Start new analysis
-                </Link>
-              )}
-            </div>
-            {liveStatus === "loading" && (
-              <div className="py-6 text-sm text-white/60">
-                Loading your saved projects...
-              </div>
-            )}
-            {liveStatus === "anon" && (
-              <div className="py-6 text-sm text-white/60 flex flex-col items-start gap-3">
-                Sign in to see your saved projects from analysis runs.
-                <Link href="/auth">
-                  <Button size="sm" className="rounded-full bg-white text-black hover:bg-white/80">
-                    Sign in
-                  </Button>
-                </Link>
-              </div>
-            )}
-            {liveStatus === "error" && (
-              <div className="py-6 text-sm text-white/60">
-                Unable to load projects{liveError ? `: ${liveError}` : "."}
-              </div>
-            )}
-            {liveStatus === "authed" && liveProjects.length === 0 && (
-              <div className="py-6 text-sm text-white/60 flex flex-col items-start gap-3">
-                No saved projects yet. Run your first analysis to create one.
-                <Link href="/upload">
-                  <Button size="sm" className="rounded-full bg-white text-black hover:bg-white/80">
-                    Upload & Analyze
-                  </Button>
-                </Link>
-              </div>
-            )}
-            {liveStatus === "authed" && liveProjects.length > 0 && (
-              <div className="space-y-12">
-                {liveProjects.map((project) => (
-                  <Link
+            {/* Projects Overview */}
+            <TabsContent value="overview" className="space-y-6">
+              <div className={viewMode === "grid" ? "grid gap-6 sm:grid-cols-2 lg:grid-cols-3" : "space-y-4"}>
+                {projects.map((project) => (
+                  <Card
                     key={project.id}
-                    href={`/projects/${project.id}`}
-                    className="block py-6"
+                    className={`border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all cursor-pointer ${
+                      viewMode === "list" ? "flex" : ""
+                    }`}
+                    onClick={() => setSelectedProject(project)}
                   >
-                    <div className="space-y-3">
-                      <p className="text-2xl sm:text-3xl font-semibold text-white">
-                        {project.name || "Untitled Project"}
-                      </p>
-                      <div className="text-sm text-white/60">
-                        <span>Type: {resolveProjectType(project)}</span>
-                        <span className="mx-2 text-white/40">·</span>
-                        <span>Status: {resolveProjectStatus(project.status)}</span>
-                        <span className="mx-2 text-white/40">·</span>
-                        <span>Confidence: —</span>
-                      </div>
-                    </div>
-                  </Link>
+                    {viewMode === "grid" ? (
+                      <>
+                        <div className="relative aspect-video bg-secondary/30 overflow-hidden rounded-t-lg">
+                          <Image
+                            src={project.thumbnail || "/placeholder.svg"}
+                            alt={project.name}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                            className="object-cover"
+                          />
+                          <Badge
+                            className={`absolute top-2 right-2 ${
+                              project.status === "completed"
+                                ? "bg-green-500/90"
+                                : project.status === "in-progress"
+                                ? "bg-foreground/90"
+                                : "bg-secondary/90"
+                            }`}
+                          >
+                            {project.status.replace("-", " ")}
+                          </Badge>
+                        </div>
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <div>
+                              <h3 className="font-semibold">{project.name}</h3>
+                              <p className="text-sm text-muted-foreground">{project.client}</p>
+                            </div>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                  <MoreVertical className="h-4 w-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="bg-popover border-border/50">
+                                <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Edit</DropdownMenuItem>
+                                <DropdownMenuItem><Copy className="mr-2 h-4 w-4" /> Duplicate</DropdownMenuItem>
+                                <DropdownMenuItem><Share2 className="mr-2 h-4 w-4" /> Share</DropdownMenuItem>
+                                <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 h-4 w-4" /> Delete</DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Progress value={project.progress} className="h-1.5 flex-1" />
+                            <span className="text-xs text-muted-foreground">{project.progress}%</span>
+                          </div>
+                          <div className="flex items-center justify-between text-sm">
+                            <div className="flex items-center gap-2">
+                              <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                              <span>{project.completedShots}/{project.shotCount} shots</span>
+                            </div>
+                            <div className="flex -space-x-2">
+                              {project.team.slice(0, 3).map((member, i) => (
+                                <Avatar key={i} className="h-6 w-6 border-2 border-card">
+                                  <AvatarImage src={member.avatar || "/placeholder.svg"} />
+                                  <AvatarFallback className="text-xs">{member.name[0]}</AvatarFallback>
+                                </Avatar>
+                              ))}
+                              {project.team.length > 3 && (
+                                <div className="h-6 w-6 rounded-full bg-secondary flex items-center justify-center text-xs border-2 border-card">
+                                  +{project.team.length - 3}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            Due: {new Date(project.dueDate).toLocaleDateString()}
+                          </div>
+                        </CardContent>
+                      </>
+                    ) : (
+                      <CardContent className="p-4 flex items-center gap-4 w-full">
+                        <div className="relative w-24 h-16 rounded bg-secondary/30 overflow-hidden shrink-0">
+                          <Image
+                            src={project.thumbnail || "/placeholder.svg"}
+                            alt=""
+                            fill
+                            sizes="96px"
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-semibold truncate">{project.name}</h3>
+                            <Badge variant="secondary" className={
+                              project.status === "completed"
+                                ? "bg-green-500/20 text-green-400"
+                                : project.status === "in-progress"
+                                ? "bg-foreground/20 text-foreground"
+                                : "bg-secondary"
+                            }>
+                              {project.status.replace("-", " ")}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground">{project.client}</p>
+                        </div>
+                        <div className="flex items-center gap-6">
+                          <div className="text-right">
+                            <p className="text-sm font-medium">{project.completedShots}/{project.shotCount}</p>
+                            <p className="text-xs text-muted-foreground">Shots</p>
+                          </div>
+                          <div className="w-24">
+                            <Progress value={project.progress} className="h-1.5" />
+                          </div>
+                          <div className="flex -space-x-2">
+                            {project.team.slice(0, 2).map((member, i) => (
+                              <Avatar key={i} className="h-8 w-8 border-2 border-card">
+                                <AvatarImage src={member.avatar || "/placeholder.svg"} />
+                                <AvatarFallback>{member.name[0]}</AvatarFallback>
+                              </Avatar>
+                            ))}
+                          </div>
+                          <Button variant="ghost" size="icon">
+                            <ArrowRight className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardContent>
+                    )}
+                  </Card>
                 ))}
               </div>
-            )}
-          </div>
+            </TabsContent>
 
-          {activeTab === "overview" && (
-            <div className="space-y-12">
-              {displayProjects.length ? (
-                displayProjects.map((project) => (
-                  <Link
-                    key={project.id}
-                    href={`/projects/${project.id}`}
-                    className="block py-6"
-                  >
-                    <div className="space-y-3">
-                      <p className="text-2xl sm:text-3xl font-semibold text-white">
-                        {project.name}
+            {/* Shot List */}
+            <TabsContent value="shotlist" className="space-y-6">
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border/50">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                        <ListChecks className="h-5 w-5 text-foreground" />
+                        Shot List - {selectedProject.name}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {shotList.filter(s => s.status === "completed").length} of {shotList.length} shots completed
                       </p>
-                      <div className="text-sm text-white/60">
-                        <span>Type: {resolveProjectType(project)}</span>
-                        <span className="mx-2 text-white/40">·</span>
-                        <span>Status: {resolveProjectStatus(project.status)}</span>
-                        <span className="mx-2 text-white/40">·</span>
-                        <span>Confidence: —</span>
-                      </div>
                     </div>
-                  </Link>
-                ))
-              ) : (
-                <div className="py-6 text-sm text-white/60">
-                  {liveStatus === "authed" ? "No projects available yet." : "Sign in to view projects."}
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeTab === "shot" && (
-            <section className="space-y-6">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="space-y-2">
-                  <p className="text-xs uppercase tracking-[0.4em] text-white/50">Shot List</p>
-                  <h2 className="text-2xl font-semibold text-white">Production Sequence</h2>
-                  <p className="text-sm text-white/60">
-                    {displayShotList.length ? `${displayShotList.length} shots listed` : "No shot list yet"}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2">
-                <Button className="h-9 bg-transparent text-white/60 hover:text-white">
-                  Share with Client
-                </Button>
-                <Button className="h-9 bg-white text-black hover:bg-white/80">Export PDF</Button>
-              </div>
-              </div>
-
-              {displayShotList.length ? (
-                <div className="space-y-8">
-                  {displayShotList.map((shot) => (
-                    <div key={shot.id} className="flex flex-wrap items-start gap-4">
-                      <Checkbox className="mt-1" checked={shot.status === "completed"} />
-                      <div className="flex-1 space-y-2">
-                        <div className="text-sm text-white/60">{shot.scene}</div>
-                        <div className="text-lg font-semibold text-white">{shot.shot}</div>
-                        <p className="text-sm text-white/60">{shot.description}</p>
-                        <div className="flex flex-wrap items-center gap-4 text-xs text-white/40">
-                          <span>{shot.duration}</span>
-                          <span>{shot.location}</span>
-                          <span>{shot.timeOfDay}</span>
-                          <span>{shot.gear}</span>
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="border-border/50 bg-transparent">
+                        <Download className="mr-2 h-4 w-4" />
+                        Export PDF
+                      </Button>
+                      <Button className="bg-foreground text-foreground-foreground hover:bg-foreground/90">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Shot
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="divide-y divide-border/50">
+                    {shotList.map((shot) => (
+                      <div
+                        key={shot.id}
+                        className="p-4 hover:bg-secondary/20 transition-colors"
+                      >
+                        <div className="flex items-start gap-4">
+                          <Checkbox
+                            checked={shot.status === "completed"}
+                            className="mt-1"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge variant="outline" className="border-border/50 text-xs">
+                                {shot.scene}
+                              </Badge>
+                              <span className="font-medium">{shot.shot}</span>
+                              {getStatusIcon(shot.status)}
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-2">{shot.description}</p>
+                            <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {shot.duration}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <ImageIcon className="h-3 w-3" />
+                                {shot.location}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                {getTimeIcon(shot.timeOfDay)}
+                                {shot.timeOfDay}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <ImageIcon className="h-3 w-3" />
+                                {shot.equipment.join(", ")}
+                              </span>
+                            </div>
+                          </div>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <MoreVertical className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="bg-popover border-border/50">
+                              <DropdownMenuItem><Edit3 className="mr-2 h-4 w-4" /> Edit</DropdownMenuItem>
+                              <DropdownMenuItem><Copy className="mr-2 h-4 w-4" /> Duplicate</DropdownMenuItem>
+                              <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 h-4 w-4" /> Delete</DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                       </div>
-                      <div className="text-xs uppercase tracking-[0.2em] text-white/50">
-                        {shot.status}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-6 text-sm text-white/60">No shot list available yet.</div>
-              )}
-            </section>
-          )}
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          {activeTab === "mood" && (
-            <section className="space-y-6">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="space-y-2">
-                  <p className="text-xs uppercase tracking-[0.4em] text-white/50">Mood Direction</p>
-                  <h2 className="text-2xl font-semibold text-white">Reference Palette</h2>
-                  <p className="text-sm text-white/60 max-w-2xl">Atmospheric references that prioritize light, texture, and tonal direction.</p>
-                </div>
-                <Button className="h-9 bg-transparent text-white/60 hover:text-white">
-                  Share with Client
-                </Button>
-              </div>
-              <div className="flex flex-wrap gap-6">
-                {displayMoodboardItems.length ? (
-                  displayMoodboardItems.map((item) => (
+            {/* Storyboard */}
+            <TabsContent value="storyboard" className="space-y-6">
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border/50">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                      <Layout className="h-5 w-5 text-foreground" />
+                      Storyboard - {selectedProject.name}
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="border-border/50 bg-transparent">
+                        <Play className="mr-2 h-4 w-4" />
+                        Preview
+                      </Button>
+                      <Button className="bg-foreground text-foreground-foreground hover:bg-foreground/90 text-card">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Frame
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {storyboardFrames.map((frame) => (
+                      <div
+                        key={frame.id}
+                        className="group relative rounded-lg border border-border/50 overflow-hidden hover:border-primary/30 transition-colors"
+                      >
+                        <div className="aspect-video bg-secondary/30 relative">
+                          <Image
+                            src={frame.image || "/placeholder.svg"}
+                            alt={`Frame ${frame.frame}`}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                            className="object-cover"
+                          />
+                          <div className="absolute top-2 left-2 bg-background/80 backdrop-blur-sm rounded px-2 py-0.5 text-xs font-medium">
+                            Frame {frame.frame}
+                          </div>
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                            <Button size="icon" variant="secondary" className="h-8 w-8">
+                              <Edit3 className="h-4 w-4" />
+                            </Button>
+                            <Button size="icon" variant="secondary" className="h-8 w-8">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        <div className="p-3 space-y-2">
+                          <p className="text-sm font-medium">{frame.notes}</p>
+                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                            <ImageIcon className="h-3 w-3" />
+                            {frame.audio}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                     <div
-                      key={item.id}
-                      className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] space-y-2"
+                      className="aspect-video rounded-lg border-2 border-dashed border-border/50 flex items-center justify-center hover:border-primary/50 transition-colors cursor-pointer"
                     >
-                      <div className="h-52 overflow-hidden rounded-3xl bg-black/40">
-                        {item.type === "image" ? (
-                          item.src ? (
-                            <img src={item.src} alt={item.label} className="h-full w-full object-cover" />
-                          ) : (
-                            <div className={`h-full w-full ${item.bg}`} />
-                          )
-                        ) : (
-                          <div className="h-full w-full" style={{ backgroundColor: item.color || "#d4af37" }} />
-                        )}
+                      <div className="text-center">
+                        <Plus className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground">Add Frame</p>
                       </div>
-                      {item.label ? (
-                        <p className="text-xs uppercase tracking-[0.2em] text-white/50">{item.label}</p>
-                      ) : null}
                     </div>
-                  ))
-                ) : (
-                  <div className="text-sm text-white/60">No moodboard items available yet.</div>
-                )}
-              </div>
-            </section>
-          )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          {activeTab === "storyboard" && (
-            <section className="space-y-6">
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-                <div className="space-y-2">
-                  <p className="text-xs uppercase tracking-[0.4em] text-white/50">Storyboard</p>
-                  <h2 className="text-2xl font-semibold text-white">Visual Sequence</h2>
-                  <p className="text-sm text-white/60 max-w-2xl">A director’s shot list with a clean, cinematic presentation.</p>
-                </div>
-                <Button className="h-9 bg-white text-black hover:bg-white/80">Export PDF</Button>
-              </div>
-              <div className="space-y-10">
-                {displayStoryboardFrames.length ? (
-                  displayStoryboardFrames.map((frame) => (
-                    <div key={frame.id} className="space-y-3">
-                      <div className="aspect-[21/9] overflow-hidden rounded-3xl bg-black/40" />
-                      <p className="text-xs uppercase tracking-[0.3em] text-white/60">{frame.label}</p>
+            {/* Mood Board */}
+            <TabsContent value="moodboard" className="space-y-6">
+              <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                <CardHeader className="border-b border-border/50">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                      <Palette className="h-5 w-5 text-foreground" />
+                      Mood Board - {selectedProject.name}
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      <Button variant="outline" className="border-border/50 bg-transparent">
+                        <Share2 className="mr-2 h-4 w-4" />
+                        Share with Client
+                      </Button>
+                      <Button className="bg-foreground text-foreground-foreground hover:bg-foreground/90">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Add Reference
+                      </Button>
                     </div>
-                  ))
-                ) : (
-                  <div className="text-sm text-white/60">No storyboard available yet.</div>
-                )}
-              </div>
-            </section>
-          )}
-
-          <div className="mt-16 p-2">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <h3 className="text-lg font-semibold text-white">Stay updated</h3>
-                <p className="text-white/60">Get the latest features, tips, and creator news.</p>
-              </div>
-              <div className="flex w-full max-w-md items-center gap-3">
-                <Input
-                  className="h-11 rounded-none border-transparent bg-transparent text-white placeholder:text-white/40"
-                  placeholder="Enter your email"
-                />
-                <Button className="h-11 bg-white px-6 text-black hover:bg-white/80">Subscribe</Button>
-              </div>
-            </div>
-          </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 auto-rows-[150px]">
+                    {moodboardItems.map((item, i) => (
+                      <div
+                        key={item.id}
+                        className={`group relative rounded-lg overflow-hidden border border-border/50 hover:border-primary/30 transition-all cursor-pointer ${
+                          i === 0 ? "col-span-2 row-span-2" : i === 4 ? "col-span-2" : ""
+                        }`}
+                      >
+                        {item.type === "image" ? (
+                          <Image
+                            src={item.src || "/placeholder.svg"}
+                            alt={item.label}
+                            fill
+                            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full"
+                            style={{ backgroundColor: item.color }}
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-0 left-0 right-0 p-3">
+                            <p className="text-sm text-white font-medium">{item.label}</p>
+                            {item.type === "color" && (
+                              <p className="text-xs text-white/70">{item.color}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    <div
+                      className="rounded-lg border-2 border-dashed border-border/50 flex items-center justify-center hover:border-primary/50 transition-colors cursor-pointer"
+                    >
+                      <div className="text-center p-4">
+                        <Plus className="h-6 w-6 text-muted-foreground mx-auto mb-2" />
+                        <p className="text-xs text-muted-foreground">Add Reference</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 

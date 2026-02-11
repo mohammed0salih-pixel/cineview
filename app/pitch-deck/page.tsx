@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
+import { Download, FileText, Loader2, ArrowLeft, CheckCircle2, TrendingUp, Users, Globe, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 // Dynamically import the PDF download component to avoid SSR issues
@@ -15,6 +17,7 @@ const PDFDownloadButton = dynamic(
         className="bg-foreground hover:bg-foreground/90 text-background font-semibold px-8 py-6 text-lg gap-3"
         disabled
       >
+        <Loader2 className="w-5 h-5 animate-spin" />
         Loading PDF Generator...
       </Button>
     ),
@@ -22,6 +25,12 @@ const PDFDownloadButton = dynamic(
 );
 
 export default function PitchDeckPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   const slides = [
     "Cover - Company Overview",
@@ -38,10 +47,10 @@ export default function PitchDeckPage() {
   ];
 
   const highlights = [
-    { label: "TAM", value: "$3.2B" },
-    { label: "Target Users", value: "2M+" },
-    { label: "Initial Market", value: "Saudi Arabia" },
-    { label: "Seeking", value: "$2.5M Seed" },
+    { icon: TrendingUp, label: "TAM", value: "$3.2B" },
+    { icon: Users, label: "Target Users", value: "2M+" },
+    { icon: Globe, label: "Initial Market", value: "Saudi Arabia" },
+    { icon: Sparkles, label: "Seeking", value: "$2.5M Seed" },
   ];
 
   return (
@@ -62,6 +71,7 @@ export default function PitchDeckPage() {
               variant="ghost"
               className="text-muted-foreground hover:text-foreground gap-2"
             >
+              <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Button>
           </Link>
@@ -73,11 +83,12 @@ export default function PitchDeckPage() {
         <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-16">
-            <div className="text-xs font-medium text-foreground/60 uppercase tracking-[0.3em] mb-6">
-              Investor Presentation
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-2 mb-6">
+              <FileText className="h-4 w-4 text-foreground" />
+              <span className="text-sm font-medium text-foreground">Investor Presentation</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-semibold text-foreground mb-4 text-balance font-display">
-              CineView AI <span className="text-foreground">Pitch Deck</span>
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 text-balance">
+              CineView AI <span className="text-gradient-gold">Pitch Deck</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
               A comprehensive 11-slide investor presentation covering our vision, 
@@ -90,8 +101,9 @@ export default function PitchDeckPage() {
             {highlights.map((item, index) => (
               <div
                 key={index}
-                className="p-5 text-center"
+                className="bg-card/50 border border-border/50 rounded-xl p-5 text-center hover:border-primary/30 transition-colors"
               >
+                <item.icon className="w-6 h-6 text-foreground mx-auto mb-3" />
                 <div className="text-2xl font-bold text-foreground mb-1">{item.value}</div>
                 <div className="text-xs text-muted-foreground uppercase tracking-wider">{item.label}</div>
               </div>
@@ -99,20 +111,26 @@ export default function PitchDeckPage() {
           </div>
 
           {/* Slides Preview */}
-          <div className="p-8 mb-10">
-            <h2 className="text-xl font-semibold text-foreground mb-6">
+          <div className="bg-card/50 border border-border/50 rounded-2xl p-8 mb-10">
+            <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+              <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                <span className="text-sm font-bold text-foreground">11</span>
+              </span>
               Slides Included
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {slides.map((slide, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 py-2"
+                  className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-colors"
                 >
-                  <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
                   <span className="text-sm text-foreground">{slide}</span>
+                  <CheckCircle2 className="w-4 h-4 text-foreground/50 ml-auto" />
                 </div>
               ))}
             </div>
@@ -120,30 +138,47 @@ export default function PitchDeckPage() {
 
           {/* Download Button */}
           <div className="flex flex-col items-center gap-6 mb-16">
-            <PDFDownloadButton />
+            {mounted && <PDFDownloadButton />}
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <span>PDF Format</span>
-              <span>Landscape A4</span>
-              <span>Print Ready</span>
+              <span className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                PDF Format
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                Landscape A4
+              </span>
+              <span className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                Print Ready
+              </span>
             </div>
           </div>
 
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 text-center">
-              <div className="text-2xl font-bold text-foreground mb-4">11</div>
+            <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-colors">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-foreground">11</span>
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Comprehensive Coverage</h3>
               <p className="text-sm text-muted-foreground">
                 All key aspects from problem to investment opportunity
               </p>
             </div>
-            <div className="p-6 text-center">
+            <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-colors">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <TrendingUp className="w-7 h-7 text-foreground" />
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Data-Driven</h3>
               <p className="text-sm text-muted-foreground">
                 Market research, projections, and competitive analysis
               </p>
             </div>
-            <div className="p-6 text-center">
+            <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-center hover:border-primary/30 transition-colors">
+              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <Globe className="w-7 h-7 text-foreground" />
+              </div>
               <h3 className="font-semibold text-foreground mb-2">Vision 2030 Aligned</h3>
               <p className="text-sm text-muted-foreground">
                 Strategic alignment with Saudi national initiatives

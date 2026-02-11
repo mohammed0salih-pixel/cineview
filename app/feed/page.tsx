@@ -3,6 +3,8 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { 
   Select, 
@@ -11,6 +13,18 @@ import {
   SelectTrigger, 
   SelectValue 
 } from "@/components/ui/select"
+import { 
+  Search, 
+  Filter,
+  Heart,
+  Download,
+  ImageIcon,
+  Video,
+  Sun,
+  Palette,
+  Grid3X3,
+  LayoutGrid
+} from "lucide-react"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 
@@ -173,10 +187,10 @@ export default function FeedPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl font-display">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Visual Feed
             </h1>
-            <p className="mt-4 text-lg text-white/60">
+            <p className="mt-4 text-lg text-muted-foreground">
               Discover inspiration filtered by shooting type, lighting, mood, and sector
             </p>
           </div>
@@ -186,47 +200,49 @@ export default function FeedPage() {
             {/* Search Bar */}
             <div className="flex gap-4">
               <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   type="text"
                   placeholder="Search inspiration..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-0 bg-transparent border-0 text-white/80 placeholder:text-white/40"
+                  className="pl-10 border-border bg-secondary/50 text-foreground placeholder:text-muted-foreground"
                 />
               </div>
               <div className="flex gap-2">
                 <Button
                   variant={viewMode === "grid" ? "default" : "outline"}
-                  size="sm"
+                  size="icon"
                   onClick={() => setViewMode("grid")}
-                  className={viewMode === "grid" ? "bg-white text-black" : "bg-transparent text-white/70"}
+                  className={viewMode === "grid" ? "bg-primary text-background" : "border-border text-foreground"}
                 >
-                  Grid
+                  <Grid3X3 className="h-4 w-4" />
                 </Button>
                 <Button
                   variant={viewMode === "masonry" ? "default" : "outline"}
-                  size="sm"
+                  size="icon"
                   onClick={() => setViewMode("masonry")}
-                  className={viewMode === "masonry" ? "bg-white text-black" : "bg-transparent text-white/70"}
+                  className={viewMode === "masonry" ? "bg-primary text-background" : "border-border text-foreground"}
                 >
-                  Masonry
+                  <LayoutGrid className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
             {/* Filter Row */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 text-sm text-white/50">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Filter className="h-4 w-4" />
                 <span>Filters:</span>
               </div>
               
               <Select value={filters.type} onValueChange={(v) => setFilters(prev => ({ ...prev, type: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[140px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {filterOptions.type.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-white/80">
+                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -234,12 +250,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.lighting} onValueChange={(v) => setFilters(prev => ({ ...prev, lighting: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[140px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {filterOptions.lighting.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-white/80">
+                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -247,12 +263,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.mood} onValueChange={(v) => setFilters(prev => ({ ...prev, mood: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[140px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {filterOptions.mood.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-white/80">
+                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -260,12 +276,12 @@ export default function FeedPage() {
               </Select>
 
               <Select value={filters.sector} onValueChange={(v) => setFilters(prev => ({ ...prev, sector: v }))}>
-                <SelectTrigger className="w-[140px] bg-transparent text-white border-0">
+                <SelectTrigger className="w-[140px] border-border bg-secondary/50 text-foreground">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0b0b0c] text-white border-0 shadow-none">
+                <SelectContent className="border-border bg-card">
                   {filterOptions.sector.map((option) => (
-                    <SelectItem key={option.value} value={option.value} className="text-white/80">
+                    <SelectItem key={option.value} value={option.value} className="text-foreground hover:bg-secondary">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -277,7 +293,7 @@ export default function FeedPage() {
                   variant="ghost" 
                   size="sm"
                   onClick={() => setFilters({ type: "all", lighting: "all", mood: "all", sector: "all" })}
-                  className="text-white/50 hover:text-white"
+                  className="text-muted-foreground hover:text-primary"
                 >
                   Clear all
                 </Button>
@@ -287,66 +303,104 @@ export default function FeedPage() {
 
           {/* Results Count */}
           <div className="mb-6">
-            <p className="text-sm text-white/50">
-              Showing <span className="text-white font-medium">{filteredItems.length}</span> results
+            <p className="text-sm text-muted-foreground">
+              Showing <span className="text-primary font-medium">{filteredItems.length}</span> results
             </p>
           </div>
 
           {/* Feed Grid */}
-          <div className={viewMode === "grid" ? "space-y-6" : "space-y-10"}>
+          <div className={`grid gap-6 ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "columns-1 sm:columns-2 lg:columns-3"}`}>
             {filteredItems.map((item, index) => (
-              <div key={item.id} className="group space-y-3">
+              <Card 
+                key={item.id} 
+                className={`group border-border bg-card overflow-hidden transition-all hover:border-primary/50 ${
+                  viewMode === "masonry" ? "break-inside-avoid mb-6" : ""
+                }`}
+              >
                 {/* Image/Video Preview */}
-                <div className={`relative bg-gradient-to-br from-white/10 via-black/30 to-black/70 ${viewMode === "grid" ? "aspect-[4/3]" : index % 3 === 0 ? "aspect-[4/5]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]"}`}>
+                <div className={`relative bg-secondary/50 ${viewMode === "grid" ? "aspect-[4/3]" : index % 3 === 0 ? "aspect-[4/5]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]"}`}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {item.type === "photo" ? (
+                      <ImageIcon className="h-12 w-12 text-muted-foreground/30" />
+                    ) : (
+                      <Video className="h-12 w-12 text-muted-foreground/30" />
+                    )}
+                  </div>
                   
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center gap-3">
+                  <div className="absolute inset-0 bg-background/80 opacity-0 transition-opacity group-hover:opacity-100 flex items-center justify-center gap-3">
                     <Button
-                      size="sm"
+                      size="icon"
                       variant="outline"
-                      className={`bg-transparent ${likedItems.includes(item.id) ? "text-white" : "text-white/70 hover:text-white"}`}
+                      className={`border-border ${likedItems.includes(item.id) ? "bg-primary text-background" : "text-foreground hover:bg-secondary"}`}
                       onClick={() => toggleLike(item.id)}
                     >
-                      Like
+                      <Heart className={`h-4 w-4 ${likedItems.includes(item.id) ? "fill-current" : ""}`} />
                     </Button>
-                    <Button size="sm" variant="outline" className="bg-transparent text-white/70 hover:text-white">
-                      Download
+                    <Button size="icon" variant="outline" className="border-border text-foreground hover:bg-secondary bg-transparent">
+                      <Download className="h-4 w-4" />
                     </Button>
                   </div>
+
+                  {/* Type Badge */}
+                  <Badge className="absolute top-3 left-3 bg-background/80 text-foreground">
+                    {item.type === "photo" ? <ImageIcon className="mr-1 h-3 w-3" /> : <Video className="mr-1 h-3 w-3" />}
+                    {item.type}
+                  </Badge>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-xs uppercase tracking-[0.3em] text-white/50">{item.type}</p>
-                  <h3 className="font-semibold text-white">{item.title}</h3>
+                <CardContent className="p-4">
+                  <h3 className="font-semibold text-foreground">{item.title}</h3>
                   
-                  <p className="mt-2 text-xs text-white/50">
-                    {item.lighting} · {item.mood} · {item.sector}
-                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Badge variant="outline" className="border-border text-xs text-muted-foreground">
+                      <Sun className="mr-1 h-3 w-3" />
+                      {item.lighting}
+                    </Badge>
+                    <Badge variant="outline" className="border-border text-xs text-muted-foreground">
+                      <Palette className="mr-1 h-3 w-3" />
+                      {item.mood}
+                    </Badge>
+                    <Badge variant="outline" className="border-border text-xs text-primary">
+                      {item.sector}
+                    </Badge>
+                  </div>
 
                   {/* Color Palette */}
-                  <div className="text-xs text-white/50">
-                    Colors: {item.colors.join(" · ")}
+                  <div className="mt-3 flex items-center gap-2">
+                    <span className="text-xs text-muted-foreground">Colors:</span>
+                    <div className="flex gap-1">
+                      {item.colors.map((color, i) => (
+                        <div
+                          key={i}
+                          className="h-4 w-4 rounded border border-border"
+                          style={{ backgroundColor: color }}
+                          title={color}
+                        />
+                      ))}
+                    </div>
                   </div>
 
                   {/* Likes */}
-                  <div className="text-sm text-white/50">
+                  <div className="mt-3 flex items-center gap-1 text-sm text-muted-foreground">
+                    <Heart className="h-3 w-3" />
                     <span>{likedItems.includes(item.id) ? item.likes + 1 : item.likes}</span>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
 
           {filteredItems.length === 0 && (
             <div className="text-center py-16">
-              <p className="text-white/50">No results found. Try adjusting your filters.</p>
+              <p className="text-muted-foreground">No results found. Try adjusting your filters.</p>
             </div>
           )}
 
           {/* Load More */}
           {filteredItems.length > 0 && (
             <div className="mt-12 text-center">
-              <Button variant="outline" className="bg-transparent text-white/70 hover:text-white">
+              <Button variant="outline" className="border-border text-foreground hover:bg-secondary hover:text-primary bg-transparent">
                 Load More
               </Button>
             </div>
