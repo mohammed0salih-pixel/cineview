@@ -8,6 +8,7 @@ import { writeAuditLog } from '@/lib/audit-log';
 import { getEnv } from '@/lib/env';
 import { analysisPayloadSchema } from '@/lib/validation';
 import { rateLimit } from '@/lib/rate-limit';
+import { canonicalizeAnalysisResult, validateAnalysisResult } from '@/lib/analysis/schema';
 
 type AnalysisPayload = {
   project_id?: string;
@@ -150,6 +151,23 @@ export async function POST(req: Request) {
 
     const outputFingerprint = JSON.stringify(body.analysis);
 
+    // Canonicalize and validate analysis result
+    let canonicalResult;
+    try {
+      canonicalResult = canonicalizeAnalysisResult({
+        id: '',
+        projectId,
+        assetId: media.id,
+        createdAt: now,
+        userId,
+        visual: body.analysis.visual,
+        cinematic: body.analysis.cinematic,
+      });
+      validateAnalysisResult(canonicalResult);
+    } catch (err) {
+      return NextResponse.json({ error: 'Invalid canonical analysis result', details: err instanceof Error ? err.message : String(err) }, { status: 400 });
+    }
+
     const { data: run, error: runError } = await supabase
       .from('analysis_runs')
       .insert({
@@ -167,6 +185,7 @@ export async function POST(req: Request) {
         started_at: body.analysis_started_at ?? now,
         completed_at: body.analysis_completed_at ?? now,
         created_by: userId,
+        canonical_result: canonicalResult,
       })
       .select('id')
       .single();
@@ -374,15 +393,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      ok: true,
-      project_id: projectId,
-      media_id: media.id,
-      analysis_run_id: run.id,
-      insight_id: insight.id,
-      trace_id: trace.id,
-      storyboard_id: storyboardRow.id,
-      moodboard_id: moodboardRow.id,
-      insight_version: insightVersion,
+      result: canonicalResult
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unexpected error';

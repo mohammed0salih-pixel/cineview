@@ -9,6 +9,7 @@
     "dev": "next dev",
     "check:env": "node scripts/validate-env.mjs",
     "lint": "BASELINE_BROWSER_MAPPING_IGNORE_OLD_DATA=true BROWSERSLIST_IGNORE_OLD_DATA=true eslint .",
+    "typecheck": "tsc --noEmit",
     "start": "next start",
     "test": "jest"
   },

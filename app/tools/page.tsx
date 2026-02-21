@@ -698,14 +698,34 @@ export default function ToolsPage() {
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-2"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to Home
+                الرئيسية
               </Link>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                Complete Visual Analysis
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
-                All-in-one analysis tools for photographers and videographers
-              </p>
+              {/* Logo and Branding */}
+              <div className="flex items-center gap-3 mb-2">
+                <div className="rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-green-400 p-1 shadow-lg">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" fill="#fff" stroke="#0ea5e9" strokeWidth="2"/><path d="M13 27c2-6 12-6 14 0" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round"/><circle cx="16" cy="17" r="2" fill="#0ea5e9"/><circle cx="24" cy="17" r="2" fill="#0ea5e9"/></svg>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">BrightVision</span>
+                  <span className="ml-2 px-2 py-0.5 rounded-full bg-yellow-200 text-yellow-900 text-xs font-semibold align-middle">اختراع</span>
+                  <Link href="/tools/about" className="ml-3 underline text-xs text-blue-600 hover:text-blue-800">عن الخدمة</Link>
+                </div>
+              </div>
+              {/* Invention-style Description */}
+              <div className="mb-2 text-base text-foreground font-semibold">تحليل بصري ذكي بالذكاء الاصطناعي</div>
+              <p className="text-sm text-muted-foreground mb-2">حل مبتكر لتحليل الصور والفيديوهات بدقة عالية وتوصيات فورية. كل التحليل يتم محليًا للحفاظ على الخصوصية.</p>
+              {/* User Guidance Section */}
+              <div className="mt-4 bg-muted/60 border border-border/40 rounded-lg p-4 text-sm text-muted-foreground space-y-1">
+                <div className="font-semibold text-foreground mb-1">طريقة الاستخدام:</div>
+                <ol className="list-decimal ml-5 space-y-0.5">
+                  <li>ارفع صورة أو فيديو عبر الزر في الأعلى.</li>
+                  <li>انتظر التحليل التلقائي (EXIF، الألوان، التقنية...)</li>
+                  <li>يمكنك تعديل الإعدادات (الإضاءة، التباين...)</li>
+                  <li>اضغط &quot;تحليل بالذكاء الاصطناعي&quot; لرؤية التوصيات الذكية.</li>
+                  <li>صدّر التقرير كـ PDF أو JSON وشاركه بسهولة.</li>
+                </ol>
+                <div className="mt-2 text-xs text-muted-foreground">نصيحة: جرب صورًا مختلفة للمقارنة. كل التحليل يتم على جهازك فقط.</div>
+              </div>
             </div>
             <div className="flex gap-2">
               <input
@@ -719,12 +739,26 @@ export default function ToolsPage() {
                 <Upload className="mr-2 h-4 w-4" />
                 Upload Image/Video
               </Button>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-red">
+              {/* Export Button Placeholder */}
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-red" disabled={!analysisApplied} title={!analysisApplied ? 'Analyze an image first' : 'Export analysis report'}>
                 <Download className="mr-2 h-4 w-4" />
                 Export Report
               </Button>
             </div>
           </div>
+
+          {/* Error and Loading States */}
+          {aiError && (
+            <div className="mb-4 p-3 rounded bg-destructive/10 border border-destructive text-destructive text-sm">
+              {aiError}
+            </div>
+          )}
+          {isAnalyzing || isAiAnalyzing ? (
+            <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+              <svg className="animate-spin h-5 w-5 text-primary" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+              <span>{isAnalyzing ? 'Analyzing image...' : 'Analyzing with AI...'}</span>
+            </div>
+          ) : null}
 
           {/* Main Content Grid */}
           <div className="grid gap-4 lg:grid-cols-4">
